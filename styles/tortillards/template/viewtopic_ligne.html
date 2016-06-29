@@ -1,0 +1,128 @@
+<!-- INCLUDECSS {GEO_LEAFLET_CSS} -->
+<!-- INCLUDEJS {GEO_LEAFLET_JS} -->
+
+<!-- INCLUDE overall_header.html -->
+
+<h2 class="topic-title"><a href="{U_VIEW_TOPIC}">{TOPIC_TITLE}</a></h2>
+
+<div id="map"></div>
+<!-- INCLUDEJS viewtopic_ligne.js -->
+
+<!-- BEGIN postrow -->
+	<div id="p{postrow.POST_ID}"
+		onmouseover="hover({postrow.POST_ID},'mousemove')"
+		onmouseout="hover({postrow.POST_ID},'mouseout')"
+		class="post has-profile <!-- IF postrow.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF -->"
+	>
+		<ul class="post-buttons">
+			<!-- IF postrow.U_EDIT -->
+				<li>
+					<a href="{postrow.U_EDIT}" title="{L_EDIT_POST}" class="button icon-button edit-icon"><span>{L_BUTTON_EDIT}</span></a>
+				</li>
+			<!-- ENDIF -->
+			<!-- IF postrow.U_QUOTE -->
+				<li>
+					<a href="{postrow.U_QUOTE}" title="{L_REPLY_WITH_QUOTE}" class="button icon-button quote-icon"><span>{L_QUOTE}</span></a>
+				</li>
+			<!-- ENDIF -->
+			<!-- IF postrow.U_DELETE -->
+				<li>
+					<a href="{postrow.U_DELETE}" title="{L_DELETE_POST}" class="button icon-button delete-icon"><span>{L_DELETE_POST}</span></a>
+				</li>
+			<!-- ENDIF -->
+			<!-- IF postrow.U_INFO -->
+				<li>
+					<a href="{postrow.U_INFO}" title="{L_INFORMATION}" class="button icon-button info-icon"><span>{L_INFORMATION}</span></a>
+				</li>
+			<!-- ENDIF -->
+		</ul>
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+		&nbsp;zzzzzzzzzzzzzzzzz
+	</div>
+
+	<hr class="divider" />
+<!-- END postrow -->
+
+<br clear="all"/>
+
+<!-- IF S_NUM_POSTS > 1 or .pagination -->
+	<form id="viewtopic" method="post" action="{S_TOPIC_ACTION}">
+	<fieldset class="display-options" style="margin-top: 0; ">
+		<!-- IF not S_IS_BOT -->
+		<label>{L_DISPLAY_POSTS}{L_COLON} {S_SELECT_SORT_DAYS}</label>
+		<label>{L_SORT_BY} {S_SELECT_SORT_KEY}</label> <label>{S_SELECT_SORT_DIR}</label>
+		<input type="submit" name="sort" value="{L_GO}" class="button2" />
+		<!-- ENDIF -->
+	</fieldset>
+	</form>
+	<hr />
+<!-- ENDIF -->
+
+<div class="action-bar bottom">
+	<div class="buttons">
+
+	<!-- IF not S_IS_BOT and S_DISPLAY_REPLY_INFO -->
+		<a href="{U_POST_REPLY_TOPIC}" class="button icon-button <!-- IF S_IS_LOCKED -->locked-icon<!-- ELSE -->reply-icon<!-- ENDIF -->" title="<!-- IF S_IS_LOCKED -->{L_TOPIC_LOCKED}<!-- ELSE -->{L_POST_REPLY}<!-- ENDIF -->">
+			<!-- IF S_IS_LOCKED -->{L_BUTTON_TOPIC_LOCKED}<!-- ELSE -->{L_BUTTON_POST_REPLY}<!-- ENDIF -->
+		</a>
+	<!-- ENDIF -->
+
+	</div>
+
+	<!-- INCLUDE viewtopic_topic_tools.html -->
+
+	<!-- IF .quickmod -->
+		<div class="dropdown-container dropdown-container-{S_CONTENT_FLOW_BEGIN} dropdown-up dropdown-{S_CONTENT_FLOW_END} dropdown-button-control" id="quickmod">
+			<span title="{L_QUICK_MOD}" class="dropdown-trigger button icon-button modtools-icon dropdown-select">{L_QUICK_MOD}</span>
+			<div class="dropdown hidden">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+				<ul class="dropdown-contents">
+				<!-- BEGIN quickmod -->
+					<!-- DEFINE $QUICKMOD_AJAX = (quickmod.VALUE in ['lock', 'unlock', 'delete_topic', 'restore_topic', 'make_normal', 'make_sticky', 'make_announce', 'make_global']) -->
+					<li><a href="{quickmod.LINK}"<!-- IF $QUICKMOD_AJAX --> data-ajax="true" data-refresh="true"<!-- ENDIF -->>{quickmod.TITLE}</a></li>
+				<!-- END quickmod -->
+				</ul>
+			</div>
+		</div>
+	<!-- ENDIF -->
+
+	<!-- IF .pagination or TOTAL_POSTS -->
+		<div class="pagination">
+			{TOTAL_POSTS}
+			<!-- IF .pagination -->
+				<!-- INCLUDE pagination.html -->
+			<!-- ELSE -->
+				&bull; {PAGE_NUMBER}
+			<!-- ENDIF -->
+		</div>
+	<!-- ENDIF -->
+	<div class="clear"></div>
+</div>
+
+<!-- INCLUDE jumpbox.html -->
+
+<!-- IF S_DISPLAY_ONLINE_LIST -->
+	<div class="stat-block online-list">
+		<h3><!-- IF U_VIEWONLINE --><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a><!-- ELSE -->{L_WHO_IS_ONLINE}<!-- ENDIF --></h3>
+		<p>{LOGGED_IN_USER_LIST}</p>
+	</div>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

@@ -1,0 +1,32 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- IF REPEAT -->
+	<meta http-equiv="refresh" content="{REPEAT}"></meta>
+<!-- ENDIF -->
+
+<div>
+	<p style="margin:5px;"><a href="sync.php?cmd=sync_wri">Synchro wri</a></p>
+	<p style="margin:5px;"><a href="sync.php?cmd=sync_prc">Synchro prc</a></p>
+	<p style="margin:5px;">
+		<a href="sync.php?cmd=sync_c2c&type=huts">Synchro c2c huts</a>
+		&nbsp;&nbsp;
+		<a href="sync.php?cmd=sync_c2c&type=huts&repeat">REPEAT</a>
+	</p>
+</div>
+<br/>
+
+<br/>
+<div>
+<!-- BEGIN errors -->
+	<p style="background-color:coral;margin:0;">{errors.REPORT}</p>
+<!-- END errors -->
+</div>
+<br/>
+<div>
+<!-- BEGIN status -->
+	<p style="margin:0;">{status.REPORT}</p>
+<!-- END status -->
+</div>
+<br/>
+
+<!-- INCLUDE overall_footer.html -->

@@ -1,0 +1,4 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+
+#RewriteRule "(.+)"  "http://v2.chemineur.fr/feed/$1"

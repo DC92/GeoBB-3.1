@@ -98,8 +98,8 @@ $styles = array (
 
 	function page_header($vars) {
 		global $config;
-		$config['sitename'] = 'Chemineur.fr'; // TODO: varier suivant les sites !
-		$config['site_desc'] = 'SITE DE TEST: LES MODIFICATIONS NE SERONT PAS GARDÉES';
+//DCMM		$config['sitename'] = 'Chemineur.fr'; // TODO: varier suivant les sites !
+//DCMM		$config['site_desc'] = 'SITE DE TEST: LES MODIFICATIONS NE SERONT PAS GARDÉES';
 	}
 
 	function page_footer($vars) {

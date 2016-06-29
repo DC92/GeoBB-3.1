@@ -41,6 +41,10 @@ pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 
 BEST TODO
 =========
+Intégrer dans les patchs
+	RewriteCond %{REQUEST_SCHEME} ^http$ [NC]
+	RewriteCond %{HTTP_HOST} ^chemineur.fr$ [NC]
+	RewriteRule ^.*$ https://%{SERVER_NAME}/%1 [L]
 Centraliser patchs
 	Passage en https: htaccess / route
 Coloration ligne sur la carte au survol du post => Uniquement Tortillards ???

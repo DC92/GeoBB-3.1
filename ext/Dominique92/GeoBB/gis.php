@@ -87,8 +87,8 @@ $sql = $db->sql_build_query('SELECT', $sql_array);
 $result = $db->sql_query_limit($sql, $limite);
 
 // Ajoute l'adresse complète aux images d'icones
+$sp = explode ('/', getenv('REQUEST_SCHEME'));
 $ri = explode ('/ext/', getenv('REQUEST_URI'));
-$sp = explode ('/', getenv('SERVER_PROTOCOL'));
 $bu = $sp[0].'://'.getenv('SERVER_NAME').$ri[0].'/';
 
 $gjs = [];

@@ -77,7 +77,7 @@ if (count ($bboxs) == 4) {
 //-------------------------------------------------------------------------
 // Exécution de la commande
 $log [] = date('r');
-$log [] = $_request->server('REQUEST_SCHEME').'://'.$_request->server('HTTP_HOST').$_request->server('REQUEST_URI');
+$log [] = $request->server('REQUEST_SCHEME').'://'.$request->server('HTTP_HOST').$request->server('REQUEST_URI');
 
 $fnc = 'geo_'.request_var('cmd', '');
 if ($source = request_var('source', ''))

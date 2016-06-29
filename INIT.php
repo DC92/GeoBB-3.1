@@ -449,7 +449,7 @@ function geo_init_chemineur_point () {geoimportchemineur ();}
 function geo_init_chemineur_diapo () {geoimportchemineur ();}
 function geo_init_chemineur_trace () {geoimportchemineur ();}
 function geoimportchemineur () {
-	global $db, $template, $arg, $glob, $errors;
+	global $db, $template, $arg, $glob, $errors, $request;
 	// $glob->forum_cle = array ('cle' => forum_id);
 	// Populées par descripteur de forum: <cle
 	// Ou par nom de l'image forum: <cle
@@ -605,14 +605,14 @@ function geoimportchemineur () {
 	if ($arg->repeat && $arg->limit <= 0 && count ($posts) && !@$a_detruire) {
 //*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'> = ".var_export('SERVER',true).'</pre>';
 		$template->assign_vars(array(
-			'META' => '<meta http-equiv="refresh" content="' . $arg->repeat . '; url=' . $_SERVER['REQUEST_URI'] . '" />')
+			'META' => '<meta http-equiv="refresh" content="' . $arg->repeat . '; url=' . $request->server('REQUEST_URI') . '" />')
 		);
 	}
-	elseif (isset($_GET['suite']) && isset ($suites[$_GET['source']])) {
+	elseif (isset($_GET['suite']) && isset ($suites[request_var ('source', '')])) {
 /**/echo"<pre style='background-color:white;color:black;font-size:14px;'>FINI = ".var_export($_GET,true).'</pre>';
 		$template->assign_vars(array(
 			'META' => '<meta http-equiv="refresh" content="' . $arg->repeat . '; url=' .
-			str_replace ($_GET['source'], $suites[$_GET['source']], $_SERVER['REQUEST_URI'])
+			str_replace (request_var ('source', ''), $suites[request_var ('source', '')], $request->server('REQUEST_URI'))
 			. '" />')
 		);
 	}

@@ -111,7 +111,8 @@ class listener implements EventSubscriberInterface
 				$forum_list [] = '<option value="' . $row['forum_id'] . '"' .($row['forum_id'] == $vars['forum_id'] ? ' selected="selected"' : ''). '>' . $row['forum_name'] . '</option>';
 			$this->db->sql_freeresult($result);
 
-			$this->template->assign_var ('S_FORUM_SELECT', implode ('', $forum_list));
+			if (isset ($forum_list))
+				$this->template->assign_var ('S_FORUM_SELECT', implode ('', $forum_list));
 		}
 
 		// Assigne le nouveau forum pour la création

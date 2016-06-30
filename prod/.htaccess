@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
 RewriteEngine on
 
-RewriteRule "(.+)"  "http://v2.chemineur.fr/feed/$1"
+RewriteRule "(.+)"  "http://v2.chemineur.fr/prod/$1"
 
 #//DCCM TODO : mettre dans les patchs .htacces

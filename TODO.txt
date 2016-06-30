@@ -1,13 +1,3 @@
-TODO
-====
-
-TODO MIGRATION
-==============
-Bouger github/MyGeoBB -> Dominique92
-Bloquage immédiat de chem.V2 => prod/bin-/function.php => $site_ouvert = 'chemineur.fr';
-Tester interface VTTRACK
-Enlever /install INIT.PHP & son template & remettre fichiers PBP origine (--patchs)
-
 TODO TORTILLARDS
 ================
 Tortillards : Fatal error: Uncaught exception 'Twig_Error_Loader' with message 'Unable to find template "viewtopic_ligne.html" (looked into: ././ext/Dominique92/BarMenu/styles/all/template, 
@@ -41,6 +31,8 @@ pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 
 BEST TODO
 =========
+pourquoi post_attachment = 0 si on a une image ?
+Interface VTTRACK => Priorité pas aux orris !!
 Intégrer dans les patchs
 	RewriteCond %{REQUEST_SCHEME} ^http$ [NC]
 	RewriteCond %{HTTP_HOST} ^chemineur.fr$ [NC]
@@ -88,6 +80,7 @@ Ajouter bouton permutation sur page point chem
 
 INSTALL / MISE EN FORME / DEMOS
 ===============================
+Enlever /install INIT.PHP & son template & remettre fichiers PBP origine (--patchs)
 Mettre tous les responsive dans responsive.css
 Voir nom en français des variables spécifiques ?
 Convergence noms: reference / lien / import / ...

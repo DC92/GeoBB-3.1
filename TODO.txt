@@ -1,5 +1,24 @@
+BUGS
+====
+OS-GB : demander clé https / v2
+Escape sur diaporama ne marche pas sur FF !
+Mauvaise largeur de carte quand le style est prosilver
+Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
+Diaporama pleine page ? En particulier sur mobile
+Barmenu: Enveloppe message trop basse dans Chrome
+Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
+Pourquoi post_attachment = 0 si on a une image ?
+Posting: Erreur "pas de titre" ne réaffiche pas la saisie ! (mettre un titre par défaut ?)
+Accueil : (+) new post ne devrait pas être affiché sur catégorie.
+
 TODO TORTILLARDS
 ================
+Editeur de position de point ne colle pas !
+TEST: Intersect répète tous les éléments du post (faire un distinct sur le topic)
+Couleur lignes = noir
+Distances points caractéristiques ligne
+Mettre lignes en priorité sur un affichage ligne / le point sur un affichage d'un type de point, ...
+Ligne n'affiche pas si pas de geom dans le premier post
 Tortillards : Fatal error: Uncaught exception 'Twig_Error_Loader' with message 'Unable to find template "viewtopic_ligne.html" (looked into: ././ext/Dominique92/BarMenu/styles/all/template, 
 Filtrage des forums & catégories suivant le style: -style <==== TBD
 Titre page dépendant du style => Le faire varier pour tortillards => Config ?
@@ -16,46 +35,27 @@ Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respecti
 
 LEAFLET - CARTES
 ================
-Mettre lignes en priorité sur un affichage ligne / le point sur un affichage d'un type de point, ...
 Carte + bbox KO full screen
 Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
-Editeur de position de point ne colle pas !
 Couche chemineur toujours présente. Ne devrait pas
 Continuité cookies cartes entre WRI et CHEM, ...
 AJAX ne trace pas si erreurs non reportées !
 
-BUGS
-====
-Escape sur diaporama ne marche pas sur FF !
-Mauvaise largeur de carte quand le style est prosilver
-Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
-Diaporama pleine page ? En particulier sur mobile
-Barmenu: Enveloppe message trop basse dans Chrome
-pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
-
 BEST TODO
 =========
+Lancer exec git depuis le site
 Monter un serveur de tests 1&1
 News: pour ligne de chemin de fer, mettre le type
-pourquoi post_attachment = 0 si on a une image ?
 Interface VTTRACK => Priorité pas aux orris !!
-Intégrer dans les patchs
-	RewriteCond %{REQUEST_SCHEME} ^http$ [NC]
-	RewriteCond %{HTTP_HOST} ^chemineur.fr$ [NC]
-	RewriteRule ^.*$ https://%{SERVER_NAME}/%1 [L]
-Centraliser patchs
-	Passage en https: htaccess / route
 Coloration ligne sur la carte au survol du post => Uniquement Tortillards ???
 	Randos dans accueil: rosir la ligne sur la carte au survol
-Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respectivement par %28 et %29
-Faire executer l'import par le cron
+Pouvoir inclure : Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respectivement par %28 et %29
 Récup trace diaporamas + chemins chem2
 Exif -> Commentaire attachment ?? / Visu Commentaire attachment dans w_point_photo
 	Récup auteur photo // GEO-TODO DCMM Retrouver le nom du "poster_id" : $vars['attachment']['poster_id']
 	Date des clichés < 1970 ??? (pas d'UNIX time) => Utiliser la date EXIF (éditée) pour les clichés ???
 EDIT.log => Trace supprimer le sujet
 	EDIT.log => Segmenter par jour
-Posting: Erreur "pas de titre" ne réaffiche pas la saisie ! (mettre un titre par défaut ?)
 Afficher les jpg signalés dans le texte.
 	Eviter les jpg non autorisés
 	Rechercher les liens vers une image dans le texte (Google image)
@@ -70,7 +70,6 @@ Pouvoir citer un WRIC
 	Tri des WRIC (actuellement en bas de page) => date par défaut + déplaçable
 ext/GeoBB : ajouter les coordonnées au template print
 Posting: Purger les points des [*=ligne] à la saisie (include fichier dans leaflet) ?
-Stockage images sur plus d'1 répertoire => ? plugin ?
 Import references: osm overpass, LDP
 	Import LDP: view-source:http://www.lacsdespyrenees.com/kml-Bielsa.kml
 Récupérer les smileys tout ronds de WRI
@@ -84,8 +83,16 @@ Aspect bouton créer un point dans viewforums
 Ajouter bouton permutation sur page point chem
 	View film + permutation
 
-INSTALL / MISE EN FORME / DEMOS
+MISE EN FORME / INSTALL / DEMOS
 ===============================
+Stockage images sur plus d'1 répertoire => ? plugin ?
+Faire executer l'import par le cron
+Intégrer dans les patchs
+	RewriteCond %{REQUEST_SCHEME} ^http$ [NC]
+	RewriteCond %{HTTP_HOST} ^chemineur.fr$ [NC]
+	RewriteRule ^.*$ https://%{SERVER_NAME}/%1 [L]
+Centraliser patchs
+	Passage en https: htaccess / route
 Enlever /install INIT.PHP & son template & remettre fichiers PBP origine (--patchs)
 Mettre tous les responsive dans responsive.css
 Voir nom en français des variables spécifiques ?

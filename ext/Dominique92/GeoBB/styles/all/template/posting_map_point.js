@@ -25,3 +25,8 @@ function gotogps () {
 	});
 	control.gps.activate()
 }
+
+// Snap sur les autres objects vectoriels
+curseur.snapediting = new L.Handler.MarkerSnap(map, curseur);
+curseur.snapediting.addGuideLayer(gis);
+curseur.snapediting.enable();

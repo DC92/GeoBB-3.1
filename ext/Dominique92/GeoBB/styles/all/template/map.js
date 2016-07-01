@@ -110,7 +110,7 @@ var gis = new L.GeoJSON.Ajax({
 				<!-- IF IS_MODERATOR -->
 					deblinkref+'&'+finlink+'">Créer une fiche</a>',
 					<!-- IF TOPIC_ID and GEO_MAP_TYPE == 'point' -->
-						deblinkref+"&t={TOPIC_ID}&nt={TOPIC_ID}\">Lier à {TOPIC_TITLE}</a>",
+						deblinkref+"&t={TOPIC_ID}&nt={TOPIC_ID}\">Lier à \"{TOPIC_TITLE}\"</a>",
 					<!-- ENDIF -->
 				<!-- ENDIF -->
 			];

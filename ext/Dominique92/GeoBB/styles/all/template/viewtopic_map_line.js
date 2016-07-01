@@ -1,3 +1,6 @@
+control.geocoder.addTo(map);
+control.fileload.addTo(map);
+
 function hover(post_id, evt) {
 	var found = false;
 	for (l in gis._layers)

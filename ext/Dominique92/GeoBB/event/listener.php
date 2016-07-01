@@ -59,6 +59,7 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_get_post_data' => 'viewtopic_get_post_data', //1143
 			'core.viewtopic_post_rowset_data' => 'viewtopic_post_rowset_data', //1240
 			'core.viewtopic_modify_post_row' => 'viewtopic_modify_post_row', //1949
+			'core.viewtopic_post_row_after' => 'viewtopic_post_row_after', //1949
 
 			// Posting
 			'core.submit_post_modify_sql_data' => 'submit_post_modify_sql_data', //21 -> functions_posting.php 1859
@@ -141,6 +142,24 @@ class listener implements EventSubscriberInterface
 
 			$vars['post_row'] = $post_row;
 		}
+	}
+
+	// Appelé aprés l'assignation de postrow au template. Pour assigner les sous-blocks de postrow
+	function viewtopic_post_row_after($vars) {
+		$row = $vars['row'];
+
+		// Lecture des posts ayant un geom en contact
+		$sql = "
+			SELECT p.post_id, p.post_subject, f.forum_id, f.forum_name, f.forum_image
+			FROM ".POSTS_TABLE." AS l
+				JOIN ".POSTS_TABLE." AS p ON (Touches (l.geom, p.geom))
+				JOIN ".FORUMS_TABLE." AS f ON (p.forum_id = f.forum_id)
+			WHERE p.post_id != l.post_id
+				AND l.post_id = ".$row['post_id'];
+
+		$result = $this->db->sql_query_limit($sql, $limite);
+		while ($row = $this->db->sql_fetchrow($result))
+			$this->template->assign_block_vars('postrow.jointif', array_change_key_case ($row, CASE_UPPER));
 	}
 
 	// Calcul des données automatiques

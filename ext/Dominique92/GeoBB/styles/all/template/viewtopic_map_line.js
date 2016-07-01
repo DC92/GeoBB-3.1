@@ -1,4 +1,3 @@
-/* TODO DCMM A TRANSFERER DANS TORTILLARDS */
 function hover(post_id, evt) {
 	var found = false;
 	for (l in gis._layers)

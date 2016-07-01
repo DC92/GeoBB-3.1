@@ -14,8 +14,12 @@ Il semble qu'on ne puisse pas chercher "jean barmasse" mais qu'il cherche <"jean
 Attendre que le fichier soit chargé avant de valider le post : à sécuriser !
 Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respectivement par %28 et %29
 
-LEAFLET
-=======
+LEAFLET - CARTES
+================
+Mettre lignes en priorité sur un affichage ligne / le point sur un affichage d'un type de point, ...
+Carte + bbox KO full screen
+Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
+Editeur de position de point ne colle pas !
 Couche chemineur toujours présente. Ne devrait pas
 Continuité cookies cartes entre WRI et CHEM, ...
 AJAX ne trace pas si erreurs non reportées !
@@ -31,6 +35,8 @@ pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 
 BEST TODO
 =========
+Monter un serveur de tests 1&1
+News: pour ligne de chemin de fer, mettre le type
 pourquoi post_attachment = 0 si on a une image ?
 Interface VTTRACK => Priorité pas aux orris !!
 Intégrer dans les patchs

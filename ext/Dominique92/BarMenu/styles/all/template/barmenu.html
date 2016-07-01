@@ -1,4 +1,5 @@
 <ul id="menu" class="horizontal">
+	<!-- Partie gauche (en partant du bord) -->
 	<li id="accueil" onclick="deplie(this)">
 		<a href="{ROOT_PATH}">{L_HOME}</a>&nbsp;
 		<ul>
@@ -7,6 +8,7 @@
 			<!-- END geo_categories -->
 		</ul>
 	</li>
+
 	<!-- IF .navlinks -->
 		<li id="ariane">
 			<!-- BEGIN navlinks -->
@@ -26,6 +28,7 @@
 		</li>
 	<!-- ENDIF -->
 
+	<!-- Partie droite (en partant du bord) -->
 	<li id="bouton" class="cache"><a onclick="menu(true)" title="{L_OPEN_CLOSE}">&#9776;</a></li>
 
 	<!-- IF not S_IS_BOT -->
@@ -54,6 +57,15 @@
 		<!-- ENDIF -->
 	<!-- ENDIF -->
 
+	<li onclick="deplie(this)">
+		<span>Aide</span>
+		<ul>
+			<li><a href="{ROOT_PATH}viewtopic.php?t=1">Aide chemineur</a></li>
+			<li><a href="{ROOT_PATH}faq.php">Aide PhpBB</a></li>
+			<li><a href="http://v2.chemineur.fr">Chemineur V2</a></li>
+		</ul>
+	</li>
+
 	<!-- IF S_DISPLAY_SEARCH -->
 		<li id="bouton-cherche"><a href="{U_SEARCH}">{L_SEARCH}</a></li>
 	<!-- ENDIF -->
@@ -67,15 +79,6 @@
 			</ul>
 		</li>
 	<!-- ENDIF -->
-
-	<li onclick="deplie(this)">
-		<span>Aide</span>
-		<ul>
-			<li><a href="{ROOT_PATH}viewtopic.php?t=1">Aide chemineur</a></li>
-			<li><a href="{ROOT_PATH}faq.php">Aide PhpBB</a></li>
-			<li><a href="http://v2.chemineur.fr">Chemineur V2</a></li>
-		</ul>
-	</li>
 
 	<!-- IF .geo_categories -->
 		<!-- IF S_USER_LOGGED_IN -->

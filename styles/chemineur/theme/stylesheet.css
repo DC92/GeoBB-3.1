@@ -431,7 +431,7 @@ top: 0;
 	background-color: #fff;
 	padding: 3px;
 }
-*/
+
 .headerspace {
 	background-color: #ECF3F7;
 	margin: 5px;
@@ -439,4 +439,9 @@ top: 0;
 }
 .headerspace h3 {
 	margin: 5px;
+}
+
+/* Lignes*/
+.hovered {
+	background-color: pink !important;
 }

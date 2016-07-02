@@ -20,6 +20,7 @@ $user->session_begin();
 $auth->acl($user->data);
 $user->setup();
 
+$priority = request_var ('priority', 0); // Topic à affichage prioritaire
 $limite = request_var ('limite', 250); // Nombre de points maximum
 $bboxs = explode (',', request_var ('bbox', '-180,-90,180,90'));
 $bbox =
@@ -58,7 +59,7 @@ $sql_array = [
 			'forum_desc LIKE "%[all=%"',
 		],
 	],
-	'ORDER_BY'	=> 'left_id',
+	'ORDER_BY'	=> "CASE WHEN f.forum_id = $priority THEN 0 ELSE left_id END",
 ];
 
 /**
@@ -84,8 +85,8 @@ if (is_array ($sql_array ['WHERE'])) {
 	$sql_array ['WHERE'] = implode (' AND ', $sql_array ['WHERE']);
 }
 $sql = $db->sql_build_query('SELECT', $sql_array);
-//*DCMM*/echo var_export($sql,true)."\n";
 $result = $db->sql_query_limit($sql, $limite);
+//*DCMM*/echo var_export($sql,true)."\n";
 
 // Ajoute l'adresse complète aux images d'icones
 $sp = explode ('/', getenv('REQUEST_SCHEME'));

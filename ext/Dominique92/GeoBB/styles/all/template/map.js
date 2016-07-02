@@ -56,7 +56,6 @@ new L.Control.Permalink.Cookies({
 	layers: control.layers
 }).addTo(map);
 
-//TODO DCMM move to chemineur template ??? / ref ?
 // Controle secondaire pour les couches vectorielles
 var lc2 = new L.Control.Layers.args({},{
 	<!-- BEGIN map_overlays -->
@@ -64,10 +63,15 @@ var lc2 = new L.Control.Layers.args({},{
 	<!-- END map_overlays -->
 }).addTo(map);
 
+var args = lc2.args();
+<!-- IF FORUM_ID --> // Priorité aux éléments du forum affiché
+	args.priority = {FORUM_ID};
+<!-- ENDIF -->
+
 // Chem POI
 var gis = new L.GeoJSON.Ajax({
 	urlGeoJSON: '{EXT_DIR}gis.php',
-	argsGeoJSON: lc2.args(),
+	argsGeoJSON: args,
 	bbox: true,
 <!-- IF POST_ID -->
 	filter: function(feature) {
@@ -84,11 +88,9 @@ var gis = new L.GeoJSON.Ajax({
 			iconUrl: feature.properties.icone,
 			iconAnchor: [8, 8],
 			popupAnchor: [0, -8],
-			weight: <!-- IF TOPIC_ID --> feature.properties.id == {TOPIC_ID} ? 5 : <!-- ENDIF --> 3,
+			weight: <!-- IF TOPIC_ID --> feature.properties.id == {TOPIC_ID} ? 3 : <!-- ENDIF --> 2,
 			degroup: 12
 		};
-		if (feature.properties.color)
-			s.color = feature.properties.color;
 
 		if (feature.properties.url) {
 			var parser = document.createElement('a');

@@ -9,13 +9,11 @@ Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
 Posting: Erreur "pas de titre" ne réaffiche pas la saisie ! (mettre un titre par défaut ?)
 1&1 s/chem.fr / Accueil : (+) new post ne devrait pas être affiché sur catégorie.
-Ligne n'affiche pas la carte si pas de geom dans le premier post
 
-TODO TORTILLARDS
-================
-TEST: Intersect répète tous les éléments du post (faire un distinct sur le topic)
+TODO TORTILLARDS - LIGNES
+=========================
+Ligne n'affiche pas la carte si pas de geom dans le premier post
 Distances points caractéristiques sur la ligne
-Mettre lignes en priorité sur un affichage ligne / le point sur un affichage d'un type de point, ...
 Tortillards : Fatal error: Uncaught exception 'Twig_Error_Loader' with message 'Unable to find template "viewtopic_ligne.html" (looked into: ././ext/Dominique92/BarMenu/styles/all/template, 
 Filtrage des forums & catégories suivant le style: -style <==== TBD
 Titre page dépendant du style => Le faire varier pour tortillards => Config ?
@@ -39,6 +37,7 @@ AJAX ne trace pas si erreurs non reportées !
 
 BEST TODO
 =========
+Récupérer trace dans fichier GPX
 voir page de contact / envoi email ???
 Lancer exec git depuis le site
 Monter un serveur de tests 1&1

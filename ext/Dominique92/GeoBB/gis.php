@@ -38,6 +38,7 @@ $sql_array = [
 		't.topic_id',
 		'post_id',
 		'forum_image',
+		'forum_desc',
 		'AsText(geom) AS geomwkt',
 	],
 	'FROM' => [POSTS_TABLE => 'p'],
@@ -102,7 +103,10 @@ while ($row = $db->sql_fetchrow($result)) {
 		'post_id' => $row['post_id'],
 		'icone' => $bu.$row['forum_image'],
 	];
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'>properties = ".var_export($properties,true).'</pre>';
+
+	preg_match('/\[color=([a-z]+)\]/i', html_entity_decode ($row['forum_desc']), $colors);
+	if (count ($colors))
+		$properties['color'] = $colors[1];
 
 	/**
 	 * Change properties before sending

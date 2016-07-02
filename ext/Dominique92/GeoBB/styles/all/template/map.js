@@ -87,6 +87,9 @@ var gis = new L.GeoJSON.Ajax({
 			weight: <!-- IF TOPIC_ID --> feature.properties.id == {TOPIC_ID} ? 5 : <!-- ENDIF --> 3,
 			degroup: 12
 		};
+		if (feature.properties.color)
+			s.color = feature.properties.color;
+
 		if (feature.properties.url) {
 			var parser = document.createElement('a');
 			parser.href = feature.properties.url;

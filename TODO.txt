@@ -1,6 +1,5 @@
 BUGS
 ====
-OS-GB : demander clé https / v2
 Escape sur diaporama ne marche pas sur FF !
 Mauvaise largeur de carte quand le style est prosilver
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
@@ -9,22 +8,19 @@ Barmenu: Enveloppe message trop basse dans Chrome
 Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
 Posting: Erreur "pas de titre" ne réaffiche pas la saisie ! (mettre un titre par défaut ?)
-Accueil : (+) new post ne devrait pas être affiché sur catégorie.
+1&1 s/chem.fr / Accueil : (+) new post ne devrait pas être affiché sur catégorie.
+Ligne n'affiche pas la carte si pas de geom dans le premier post
 
 TODO TORTILLARDS
 ================
-Editeur de position de point ne colle pas !
 TEST: Intersect répète tous les éléments du post (faire un distinct sur le topic)
-Couleur lignes = noir
-Distances points caractéristiques ligne
+Distances points caractéristiques sur la ligne
 Mettre lignes en priorité sur un affichage ligne / le point sur un affichage d'un type de point, ...
-Ligne n'affiche pas si pas de geom dans le premier post
 Tortillards : Fatal error: Uncaught exception 'Twig_Error_Loader' with message 'Unable to find template "viewtopic_ligne.html" (looked into: ././ext/Dominique92/BarMenu/styles/all/template, 
 Filtrage des forums & catégories suivant le style: -style <==== TBD
 Titre page dépendant du style => Le faire varier pour tortillards => Config ?
 Styles => 1.234em (pas de PX)
 Reprendre tortillards viewtopic_ligne.* suivant nouveaux templates ext/GeoBB
-Liste des points jointifs à une ligne ??
 
 AIDE
 ====
@@ -43,12 +39,11 @@ AJAX ne trace pas si erreurs non reportées !
 
 BEST TODO
 =========
+voir page de contact / envoi email ???
 Lancer exec git depuis le site
 Monter un serveur de tests 1&1
-News: pour ligne de chemin de fer, mettre le type
 Interface VTTRACK => Priorité pas aux orris !!
-Coloration ligne sur la carte au survol du post => Uniquement Tortillards ???
-	Randos dans accueil: rosir la ligne sur la carte au survol
+	Reprendre interface sur chem3
 Pouvoir inclure : Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respectivement par %28 et %29
 Récup trace diaporamas + chemins chem2
 Exif -> Commentaire attachment ?? / Visu Commentaire attachment dans w_point_photo

@@ -184,7 +184,7 @@ GENERAL
 		Domaine du cookie : => Effacer
 	Paramètres du serveur
 		Activer la compression GZip : oui
-		Exécuter les tâches récurrentes en utilisant le « cron » système. : oui
+		Exécuter les tâches récurrentes en utilisant le « cron » système. : non
 		Nom de domaine : => Effacer
 	Paramètres de charge
 		Options générales : tout non

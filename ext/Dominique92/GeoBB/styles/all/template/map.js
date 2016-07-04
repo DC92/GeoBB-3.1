@@ -84,12 +84,12 @@ var gis = new L.GeoJSON.Ajax({
 			remanent: true,
 <!-- IF SCRIPT_NAME != 'posting' -->
 			url: feature.properties.id ? 'viewtopic.php?t='+feature.properties.id : null,
+			degroup: 12,
 <!-- ENDIF -->
 			iconUrl: feature.properties.icone,
 			iconAnchor: [8, 8],
 			popupAnchor: [0, -8],
-			weight: <!-- IF TOPIC_ID --> feature.properties.id == {TOPIC_ID} ? 3 : <!-- ENDIF --> 2,
-			degroup: 12
+			weight: <!-- IF TOPIC_ID --> feature.properties.id == {TOPIC_ID} ? 3 : <!-- ENDIF --> 2
 		};
 
 		if (feature.properties.url) {

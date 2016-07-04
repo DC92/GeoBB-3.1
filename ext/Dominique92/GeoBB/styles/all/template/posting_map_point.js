@@ -11,14 +11,14 @@ var curseur = new L.Marker(
 );
 curseur.coordinates('edit'); // Affiche / saisi les coordonnées
 curseur.addTo(map);
-map.setView(curseur._latlng, 13); // Centre la carte sur ce point
+map.setView(curseur._latlng, 15); // Centre la carte sur ce point
 
 control.geocoder.addTo(map);
 
 function gotogps () {
 	control.gps.deactivate()
 	control.gps.on('gpslocated', function(e) {
-		e.target._map.setView(e.latlng, 16, {
+		e.target._map.setView(e.latlng, 15, {
 			reset: true
 		});
 		curseur.setLatLng(e.latlng);

@@ -150,17 +150,23 @@ class listener implements EventSubscriberInterface
 
 		// Lecture des posts ayant un geom en contact
 		$sql = "
-			SELECT p.post_id, p.post_subject, p.topic_id, f.forum_id, f.forum_name, f.forum_image
+			SELECT p.post_id, p.post_subject, p.topic_id,
+				f.forum_id, f.forum_name, f.forum_image,
+				AsText(p.geom) AS gp, AsText(l.geom) AS gl
 			FROM ".POSTS_TABLE." AS l
-				JOIN ".POSTS_TABLE." AS p ON (Touches (l.geom, p.geom))
+				JOIN ".POSTS_TABLE." AS p ON (Intersects (l.geom, p.geom))
 				JOIN ".FORUMS_TABLE." AS f ON (p.forum_id = f.forum_id)
 			WHERE p.post_id != l.post_id
 				AND l.post_id = ".$row['post_id']."
 				GROUP BY (p.topic_id)";
 
 		$result = $this->db->sql_query_limit($sql, $limite);
-		while ($row = $this->db->sql_fetchrow($result))
-			$this->template->assign_block_vars('postrow.jointif', array_change_key_case ($row, CASE_UPPER));
+		while ($row = $this->db->sql_fetchrow($result)) {
+			preg_match ('/([0-9\. ]+)/', $row['gp'], $pp);
+			preg_match_all ('/([0-9\. ]+)/', $row['gl'], $pl);
+			if (in_array ($pp[0], $pl[0])) // Intersects récolte tout les points qui sont dans le bbox des lignes. Il faut trier ceux qui en sont des sommets
+				$this->template->assign_block_vars('postrow.jointif', array_change_key_case ($row, CASE_UPPER));
+		}
 	}
 
 	// Calcul des données automatiques

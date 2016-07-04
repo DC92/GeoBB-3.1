@@ -26,7 +26,12 @@ $reset = request_var ('reset', false);
 $c2c = request_var ('c2c', '');
 
 //-------------------------------------------------------------------------
-ignore_user_abort (true);
+// Mise à jour logicielle
+if (request_var ('git', ''))
+	$template->assign_block_vars ('status', ['REPORT' => 'GIT PULL : ' .shell_exec ('git pull')]);
+
+//-------------------------------------------------------------------------
+ignore_user_abort (true); // Permet de continuer le sync aprés la tempo de lancement du script initial
 
 //-------------------------------------------------------------------------
 // Numéros des forum avec icones
@@ -51,7 +56,6 @@ $forums += [
 	'refuge-garde' => $forums['refuge'],
 	'' => $forums['inconnu'],
 ];
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'>forums = ".var_export($forums,true).'</pre>';
 
 //-------------------------------------------------------------------------
 // Liste des users
@@ -151,8 +155,6 @@ function geo_sync_wri ($bbox = 'world') {
 function geo_sync_c2c ($type = 'huts', $last_date = 0) {
 	global $forums, $template;
 
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'>XXXX = ".var_export(date('r',$last_date),true).'</pre>';
-
 	if (time() - $last_date > 24 * 3600) { // Une fois par jour
 		$type = request_var ('type', $type);
 		$page = request_var ('page', 1);
@@ -173,20 +175,15 @@ function geo_sync_c2c ($type = 'huts', $last_date = 0) {
 				echo"<pre>Icone C2C inconnue ".var_export($ds[1],true).'</pre>';
 		}
 		sql_update_table ('geo_reference', $sql_values);
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'> = ".var_export(count($c2cxml->channel->item),true).'</pre>';
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'> = ".var_export($sql_values,true).'</pre>';
 
-		if (isset ($_GET['repeat']) &&
-			count($c2cxml->channel->item) == 100) {
+		if (request_var('repeat', 0) &&
+			count($c2cxml->channel->item) == 100)
 			$template->assign_var('REPEAT', "1;url=sync.php?cmd=sync_c2c&type=$type&repeat&page=".($page+1));
-		}
 	}
 }
 //-------------------------------------------------------------------------
 function geo_sync_prc ($last_date = 0) {
 	global $forums;
-
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'> = ".var_export((time() - $last_date)/ 3600,true).'</pre>';
 
 	if (time() - $last_date > 24 * 3600) { // Une fois par jour
 		eval (str_replace ('var ', '$', file_get_contents ('http://www.pyrenees-refuges.com/lib/refuges.js')));
@@ -201,7 +198,6 @@ function geo_sync_prc ($last_date = 0) {
 			];
 		sql_update_table ('geo_reference', $sql_values);
 	}
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'> = ".var_export($sql_values,true).'</pre>';
 }
 //-------------------------------------------------------------------------
 function sql_update_table ($table, $lignes) {
@@ -221,7 +217,6 @@ function sql_update_table ($table, $lignes) {
 			VALUES \n(".implode ("),\n(", $sql_values).")
 			ON DUPLICATE KEY UPDATE ".implode (',', $sql_eq);
 		$db->sql_query($sql);
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'>SQL = ".var_export($sql,true).'</pre>';
 
 		$log [] = $table.' = '.count($lignes);
 		$log [] = implode ('|', array_keys ($logid));

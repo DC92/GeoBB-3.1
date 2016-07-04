@@ -83,19 +83,15 @@
 		</li>
 	<!-- ENDIF -->
 
-	<!-- IF .geo_categories -->
-		<!-- IF S_USER_LOGGED_IN -->
-			<li onclick="deplie(this)"><span>Ajouter</span>
-				<ul>
-				<!-- BEGIN geo_categories -->
-					<!-- IF geo_categories.FIRST_FORUM_ID -->
-						<li><a href="posting.php?mode=post&amp;f={geo_categories.FIRST_FORUM_ID}">{geo_categories.CATEGORY_NAME}</a></li>
-					<!-- ENDIF -->
-				<!-- END geo_categories -->
-				</ul>
-			</li>
-		<!-- ELSE -->
-			<li><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_REQUIRED}">Ajouter</a></li>
-		<!-- ENDIF -->
+	<!-- IF .geo_categories and S_USER_LOGGED_IN -->
+		<li onclick="deplie(this)"><span>Ajouter</span>
+			<ul>
+			<!-- BEGIN geo_categories -->
+				<!-- IF geo_categories.FIRST_FORUM_ID -->
+					<li><a href="posting.php?mode=post&amp;f={geo_categories.FIRST_FORUM_ID}">{geo_categories.CATEGORY_NAME}</a></li>
+				<!-- ENDIF -->
+			<!-- END geo_categories -->
+			</ul>
+		</li>
 	<!-- ENDIF -->
 </ul>

@@ -269,7 +269,7 @@ class listener implements EventSubscriberInterface
 					trigger_error('NOT_AUTHORISED');
 
 			$nt = request_var('nt', 0);
-			if ($nom = @$_GET['nom']) { // On ne passe pas par request_var car il ne récupère pas les accents
+			if ($nom = request_var('nom', '')) { // On ne passe pas par request_var car il ne récupère pas les accents
 				$data = [
 					'forum_id' => $vars['forum_id'],
 					'post_subject' => $nom,

@@ -128,9 +128,6 @@ body, html,
 	border: 3px outset #dc0 !important;
 	margin: 8px -3px -3px -4px !important;
 }
-#menu li ul li {
-	margin-top: 4px !important;
-}
 #menu.horizontal a {
 	color: #000 !important;
 	text-decoration: none !important;

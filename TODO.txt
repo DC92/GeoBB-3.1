@@ -1,5 +1,7 @@
 BUGS
 ====
+Supprmer lien carte plante.
+Dalles cartes non complètes quand redimensionne la carte
 Escape sur diaporama ne marche pas sur FF !
 Mauvaise largeur de carte quand le style est prosilver
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
@@ -20,16 +22,9 @@ Titre page dépendant du style => Le faire varier pour tortillards => Config ?
 Styles => 1.234em (pas de PX)
 Reprendre tortillards viewtopic_ligne.* suivant nouveaux templates ext/GeoBB
 
-AIDE
-====
-Populer aide (post 1):
-Il semble qu'on ne puisse pas chercher "jean barmasse" mais qu'il cherche <"jean" ou "barmasse">
-Attendre que le fichier soit chargé avant de valider le post : à sécuriser !
-Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respectivement par %28 et %29
-
 LEAFLET - CARTES
 ================
-Carte + bbox KO full screen
+Carte + bbox KO full screen sur smartphone
 Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
 Couche chemineur toujours présente. Ne devrait pas
 Continuité cookies cartes entre WRI et CHEM, ...
@@ -37,6 +32,7 @@ AJAX ne trace pas si erreurs non reportées !
 
 BEST TODO
 =========
+Attendre que le fichier soit chargé avant de valider le post : à sécuriser !
 Récupérer trace dans fichier GPX
 voir page de contact / envoi email ???
 Lancer exec git depuis le site
@@ -81,7 +77,7 @@ MISE EN FORME / INSTALL / DEMOS
 ===============================
 Stockage images sur plus d'1 répertoire => ? plugin ?
 Faire executer l'import par le cron
-Intégrer dans les patchs
+Intégrer dans les patchs ??? Attendre !
 	RewriteCond %{REQUEST_SCHEME} ^http$ [NC]
 	RewriteCond %{HTTP_HOST} ^chemineur.fr$ [NC]
 	RewriteRule ^.*$ https://%{SERVER_NAME}/%1 [L]

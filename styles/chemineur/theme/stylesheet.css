@@ -14,7 +14,39 @@
 @import url("../../prosilver/theme/colours.css");
 @import url("../../prosilver/theme/imageset.css");
 
-/* Page */
+/* Modification de l'affichage standard */
+.section-index #page-body > p, /* Enlève les commentaires prosilver */
+.section-index #page-body .compact, /* Enlève "Marquer tous les forums comme lus" */
+.section-index .statistics,
+
+.view-point .jumpbox-return,
+.view-point .pagination,
+.postprofile,
+form#viewtopic,
+.report-icon, .info-icon, .warn-icon, /* Viewtopic / post */
+
+#options-panel, #options-panel-tab,
+/*label[for=delete_permanent],*/
+.submit-buttons input[name="preview"],
+.file-inline-bbcode {
+	display: none !important;
+}
+/* Affichage état de l'émetteur d'un post */
+.postbody {
+	width: 100%;
+}
+.online {
+	background-image: none;
+}
+
+.sub-panels,
+#attach-panel,
+#options-panel-tab .button1,
+#confirm .submit-buttons input,
+.button1.default-submit-action {
+	WWW_display: inline-block !important; /* DCMM TODO DELETE */
+}
+
 body, html,
 #page-footer {
 	padding: 0;
@@ -27,10 +59,27 @@ body, html,
 	margin: 0;
 }
 
+/* Inhibe l'affichage du descripteur de forum */
+.forums .list-inner {
+	color: transparent;
+}
+.forums .list-inner a {
+	position: relative;
+	top: 10px;
+}
+.forums .list-inner img {
+	position: relative;
+	top: 8px;
+}
+
+.dropdown {
+	z-index: 1000 !important;
+}
+
 /* Bandeau */
 .headerbar {
 	background-image: url("images/banniere.jpg");
-	height: 51px;
+	height: 60px;
 	margin: 0 !important;
 	padding: 0;
 	border-radius: 0;
@@ -60,10 +109,7 @@ body, html,
 }
 
 /* Menu */
-.headerbar {
-	height: 60px;
-}
-/* Specifique chemineur */
+/* Specifique chemineur (La base est dans ext/D./Barmenu) */
 #menu.horizontal {
 	background-color: transparent !important;
 	font-weight: normal !important;
@@ -74,10 +120,16 @@ body, html,
 	background-color: #fe0 !important;
 	border: 3px outset #dc0 !important;
 }
+#menu.horizontal > li:hover {
+	height: 19px;
+}
 #menu.horizontal li:hover ul {
 	background-color: #fe0 !important;
 	border: 3px outset #dc0 !important;
-	margin: 5px -3px -3px -5px !important;
+	margin: 8px -3px -3px -4px !important;
+}
+#menu li ul li {
+	margin-top: 4px !important;
 }
 #menu.horizontal a {
 	color: #000 !important;
@@ -158,47 +210,6 @@ body, html,
 }
 #more-news a {
 	color: yellow !important;
-}
-
-/* Inhibe l'affichage du descripteur de forum */
-.forums .list-inner {
-	color: transparent;
-}
-.forums .list-inner a {
-	position: relative;
-	top: 10px;
-}
-.forums .list-inner img {
-	position: relative;
-	top: 8px;
-}
-
-.dropdown {
-	z-index: 1000 !important;
-}
-
-.section-index #page-body > p, /* Enlève les commentaires prosilver */
-.section-index #page-body .compact, /* Enlève "Marquer tous les forums comme lus" */
-.section-index .statistics,
-
-.view-point .jumpbox-return,
-.view-point .pagination,
-form#viewtopic,
-
-#options-panel, #options-panel-tab,
-/*label[for=delete_permanent],*/
-.submit-buttons input[name="preview"],
-.file-inline-bbcode {
-	display: none !important;
-}
-
-.report-icon, .info-icon, .postprofile, /* Viewtopic / post */
-.sub-panels,
-#attach-panel,
-#options-panel-tab .button1,
-#confirm .submit-buttons input,
-.button1.default-submit-action {
-	display: inline-block !important;
 }
 
 /* Points */

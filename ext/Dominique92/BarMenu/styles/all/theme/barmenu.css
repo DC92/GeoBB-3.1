@@ -28,7 +28,7 @@
 }
 #menu #accueil,
 #menu #ariane,
-#menu #potviews { /*Le fil d'ariane est à gauche*/
+#menu #potviews { /* Le fil d'ariane est à gauche*/
 	float: left;
 	border: 0;
 }
@@ -44,7 +44,7 @@
 		display: none !important;
 	}
 }
-#menu #bouton { /*Le bouton reste toujours à droite */
+#menu #bouton { /* Le bouton reste toujours à droite */
 	cursor: pointer;
 	float: right !important;
 }
@@ -53,16 +53,15 @@
 	display: none;
 }
 #menu.horizontal li ul {
-	position: absolute; /*Pour éviter que les titres de sous-menu se redimensionnent à la taille de leurs items */
+	position: absolute; /* Pour éviter que les titres de sous-menu se redimensionnent à la taille de leurs items */
 }
 #menu.horizontal li:hover ul {
 	background-color: #ECECEC;
     border: 5px solid white;
 	border-top: 0 !important;
 	margin: 6px 0 0 -8px;
-	z-index: 10000; /*Pour être au dessus des cartes */
 	padding: 5px;
-	z-index: 10000; /*Pour être au dessus des cartes */
+	z-index: 10000; /* Pour être au dessus des cartes */
 }
 #menu.horizontal a {
 	color: #536482;
@@ -72,7 +71,7 @@
 	color: red;
 }
 @-moz-document url-prefix() {
-	#menu.horizontal li:hover ul { /*FF ne traite pas les marges pareil !! */
+	#menu.horizontal li:hover ul { /* FF ne traite pas les marges pareil !! */
 		margin-top: 4px;
 	}
 }

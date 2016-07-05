@@ -96,10 +96,15 @@ $styles = array (
 		$this->template->assign_var ('BODY_CLASS', 'view-'.request_var('view', ''));
 	}
 
+	// Récrit les infos du header
 	function page_header($vars) {
-		global $config;
-//DCMM		$config['sitename'] = 'Chemineur.fr'; // TODO: varier suivant les sites !
-//DCMM		$config['site_desc'] = 'SITE DE TEST: LES MODIFICATIONS NE SERONT PAS GARDÉES';
+		global $config, $config_locale;
+		$config['sitename'] =
+			@$config_locale['sitename']
+			? $config_locale['sitename']
+			: ucfirst (getenv('HTTP_HOST'));
+		if (isset ($config_locale['site_desc']))
+			$config['site_desc'] = $config_locale['site_desc'];
 	}
 
 	function page_footer($vars) {

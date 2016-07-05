@@ -39,12 +39,12 @@ form#viewtopic,
 	background-image: none;
 }
 
-.sub-panels,
+.Wsub-panels, /* DCMM TODO DELETE ... */
 #attach-panel,
-#options-panel-tab .button1,
-#confirm .submit-buttons input,
-.button1.default-submit-action {
-	WWW_display: inline-block !important; /* DCMM TODO DELETE */
+#Woptions-panel-tab .button1,
+#Wconfirm .submit-buttons input,
+.Wbutton1.default-submit-action {
+	Display: inline-block !important;
 }
 
 body, html,

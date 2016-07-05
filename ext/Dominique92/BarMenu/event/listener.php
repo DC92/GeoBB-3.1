@@ -65,12 +65,14 @@ class listener implements EventSubscriberInterface
 		";
 		$result = $this->db->sql_query($sql);
 		while ($row = $this->db->sql_fetchrow($result))
-			if (!@$cat[$row['category_id']]++) { // Seulement le premier de sa catégorie
-				preg_match('/\[view=([a-z]+)\]/i', html_entity_decode ($row['forum_desc']), $views);
-				if (!$views) // Inhibe la création de forums sans view
-					$row['first_forum_id'] = 0;
-				$this->template->assign_block_vars('geo_categories', array_change_key_case ($row, CASE_UPPER));
-			}
+			if (!@$cat[$row['category_id']]++) // Seulement une fois par catégorie
+				$this->template->assign_block_vars (
+					'geo_categories',
+					array_change_key_case (
+						preg_replace ('/s( |$)/i', '$1', $row), // Enlève les s en fin de mot
+						CASE_UPPER
+					)
+				);
 		$this->db->sql_freeresult($result);
 	}
 }

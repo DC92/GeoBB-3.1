@@ -248,6 +248,10 @@ class listener implements EventSubscriberInterface
 			$this->get_bounds($g);
 		}
 
+		// Pour éviter qu'un titre vide invalide la page et toute la saisie graphique.
+		if (!$post_data['post_subject'])
+			$post_data['draft_subject'] = 'NEW';
+
 		// Assign the phpbb-posts SQL data to the template
 		foreach ($post_data AS $k=>$v)
 			if (is_string ($v))

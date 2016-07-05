@@ -51,7 +51,8 @@ class listener implements EventSubscriberInterface
 		global $auth;
 		$row = $vars['row'];
 
-		if ($auth->acl_get('f_post', $row['forum_id']))
+		if ($auth->acl_get('f_post', $row['forum_id']) &&
+			$row['forum_type'] == FORUM_POST)
 			$row['forum_name'] .=
 				' &nbsp; '.
 				'<a href="posting.php?mode=post&f='.$row['forum_id'].'" title="Créer un nouveau sujet '.$row['forum_name'].'">'.

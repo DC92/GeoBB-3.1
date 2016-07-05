@@ -1,16 +1,21 @@
 BUGS
 ====
+Erreur sur déplacement POINT A RECUPERER 2
+	Out of range value for column 'forum_posts_softdeleted' at row 1 [1264]
+	UPDATE phpbb_forums SET forum_posts_approved = forum_posts_approved - 2, forum_posts_softdeleted = forum_posts_softdeleted - 1, forum_topics_approved = forum_topics_approved - 1 WHERE forum_id = 70
+On ne devrait pas avoir le choix du type de point sur édition d'un commentaire qui n'est pas le premier
+20160129.gpx : Fatal error: Uncaught exception 'Exception' with message 'Cannot construct a LineString with a single point' in /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/geometry/LineString.class.php:18 Stack trace: #0 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(71): LineString->__construct(Array) #1 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(93): GeoJSON->arrayToLineString(Array) #2 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(54): GeoJSON->arrayToMultiLineString(Array) #3 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(44): GeoJSON->objToGeom(Object(stdClass)) #4 [internal function]: GeoJSON->read('{"type":"MultiL...') #5 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/geoPHP.inc(78): call_user_func_array(Array, Array) #6 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB in /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/geometry/LineString.class.php on line 18
+Erreur type de caractères randos Lozerre
 Escape sur diaporama ne marche pas sur FF !
-Mauvaise largeur de carte quand le style est prosilver
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
 Barmenu: Enveloppe message trop basse dans Chrome
+Mauvaise largeur de carte quand le style est prosilver
 Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
-Posting: Erreur "pas de titre" ne réaffiche pas la saisie ! (mettre un titre par défaut ?)
-1&1 s/chem.fr / Accueil : (+) new post ne devrait pas être affiché sur catégorie.
 
 TODO TORTILLARDS - LIGNES
 =========================
+Icône modifier fiche ligne / supprimer
 Ligne n'affiche pas la carte si pas de geom dans le premier post
 Distances points caractéristiques sur la ligne
 Tortillards : Fatal error: Uncaught exception 'Twig_Error_Loader' with message 'Unable to find template "viewtopic_ligne.html" (looked into: ././ext/Dominique92/BarMenu/styles/all/template, 
@@ -135,3 +140,4 @@ gpx-rando
 	+ stats sur trace
 wri + info cabane / type
 IO/MW
+

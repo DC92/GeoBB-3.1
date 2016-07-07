@@ -1,17 +1,11 @@
 BUGS
 ====
-Erreur sur déplacement POINT A RECUPERER 2
-	Out of range value for column 'forum_posts_softdeleted' at row 1 [1264]
-	UPDATE phpbb_forums SET forum_posts_approved = forum_posts_approved - 2, forum_posts_softdeleted = forum_posts_softdeleted - 1, forum_topics_approved = forum_topics_approved - 1 WHERE forum_id = 70
-On ne devrait pas avoir le choix du type de point sur édition d'un commentaire qui n'est pas le premier
-20160129.gpx : Fatal error: Uncaught exception 'Exception' with message 'Cannot construct a LineString with a single point' in /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/geometry/LineString.class.php:18 Stack trace: #0 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(71): LineString->__construct(Array) #1 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(93): GeoJSON->arrayToLineString(Array) #2 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(54): GeoJSON->arrayToMultiLineString(Array) #3 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(44): GeoJSON->objToGeom(Object(stdClass)) #4 [internal function]: GeoJSON->read('{"type":"MultiL...') #5 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/geoPHP.inc(78): call_user_func_array(Array, Array) #6 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB in /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/geometry/LineString.class.php on line 18
-Erreur type de caractères randos Lozerre
+Les liens WRI (et quelques C2C) ne donnent pas le nom http://chemineur.fr/viewtopic.php?t=1545
 Escape sur diaporama ne marche pas sur FF !
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
-Barmenu: Enveloppe message trop basse dans Chrome
-Mauvaise largeur de carte quand le style est prosilver
 Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
+Click sur une icone chem2 plante
 
 TODO TORTILLARDS - LIGNES
 =========================
@@ -23,6 +17,11 @@ Filtrage des forums & catégories suivant le style: -style <==== TBD
 Titre page dépendant du style => Le faire varier pour tortillards => Config ?
 Styles => 1.234em (pas de PX)
 Reprendre tortillards viewtopic_ligne.* suivant nouveaux templates ext/GeoBB
+20160129.gpx : Fatal error:
+	Uncaught exception 'Exception' with message 'Cannot construct a LineString with a single point' in /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/geometry/LineString.class.php:18 Stack trace: #0 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(71): LineString->__construct(Array) #1 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(93): GeoJSON->arrayToLineString(Array) #2 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(54): GeoJSON->arrayToMultiLineString(Array) #3 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/adapters/GeoJSON.class.php(44): GeoJSON->objToGeom(Object(stdClass)) #4 [internal function]: GeoJSON->read('{"type":"MultiL...') #5 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/geoPHP.inc(78): call_user_func_array(Array, Array) #6 /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB in /homepages/33/d187913083/htdocs/chem3/ext/Dominique92/GeoBB/geoPHP/lib/geometry/LineString.class.php on line 18
+	Leaflet
+		Purge des points identiques sur un segment
+		Ne pas exporter une ligne ne contenant qu'un point
 
 LEAFLET - CARTES
 ================
@@ -36,13 +35,17 @@ AJAX ne trace pas si erreurs non reportées !
 
 BEST TODO
 =========
+Barmenu: Enveloppe message trop basse dans Chrome
+Mauvaise largeur de carte quand le style est prosilver
 Attendre que le fichier soit chargé avant de valider le post : à sécuriser !
 Récupérer trace dans fichier GPX
-voir page de contact / envoi email ???
 Diaporama pleine page ? En particulier sur mobile
-Interface VTTRACK => Priorité pas aux orris !!
+Interface VTTRACK
+	Icônes KO
+	Priorité pas aux orris !!
 	Reprendre interface sur chem3
 Pouvoir inclure : Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respectivement par %28 et %29
+Erreur type de caractères randos Lozerre
 Récup trace diaporamas + chemins chem2
 Exif -> Commentaire attachment ?? / Visu Commentaire attachment dans w_point_photo
 	Récup auteur photo // GEO-TODO DCMM Retrouver le nom du "poster_id" : $vars['attachment']['poster_id']

@@ -74,7 +74,6 @@ $vars = array(
 extract($phpbb_dispatcher->trigger_event('geo.sync_modify_sql', compact($vars)));
 
 // Build query
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'>SQL_ARRAY = ".var_export($sql_array,true).'</pre>';
 if (is_array ($sql_array ['SELECT']))
 	$sql_array ['SELECT'] = implode (',', $sql_array ['SELECT']);
 
@@ -86,7 +85,6 @@ if (is_array ($sql_array ['WHERE'])) {
 }
 $sql = $db->sql_build_query('SELECT', $sql_array);
 $result = $db->sql_query_limit($sql, $limite);
-//*DCMM*/echo var_export($sql,true)."\n";
 
 // Ajoute l'adresse complète aux images d'icones
 $sp = explode ('/', getenv('REQUEST_SCHEME'));
@@ -95,8 +93,6 @@ $bu = $sp[0].'://'.getenv('SERVER_NAME').$ri[0].'/';
 
 $gjs = [];
 while ($row = $db->sql_fetchrow($result)) {
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'>ROW = ".var_export($row,true).'</pre>';
-
 	$properties = [
 		'nom' => $row['post_subject'],
 		'id' => $row['topic_id'],
@@ -113,7 +109,8 @@ while ($row = $db->sql_fetchrow($result)) {
 	 * Change properties before sending
 	 *
 	 * @event geo.sync_modify_properties
-	 * @var array     sql_array    Fully assembled SQL query with keys SELECT, FROM, LEFT_JOIN, WHERE
+	 * @var array row
+	 * @var array properties
 	 */
 	$vars = array(
 		'row',
@@ -177,7 +174,6 @@ header("Expires: $ts");
 header("Access-Control-Allow-Origin: *");
 header("Cache-Control: max-age=$secondes_de_cache");
 
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'> = ".var_export($gjs,true).'</pre>';
 echo json_encode ([ // On transforme l'objet PHP en code geoJson
 	'type' => 'FeatureCollection',
 	'features' => $gjs

@@ -79,7 +79,6 @@ class listener implements EventSubscriberInterface
 			JOIN ".FORUMS_TABLE." AS f ON (f.parent_id = c.forum_id)
 			WHERE f.forum_desc REGEXP '\[[all|first]=[a-z]+\]'
 		";
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'> = ".var_export($sql,true).'</pre>';
 		$result = $this->db->sql_query($sql);
 		while ($row = $this->db->sql_fetchrow($result))
 			$this->template->assign_block_vars('map_overlays', [
@@ -139,8 +138,6 @@ class listener implements EventSubscriberInterface
 				WHERE topic_id = ".$rowset[$post_list[0]]['topic_id'];
 			$result = $this->db->sql_query($sql);
 			while ($row = $this->db->sql_fetchrow($result)) {
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'> = ".var_export($topic_data,true).'</pre>';
-
 				$post_username =
 					'"<a target="_blank"'
 					.' href="'.$row['url'].'#C'.$row['id'].'"'
@@ -197,10 +194,6 @@ class listener implements EventSubscriberInterface
 					);
 			}
 			$this->db->sql_freeresult($result);
-			
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'>post_list = ".var_export($post_list,true).'</pre>';
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'>rowset = ".var_export($rowset,true).'</pre>';
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'>attachments = ".var_export($attachments,true).'</pre>';
 
 			$vars['post_list'] = $post_list;
 			$vars['rowset'] = $rowset;
@@ -238,9 +231,9 @@ class listener implements EventSubscriberInterface
 		curl_setopt_array ($ch, [
 			CURLOPT_FRESH_CONNECT => true,
 			CURLOPT_FORBID_REUSE => true,
-			CURLOPT_TIMEOUT_MS => 1,
+			CURLOPT_TIMEOUT_MS => 100, // 100ms : not noticable but suffisant to start the script up to register_shutdown_function
 		]);
-		$r = curl_exec($ch);
+		curl_exec ($ch);
 		file_put_contents ('../../../SYNC.log', 'GIS.PHP sync_modify_sql = '.curl_error($ch).' '.date('r').' '.$url."\n", FILE_APPEND);
 		curl_close($ch);
 	}

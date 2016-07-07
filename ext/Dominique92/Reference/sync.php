@@ -1,15 +1,12 @@
 <?php
 /**
-* Importations de données géographiques
-*
-* @copyright (c) Dominique Cavailhez 2016
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
-
-/*
-http://localhost/GeoBB/GeoBB319/ext/Dominique92/Reference/sync.php?bbox=5,45,6,46
-*/
+ * Importations de données géographiques
+ *
+ * @copyright (c) Dominique Cavailhez 2016
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ * http://localhost/GeoBB/GeoBB319/ext/Dominique92/Reference/sync.php?bbox=5,45,6,46
+ */
 
 define('IN_PHPBB', true);
 $phpbb_root_path = (defined('PHPBB_ROOT_PATH')) ? PHPBB_ROOT_PATH : '../../../';
@@ -31,73 +28,6 @@ if (request_var ('git', ''))
 	$template->assign_block_vars ('status', ['REPORT' => 'GIT PULL : ' .shell_exec ('git pull')]);
 
 //-------------------------------------------------------------------------
-ignore_user_abort (true); // Permet de continuer le sync aprés la tempo de lancement du script initial
-
-//-------------------------------------------------------------------------
-// Numéros des forum avec icones
-$sql = 'SELECT forum_id, forum_image FROM '.FORUMS_TABLE.' WHERE forum_image != ""';
-$result = $db->sql_query($sql);
-while ($row = $db->sql_fetchrow($result)) {
-	preg_match('/([a-z_]+)\./i', $row['forum_image'], $m);
-	if (count ($m))
-		$forums[$m[1]] = $row['forum_id'];
-}
-$forums += [
-	'gîte' => $forums['gite'],
-	'gÃ®te' => $forums['gite'],
-	'point culminant' => $forums['sommet'],
-	'abri sommaire' => $forums['abri'],
-	'emplacement de bivouac' => $forums['bivouac'],
-	'camp de base' => $forums['bivouac'],
-	'point' => $forums['point_eau'],
-	'source' => $forums['point_eau'],
-	'inutilisable' => $forums['ferme'],
-	'batiment' => $forums['inconnu'],
-	'refuge-garde' => $forums['refuge'],
-	'' => $forums['inconnu'],
-];
-
-//-------------------------------------------------------------------------
-// Liste des users
-$sql = "SELECT user_id, username, username_clean FROM phpbb_users";
-$result = $db->sql_query($sql);
-while ($row = $db->sql_fetchrow($result))
-	$users [$row ['username_clean']] = $row;
-
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'> = ".var_export($users,true).'</pre>';
-
-//-------------------------------------------------------------------------
-/*
-//$bboxs = explode (',', request_var ('bbox', '-180,-90,180,90'));
-$bboxs = explode (',', $bbox = request_var ('bbox', ''));
-if (count ($bboxs) == 4) {
-	$bboxexp =
-		$bboxs[0].' '.$bboxs[1].','.
-		$bboxs[2].' '.$bboxs[1].','.
-		$bboxs[2].' '.$bboxs[3].','.
-		$bboxs[0].' '.$bboxs[3].','.
-		$bboxs[0].' '.$bboxs[1];
-}*/
-//-------------------------------------------------------------------------
-// Exécution de la commande
-$log [] = date('r');
-$log [] = $request->server('REQUEST_SCHEME').'://'.$request->server('HTTP_HOST').$request->server('REQUEST_URI');
-
-$fnc = 'geo_'.request_var('cmd', '');
-if ($source = request_var('source', ''))
-	$fnc .= '_'.$source;
-if (function_exists ($fnc))
-	$fnc ();
-else {
-	geo_sync_wri (request_var ('bbox', ''));
-	geo_sync_prc (date_last_sync ('pyrenees'));
-	geo_sync_c2c ('huts', date_last_sync ('camptocamp'));
-//	geo_sync_c2c ('summits', date_last_sync ('camptocamp'));
-}
-
-file_put_contents ('../../../SYNC.log', implode (' ', $log) ."\n", FILE_APPEND);
-
-//-------------------------------------------------------------------------
 // Output page
 page_header('Synchronisation autres sites', true);
 
@@ -108,7 +38,67 @@ $template->set_filenames(array(
 page_footer();
 
 //-------------------------------------------------------------------------
+// Exécution de la commande à la fin du script même si le demandeur a fermé la session
+register_shutdown_function('exec_sync');
+
+function exec_sync () {
+	global $log;
+
+	$log [] = date('r');
+	$log [] = $request->server('REQUEST_SCHEME').'://'.$request->server('HTTP_HOST').$request->server('REQUEST_URI');
+
+	get_sync_context ();
+
+	$fnc = 'geo_'.request_var('cmd', '');
+	if ($source = request_var('source', ''))
+		$fnc .= '_'.$source;
+	if (function_exists ($fnc))
+		$fnc ();
+	else {
+		geo_sync_wri (request_var ('bbox', ''));
+		geo_sync_prc (date_last_sync ('pyrenees'));
+		geo_sync_c2c ('huts', date_last_sync ('camptocamp'));
+	//	geo_sync_c2c ('summits', date_last_sync ('camptocamp'));
+	}
+
+	file_put_contents ('../../../SYNC.log', implode (' ', $log) ."\n", FILE_APPEND);
+}
+//-------------------------------------------------------------------------
 // FONCTIONS
+//-------------------------------------------------------------------------
+function get_sync_context () {
+	global $forums, $users;
+
+	// Numéros des forum avec icones
+	$sql = 'SELECT forum_id, forum_image FROM '.FORUMS_TABLE.' WHERE forum_image != ""';
+	$result = $db->sql_query($sql);
+	while ($row = $db->sql_fetchrow($result)) {
+		preg_match('/([a-z_]+)\./i', $row['forum_image'], $m);
+		if (count ($m))
+			$forums[$m[1]] = $row['forum_id'];
+	}
+	$forums += [
+		'gîte' => $forums['gite'],
+		'gÃ®te' => $forums['gite'],
+		'point culminant' => $forums['sommet'],
+		'abri sommaire' => $forums['abri'],
+		'emplacement de bivouac' => $forums['bivouac'],
+		'camp de base' => $forums['bivouac'],
+		'point' => $forums['point_eau'],
+		'source' => $forums['point_eau'],
+		'inutilisable' => $forums['ferme'],
+		'batiment' => $forums['inconnu'],
+		'refuge-garde' => $forums['refuge'],
+		'' => $forums['inconnu'],
+	];
+
+	// Liste des users
+	$sql = "SELECT user_id, username, username_clean FROM phpbb_users";
+	$result = $db->sql_query($sql);
+	while ($row = $db->sql_fetchrow($result))
+		$users [$row ['username_clean']] = $row;
+}
+
 //-------------------------------------------------------------------------
 function geo_sync_wri ($bbox = 'world') {
 	global $forums, $users, $log;

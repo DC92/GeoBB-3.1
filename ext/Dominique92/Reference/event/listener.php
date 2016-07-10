@@ -47,8 +47,9 @@ class listener implements EventSubscriberInterface
 			'core.modify_posting_auth' => 'modify_posting_auth',
 			'core.submit_post_modify_sql_data' => 'submit_post_modify_sql_data',
 
-			'geo.sync_modify_sql' => 'sync_modify_sql',
-			'geo.sync_modify_properties' => 'sync_modify_properties',
+			'geo.gis_after' => 'gis_after',
+			'geo.gis_modify_sql' => 'gis_modify_sql',
+			'geo.gis_modify_row_properties' => 'gis_modify_row_properties',
 		];
 	}
 
@@ -202,49 +203,6 @@ class listener implements EventSubscriberInterface
 		}
 	}
 
-	function sync_modify_sql($vars) {
-		// Insère l'extraction des données externes dans le flux géographique
-		$sql_array = $vars['sql_array'];
-
-		$sql_array ['SELECT'][] = 'url'; // 1 donnée supplèmentaire
-
-		// Fusionne la table interne et externe
-		$posts_it = 'post_subject,      post_id, topic_id, forum_id,                      post_visibility, geom, NULL AS url';
-		$ref_it   = 'post_subject, 0 AS post_id, topic_id, forum_id, '.ITEM_APPROVED.' AS post_visibility, geom,         url';
-		$sql_array['FROM'] = ["((SELECT $posts_it FROM ".POSTS_TABLE.") UNION (SELECT $ref_it FROM geo_reference))" => 'p'];
-
-		$sql_array ['WHERE']['OR'][] = 't.topic_id IS NULL'; // Affiche un point externe s'il n'est pas associé à un topic ou si le topic associé n'existe plus
-		$sql_array ['WHERE']['OR'][] = 't.topic_visibility != '.ITEM_APPROVED; // Ou si le topic est masqué
-
-		$sql_array ['WHERE'][] = 'f.parent_id IN ('.request_var ('poi', '9999').')'; // Liste des types de points
-		$sql_array ['WHERE'][] = '(url IS NULL OR url REGEXP "'.str_replace (',', '|', request_var ('site', 'NONE')).'")'; // Liste des sites
-
-		$vars['sql_array'] = $sql_array;
-
-		// Lancement en asynchrone de l'importations de données des autres sites
-		$ru = explode ('/ext/', getenv('REQUEST_URI'));
-		$ns = explode ('\\', __NAMESPACE__);
-		$sp = explode ('/', getenv('SERVER_PROTOCOL'));
-		$url = $sp[0].'://'.getenv('SERVER_NAME').$ru[0].'/ext/'.$ns[0].'/'.$ns[1].'/sync.php?bbox='.request_var ('bbox', '');
-
-		$ch = curl_init ($url);
-		curl_setopt_array ($ch, [
-			CURLOPT_FRESH_CONNECT => true,
-			CURLOPT_FORBID_REUSE => true,
-			CURLOPT_TIMEOUT_MS => 100, // 100ms : not noticable but suffisant to start the script up to register_shutdown_function
-		]);
-		curl_exec ($ch);
-		file_put_contents ('../../../SYNC.log', 'GIS.PHP sync_modify_sql = '.curl_error($ch).' '.date('r').' '.$url."\n", FILE_APPEND);
-		curl_close($ch);
-	}
-
-	// Insère les données externes extraites dans le flux géographique
-	function sync_modify_properties($vars) {
-		$properties = $vars['properties'];
-		$properties ['url'] =  $vars['row']['url'];
-		$vars['properties'] = $properties;
-	}
-
 	/* Appelé aprés vérifications autorisations à l'affichage de la page
 	Crée une fiche: http://localhost/GeoBB/GeoBB319/posting.php?sid=...&mode=post&f=12&url=http://wri/...&nom=nnnn&lon=2&lat=45
 	Lien à un topic: http://localhost/GeoBB/GeoBB319/posting.php?sid=...&mode=post&f=12&t=34&url=http://wri/...&nt=34
@@ -317,4 +275,215 @@ class listener implements EventSubscriberInterface
 			$vars['sql_data'] = $sql_data;
 		}
 	}
+
+	function gis_modify_sql($vars) {
+		// Insère l'extraction des données externes dans le flux géographique
+		$sql_array = $vars['sql_array'];
+
+		$sql_array ['SELECT'][] = 'url'; // 1 donnée supplèmentaire
+
+		// Fusionne la table interne et externe
+		$posts_it = 'post_subject,      post_id, topic_id, forum_id,                      post_visibility, geom, NULL AS url';
+		$ref_it   = 'post_subject, 0 AS post_id, topic_id, forum_id, '.ITEM_APPROVED.' AS post_visibility, geom,         url';
+		$sql_array['FROM'] = ["((SELECT $posts_it FROM ".POSTS_TABLE.") UNION (SELECT $ref_it FROM geo_reference))" => 'p'];
+
+		$sql_array ['WHERE']['OR'][] = 't.topic_id IS NULL'; // Affiche un point externe s'il n'est pas associé à un topic ou si le topic associé n'existe plus
+		$sql_array ['WHERE']['OR'][] = 't.topic_visibility != '.ITEM_APPROVED; // Ou si le topic est masqué
+
+		$sql_array ['WHERE'][] = 'f.parent_id IN ('.request_var ('poi', '9999').')'; // Liste des types de points
+		$sql_array ['WHERE'][] = '(url IS NULL OR url REGEXP "'.str_replace (',', '|', request_var ('site', 'NONE')).'")'; // Liste des sites
+
+		$vars['sql_array'] = $sql_array;
+	}
+
+	// Insère les données externes extraites dans les propriétés de chaque élément du flux géographique
+	function gis_modify_row_properties($vars) {
+		$properties = $vars['properties'];
+		$properties ['url'] =  $vars['row']['url'];
+		$vars['properties'] = $properties;
+	}
+
+	// Traitement hors délais de l'importations de données des autres sites
+	function gis_after($vars) {
+		// Release flow & continue import
+		ignore_user_abort (true);
+		ob_flush();
+		flush();
+
+		$log [] = str_repeat('*', 40);
+		$log [] = date('r');
+		$log [] = $request->server('REQUEST_SCHEME').'://'.$request->server('HTTP_HOST').$request->server('REQUEST_URI');
+
+		get_sync_context ();
+		geo_sync_wri ($vars['bbox']);
+		geo_sync_prc (date_last_sync ('pyrenees'));
+		geo_sync_c2c ('huts', date_last_sync ('camptocamp'));
+
+		$log [] = '';
+		file_put_contents ('../../../SYNC.log', implode (' ', $log) ."\n", FILE_APPEND);
+	}
+}
+//-------------------------------------------------------------------------
+// FONCTIONS
+//-------------------------------------------------------------------------
+function get_sync_context () {
+	global $forums, $users, $db;
+
+	// Liste des users
+	$sql = "SELECT user_id, username, username_clean FROM phpbb_users";
+	$result = $db->sql_query($sql);
+	while ($row = $db->sql_fetchrow($result))
+		$users [$row ['username_clean']] = $row;
+
+	// Numéros des forum avec icones
+	$sql = 'SELECT forum_id, forum_image FROM '.FORUMS_TABLE.' WHERE forum_image != ""';
+	$result = $db->sql_query($sql);
+	while ($row = $db->sql_fetchrow($result)) {
+		preg_match('/([a-z_]+)\./i', $row['forum_image'], $m);
+		if (count ($m))
+			$forums[$m[1]] = $row['forum_id'];
+	}
+	$forums += [
+		'gîte' => $forums['gite'],
+		'gÃ®te' => $forums['gite'],
+		'point culminant' => $forums['sommet'],
+		'abri sommaire' => $forums['abri'],
+		'emplacement de bivouac' => $forums['bivouac'],
+		'camp de base' => $forums['bivouac'],
+		'point' => $forums['point_eau'],
+		'source' => $forums['point_eau'],
+		'inutilisable' => $forums['ferme'],
+		'batiment' => $forums['inconnu'],
+		'refuge-garde' => $forums['refuge'],
+		'' => $forums['inconnu'],
+	];
+}
+//-------------------------------------------------------------------------
+function geo_sync_wri ($bbox = 'world') {
+	global $forums, $users, $log;
+
+	$wri_upd = $wric_upd = [];
+	$log [] = 'SYNC.PHP';
+	$log [] = $urlWRI = "http://www.refuges.info/api/bbox?bbox=$bbox&nb_coms=100&detail=simple&format_texte=texte&format=xml";
+	$xmlWRI = simplexml_load_file($urlWRI);
+	foreach ($xmlWRI AS $x) {
+		preg_match('/([a-z]+)/i', $x->type->icone, $icones);
+		if ($f = @$forums[$icones[1]])
+			$wri_upd [] = [
+				'post_subject' => '"'.str_replace ('"', '\\"', $x->nom).'"',
+				'forum_id' => $f,
+				'geom' => "GeomFromText('POINT({$x->coord->long} {$x->coord->lat})',0)",
+				'url' => '"http://www.refuges.info/point/'.$x->id.'"',
+				'last_update' => time(),
+			];
+		else if (!@$sans_icone[$icones[1]]++)
+			echo"<pre>Icone WRI inconnue ({$icones[1]}) ".var_export($x->type,true).'</pre>';
+
+		if ($x->coms)
+			foreach ($x->coms->node AS $c) {
+				$noms = explode (' ', strtolower (@$c->createur->nom));
+				if ($u = @$users[$noms[count($noms)-1]]) {
+					$logWriId [(int)$c->id] = true;
+					$wric_upd [] = [
+						'id'               => (int) $c->id,
+						'texte'            => '"'.str_replace ('"', '\\"', $c->texte).'"',
+						'date'             => strtotime($c->date) ?: 0,
+						'photo'            => '"'.@$c->photo->originale.'"',
+						'date_photo'       => strtotime(@$c->photo->date) ?: 0,
+						'auteur'           => '"'.$c->createur->nom.'"',
+						'url'              => '"http://www.refuges.info/point/'.$x->id.'"',
+						'wric_last_update' => time(),
+					];
+				}
+			}
+	}
+	sql_update_table ('geo_reference', $wri_upd);
+	sql_update_table ('geo_wric', $wric_upd);
+}
+//-------------------------------------------------------------------------
+function geo_sync_c2c ($type = 'huts', $last_date = 0) {
+	global $forums, $template;
+
+	if (time() - $last_date > 24 * 3600) { // Une fois par jour
+		$type = request_var ('type', $type);
+		$page = request_var ('page', 1);
+		$c2cxml = new SimpleXMLElement (str_replace ('geo:', '', (file_get_contents ("http://www.camptocamp.org/$type/rss/npp/100/page/$page"))));
+		foreach ($c2cxml->channel->item AS $c) {
+			$ds = explode (' - ', $c->description);
+			$ls = explode ('/', $c->link);
+
+			if ($f = @$forums[$ds[1]])
+				$sql_values[] = [
+					'post_subject' => '"'.str_replace("\"", "\\\"", html_entity_decode ($c->title, ENT_QUOTES)).'"',
+					'forum_id'     => $f,
+					'geom'         => "GeomFromText('POINT({$c->long} {$c->lat})',0)",
+					'url'          => '"http://www.camptocamp.org/'.$type.'/'.$ls[4].'"',
+					'last_update'  => time(),
+				];
+			else if (!@$sans_icone[$ds[1]]++)
+				echo"<pre>Icone C2C inconnue ".var_export($ds[1],true).'</pre>';
+		}
+		sql_update_table ('geo_reference', $sql_values);
+
+		if (request_var('repeat', 0) &&
+			count($c2cxml->channel->item) == 100)
+			$template->assign_var('REPEAT', "1;url=sync.php?cmd=sync_c2c&type=$type&repeat&page=".($page+1));
+	}
+}
+//-------------------------------------------------------------------------
+function geo_sync_prc ($last_date = 0) {
+	global $forums;
+
+	if (time() - $last_date > 24 * 3600) { // Une fois par jour
+		eval (str_replace ('var ', '$', file_get_contents ('http://www.pyrenees-refuges.com/lib/refuges.js')));
+		$sql_values = [];
+		foreach ($addressPoints AS $k=>$v)
+			$sql_values[] = [
+				'post_subject' => '"'.$v[2].'"',
+				'forum_id'     => $forums['cabane'],
+				'geom'         => "GeomFromText('POINT({$v[0]} {$v[1]})',0)",
+				'url'          => '"http://www.pyrenees-refuges.com/fr/affiche.php?numenr='.$v[3].'"',
+				'last_update'  => time(),
+			];
+		sql_update_table ('geo_reference', $sql_values);
+	}
+}
+//-------------------------------------------------------------------------
+function sql_update_table ($table, $lignes) {
+	global $db, $log;
+
+	$logid = [];
+	if (count ($lignes)) {
+		foreach ($lignes AS $ligne) {
+			$sql_values[] = implode (',', $ligne);
+			if (isset ($ligne['id']))
+				$logid[] = $ligne['id'];
+		}
+		foreach ($ligne AS $k=>$v)
+			$sql_eq[] = "$k=VALUES($k)";
+
+		$sql = "INSERT INTO $table (".implode (',', array_keys ($ligne)).")
+			VALUES \n(".implode ("),\n(", $sql_values).")
+			ON DUPLICATE KEY UPDATE ".implode (',', $sql_eq);
+		$db->sql_query($sql);
+
+		$log [] = $table.' = '.count($lignes);
+		$log [] = implode ('|', array_keys ($logid));
+	}
+}
+//-------------------------------------------------------------------------
+// Calcul du délai depuis le dernier sync PRC
+function date_last_sync ($site) {
+	global $db;
+
+	$sql = "SELECT last_update FROM geo_reference WHERE url LIKE '%$site%' ORDER BY last_update DESC";
+	$result = $db->sql_query($sql);
+	$r =
+		$result
+		? $db->sql_fetchrow($result) ['last_update']
+		: 0;
+	$db->sql_freeresult($result);
+
+//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'>Dernier update : ".var_export(date('r',$r),true).'</pre>';
+	return $r;
 }

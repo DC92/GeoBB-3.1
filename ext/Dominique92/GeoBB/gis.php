@@ -22,16 +22,27 @@ $user->setup();
 
 $priority = request_var ('priority', 0); // Topic à affichage prioritaire
 $limite = request_var ('limite', 250); // Nombre de points maximum
-$bboxs = explode (',', request_var ('bbox', '-180,-90,180,90'));
-$bbox =
+$bboxs = explode (',', $bbox = request_var ('bbox', '-180,-90,180,90'));
+$bbox_sql =
 	$bboxs[0].' '.$bboxs[1].','.
 	$bboxs[2].' '.$bboxs[1].','.
 	$bboxs[2].' '.$bboxs[3].','.
 	$bboxs[0].' '.$bboxs[3].','.
 	$bboxs[0].' '.$bboxs[1];
 
-$diagBbox = hypot ($bboxs[2] - $bboxs[0], $bboxs[3] - $bboxs[1]);
+$diagBbox = hypot ($bboxs[2] - $bboxs[0], $bboxs[3] - $bboxs[1]); // Hypothènuse de la bbox
 
+/**
+ * Execute something before actions
+ *
+ * @event geo.gis_before
+ */
+$vars = array(
+	'bbox',
+);
+extract($phpbb_dispatcher->trigger_event('geo.gis_before', compact($vars)));
+
+// Recherche des points dans la bbox
 $sql_array = [
 	'SELECT' => [
 		'post_subject',
@@ -52,7 +63,7 @@ $sql_array = [
 	]],
 	'WHERE' => [
 		'geom IS NOT NULL',
-		"Intersects (GeomFromText ('POLYGON (($bbox))'),geom)",
+		"Intersects (GeomFromText ('POLYGON (($bbox_sql))'),geom)",
 		'post_visibility = '.ITEM_APPROVED,
 		'OR' => [
 			't.topic_first_post_id = p.post_id',
@@ -65,13 +76,13 @@ $sql_array = [
 /**
  * Change SQL query for fetching geographic data
  *
- * @event geo.sync_modify_sql
+ * @event geo.gis_modify_sql
  * @var array     sql_array    Fully assembled SQL query with keys SELECT, FROM, LEFT_JOIN, WHERE
  */
 $vars = array(
 	'sql_array',
 );
-extract($phpbb_dispatcher->trigger_event('geo.sync_modify_sql', compact($vars)));
+extract($phpbb_dispatcher->trigger_event('geo.gis_modify_sql', compact($vars)));
 
 // Build query
 if (is_array ($sql_array ['SELECT']))
@@ -108,7 +119,7 @@ while ($row = $db->sql_fetchrow($result)) {
 	/**
 	 * Change properties before sending
 	 *
-	 * @event geo.sync_modify_properties
+	 * @event geo.gis_modify_row_properties
 	 * @var array row
 	 * @var array properties
 	 */
@@ -116,7 +127,7 @@ while ($row = $db->sql_fetchrow($result)) {
 		'row',
 		'properties',
 	);
-	extract($phpbb_dispatcher->trigger_event('geo.sync_modify_properties', compact($vars)));
+	extract($phpbb_dispatcher->trigger_event('geo.gis_modify_row_properties', compact($vars)));
 
 	$g = geoPHP::load ($row['geomwkt'], 'wkt'); // On lit le geom en format WKT forni par MySql
 	$gj = $g->out('json'); // On le transforme en format GeoJson
@@ -177,4 +188,14 @@ header("Cache-Control: max-age=$secondes_de_cache");
 echo json_encode ([ // On transforme l'objet PHP en code geoJson
 	'type' => 'FeatureCollection',
 	'features' => $gjs
-]);
+]) . PHP_EOL;
+
+/**
+ * Execute something after actions
+ *
+ * @event geo.gis_after
+ */
+$vars = array(
+	'bbox',
+);
+extract($phpbb_dispatcher->trigger_event('geo.gis_before', compact($vars)));

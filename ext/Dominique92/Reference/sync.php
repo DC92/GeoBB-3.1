@@ -35,14 +35,14 @@ $template->set_filenames(array(
 	'body' => 'sync_body.html')
 );
 
+exec_sync ();
 page_footer();
 
 //-------------------------------------------------------------------------
 // Exécution de la commande à la fin du script même si le demandeur a fermé la session
 register_shutdown_function('exec_sync');
-
 function exec_sync () {
-	global $log;
+	global $log, $request, $db;
 
 	$log [] = date('r');
 	$log [] = $request->server('REQUEST_SCHEME').'://'.$request->server('HTTP_HOST').$request->server('REQUEST_URI');
@@ -67,7 +67,7 @@ function exec_sync () {
 // FONCTIONS
 //-------------------------------------------------------------------------
 function get_sync_context () {
-	global $forums, $users;
+	global $forums, $users, $db;
 
 	// Numéros des forum avec icones
 	$sql = 'SELECT forum_id, forum_image FROM '.FORUMS_TABLE.' WHERE forum_image != ""';

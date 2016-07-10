@@ -305,6 +305,8 @@ class listener implements EventSubscriberInterface
 
 	// Traitement hors délais de l'importations de données des autres sites
 	function gis_after($vars) {
+		global $request;
+
 		// Release flow & continue import
 		ignore_user_abort (true);
 		ob_flush();
@@ -320,7 +322,7 @@ class listener implements EventSubscriberInterface
 		geo_sync_c2c ('huts', date_last_sync ('camptocamp'));
 
 		$log [] = '';
-		file_put_contents ('../../../SYNC.log', implode (' ', $log) ."\n", FILE_APPEND);
+		file_put_contents ('../../../GIS.log', implode (' ', $log) ."\n", FILE_APPEND);
 	}
 }
 //-------------------------------------------------------------------------
@@ -407,7 +409,7 @@ function geo_sync_c2c ($type = 'huts', $last_date = 0) {
 	if (time() - $last_date > 24 * 3600) { // Une fois par jour
 		$type = request_var ('type', $type);
 		$page = request_var ('page', 1);
-		$c2cxml = new SimpleXMLElement (str_replace ('geo:', '', (file_get_contents ("http://www.camptocamp.org/$type/rss/npp/100/page/$page"))));
+		$c2cxml = new \SimpleXMLElement (str_replace ('geo:', '', (file_get_contents ("http://www.camptocamp.org/$type/rss/npp/100/page/$page"))));
 		foreach ($c2cxml->channel->item AS $c) {
 			$ds = explode (' - ', $c->description);
 			$ls = explode ('/', $c->link);

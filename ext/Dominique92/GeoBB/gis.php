@@ -198,4 +198,4 @@ echo json_encode ([ // On transforme l'objet PHP en code geoJson
 $vars = array(
 	'bbox',
 );
-extract($phpbb_dispatcher->trigger_event('geo.gis_before', compact($vars)));
+extract($phpbb_dispatcher->trigger_event('geo.gis_after', compact($vars)));

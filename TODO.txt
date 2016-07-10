@@ -35,6 +35,7 @@ AJAX ne trace pas si erreurs non reportées !
 
 BEST TODO
 =========
+GIS.PHP faire du BBOX une diagonale pour Intersects
 Barmenu: Enveloppe message trop basse dans Chrome
 Mauvaise largeur de carte quand le style est prosilver
 Attendre que le fichier soit chargé avant de valider le post : à sécuriser !
@@ -81,6 +82,9 @@ Ajouter bouton permutation sur page point chem
 
 MISE EN FORME / INSTALL / DEMOS
 ===============================
+Faire un read.me
+DELETE sync.php & template & barre menu
+DCMM -> TBD
 Stockage images sur plus d'1 répertoire => ? plugin ?
 Faire executer l'import par le cron
 Intégrer dans les patchs ??? Attendre !

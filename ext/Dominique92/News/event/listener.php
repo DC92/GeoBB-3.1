@@ -64,6 +64,8 @@ class listener implements EventSubscriberInterface
 
 	// Affiche les post les plus récents sur la page d'accueil
 	function index_modify_page_title ($vars) {
+		global $auth; // DCMM intégrer aux variables du listener ($this->auth)
+
 		$nouvelles = request_var ('nouvelles', 20);
 		$this->template->assign_var ('PLUS_NOUVELLES', $nouvelles * 2);
 
@@ -81,11 +83,12 @@ class listener implements EventSubscriberInterface
 			ORDER BY post_time DESC
 			LIMIT ".$nouvelles;
 		$result = $this->db->sql_query($sql);
-		while ($row = $this->db->sql_fetchrow($result)) {
-			$row ['topic_comments'] = $row['topic_posts_approved'] - 1;
-			$row ['post_time'] = $this->user->format_date ($row['post_time']);
-			$this->template->assign_block_vars('nouvelles', array_change_key_case ($row, CASE_UPPER));
-		}
+		while ($row = $this->db->sql_fetchrow($result))
+			if ($auth->acl_get('f_read', $row['forum_id'])) {
+				$row ['topic_comments'] = $row['topic_posts_approved'] - 1;
+				$row ['post_time'] = $this->user->format_date ($row['post_time']);
+				$this->template->assign_block_vars('nouvelles', array_change_key_case ($row, CASE_UPPER));
+			}
 		$this->db->sql_freeresult($result);
 
 		// Affiche un message de bienvenu dépendant du style pour ceux qui ne sont pas connectés

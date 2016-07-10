@@ -84,7 +84,6 @@ MISE EN FORME / INSTALL / DEMOS
 Dépendance des plugins:
 	<!-- INCLUDE reference.html --> => Devrait être un extract
 Compléter un GITHUB READ.ME
-DELETE sync.php & template & barre menu
 DCMM -> TBD
 Stockage images sur plus d'1 répertoire => ? plugin ?
 Faire executer l'import par le cron
@@ -94,7 +93,6 @@ Intégrer dans les patchs ??? Attendre !
 	RewriteRule ^.*$ https://%{SERVER_NAME}/%1 [L]
 Centraliser patchs
 	Passage en https: htaccess / route
-Enlever /install INIT.PHP & son template & remettre fichiers PBP origine (--patchs)
 Mettre tous les responsive dans responsive.css
 Voir nom en français des variables spécifiques ?
 Convergence noms: reference / lien / import / ...

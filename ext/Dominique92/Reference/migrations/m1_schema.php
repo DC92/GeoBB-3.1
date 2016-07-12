@@ -60,16 +60,6 @@ class m1_schema extends \phpbb\db\migration\migration
 					),
 					'PRIMARY_KEY' => 'id',
 				),
-/*TBD DELETE
-				'geo_gis' => array(
-					'COLUMNS' => array(
-						'bbox'      => array('VCHAR:255', null),
-						'requested' => array('TIMESTAMP', 0),
-						'done'      => array('TIMESTAMP', 0),
-					),
-					'PRIMARY_KEY' => 'bbox',
-				),
-*/
 			),
 		);
 	}
@@ -86,7 +76,6 @@ class m1_schema extends \phpbb\db\migration\migration
 			'drop_tables' => array(
 				'geo_reference',
 				'geo_wric',
-//TBD				'geo_gis',
 			),
 		);
 	}

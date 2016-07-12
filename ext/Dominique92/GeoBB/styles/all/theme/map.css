@@ -2,11 +2,13 @@
 #map {
 	width: 50vw;
 	height: 50vw;
-	max-width: 80vh;
-	max-height: 80vh;
+	max-width: 80vw;
+	max-height: 90vh;
 	float: right;
+	background-color: #CDD9B5;
 	background-image: url(images/alt_carte.jpg);
-}
+	background-repeat: repeat-x;
+ }
 .leaflet-fullscreen-on {
 	width: 100% !important;
 	height: 100% !important;

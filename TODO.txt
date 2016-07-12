@@ -1,5 +1,6 @@
 BUGS
 ====
+Pour ce point : http://v3.chemineur.fr/viewtopic.php?t=6743 le picto est un "?" alors qu'il s'agit d'une cabane...
 Escape sur diaporama ne marche pas sur FF !
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
 Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
@@ -24,6 +25,7 @@ Reprendre tortillards viewtopic_ligne.* suivant nouveaux templates ext/GeoBB
 
 LEAFLET - CARTES
 ================
+Ne pas forcer la carte de base d'un point. Prendre les cookies.
 Clear Ajax carte quand ajoute/supprime un lien
 Dalles cartes non complètes quand redimensionne la carte
 Carte + bbox KO full screen sur smartphone

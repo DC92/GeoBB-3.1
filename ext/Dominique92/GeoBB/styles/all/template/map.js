@@ -79,8 +79,22 @@ var gis = new L.GeoJSON.Ajax({
 	},
 <!-- ENDIF -->
 	style: function(feature) {
+		var popup = [
+			'<a href="viewtopic.php?t='+feature.properties.id+'" class="lien-noir">'+feature.properties.nom+'</a>'
+		];
+		<!-- IF IS_MODERATOR and TOPIC_ID and GEO_MAP_TYPE == 'point' -->
+			if (feature.properties.type_id == {FORUM_ID} && // Uniquement entre points de même type
+				feature.properties.id != {TOPIC_ID}) // Pas le point avec lui même
+				popup.push ('<a href="' + [
+					'mcp.php?i=main&mode=forum_view&action=merge_topic',
+					'f={FORUM_ID}',
+					't='+feature.properties.id,
+					'to_topic_id={TOPIC_ID}',
+					'redirect=viewtopic.php?t={TOPIC_ID}',
+				].join('&') + '" title="CETTE OPERATION EST IRREVERSIBLE">Fusionner avec "{TOPIC_TITLE}"</a>');
+		<!-- ENDIF -->
 		var s = {
-			popup: '<a href="viewtopic.php?t='+feature.properties.id+'" class="lien-noir">'+feature.properties.nom+'</a>',
+			popup: ('<p>' + popup.join('</p><p>') + '</p>').replace(/<p>\s*<\/p>/ig, ''),
 			remanent: true,
 <!-- IF SCRIPT_NAME != 'posting' -->
 			url: feature.properties.id ? 'viewtopic.php?t='+feature.properties.id : null,
@@ -115,7 +129,7 @@ var gis = new L.GeoJSON.Ajax({
 				<!-- IF IS_MODERATOR -->
 					deblinkref+'&'+finlink+'">Créer une fiche</a>',
 					<!-- IF TOPIC_ID and GEO_MAP_TYPE == 'point' -->
-						deblinkref+"&t={TOPIC_ID}&nt={TOPIC_ID}\">Lier à \"{TOPIC_TITLE}\"</a>",
+						deblinkref+'&t={TOPIC_ID}&nt={TOPIC_ID}">Lier à "{TOPIC_TITLE}"</a>',
 					<!-- ENDIF -->
 				<!-- ENDIF -->
 			];

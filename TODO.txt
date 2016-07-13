@@ -1,5 +1,16 @@
+AIDE
+====
+L'affichage des traces peut être désactivé dans le sélecteur de gauche de la carte (décocher randonnées)
+Un sujet est actif quand il y a eu des contributions récentes.
+Création / 2dition de traces
+Résolu en se limitant aux liens C2C de type huts. Exit les summits qui posaient problèmes.
+Ici, la COPPA est la "Children's Online Privacy Protection Act", une loi américaine pour protéger la vie privée des mineurs de moins de 13 ans. J'essayerai d'enlever les mentions dans les formulaires.
+Consulter l'historique des éditions
+
 BUGS
 ====
+Dates clichés ont été pris...en 1970 ! Et un 1er janvier en outre... sans EXIF
+Hauteur menu déplié smartph
 Pour ce point : http://v3.chemineur.fr/viewtopic.php?t=6743 le picto est un "?" alors qu'il s'agit d'une cabane...
 Escape sur diaporama ne marche pas sur FF !
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
@@ -25,6 +36,8 @@ Reprendre tortillards viewtopic_ligne.* suivant nouveaux templates ext/GeoBB
 
 LEAFLET - CARTES
 ================
+Pas d'ascenseur sur changelayer smartphone
+Icones dégroupées derreière cagre nonn cliquables / ?? avec grande étiquette difficilement cliquables
 Ne pas forcer la carte de base d'un point. Prendre les cookies.
 Clear Ajax carte quand ajoute/supprime un lien
 Dalles cartes non complètes quand redimensionne la carte
@@ -36,6 +49,7 @@ AJAX ne trace pas si erreurs non reportées !
 
 BEST TODO
 =========
+Ajouter des données fiches à volonté (serialized)
 GIS.PHP faire du BBOX une diagonale pour Intersects
 Barmenu: Enveloppe message trop basse dans Chrome
 Mauvaise largeur de carte quand le style est prosilver
@@ -101,7 +115,7 @@ Convergence noms: reference / lien / import / ...
 Demo GeoBB : création 1 point + 1 ligne + 1 surface et forums associés
 Lang sur tous les *.php : faire le tri ! + incorporer tous les textes + traduire en anglais ??
 
-Extensions
+Extensions (Ajouter dans les read.me)
 ==========
 https://www.phpbb.com/customise/db/extension/upload/
 https://www.phpbb.com/customise/db/extension/auto_database_backup_2/

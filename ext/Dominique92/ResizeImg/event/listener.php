@@ -80,7 +80,6 @@ class listener implements EventSubscriberInterface
 
 	function download_file_send_to_browser_before($vars) {
 		$attachment = $vars['attachment'];
-//*DCMM*/echo"<pre style='background-color:white;color:black;font-size:14px;'> = ".var_export($attachment,true).'</pre>';
 		if (!is_dir ('../cache/geo/'))
 			mkdir ('../cache/geo/');
 
@@ -150,15 +149,40 @@ class listener implements EventSubscriberInterface
 			$isx = $img_size [0]; $isy = $img_size [1]; 
 			$reduction = max ($isx / $max_size, $isy / $max_size);
 			if ($reduction > 1) { // Il faut reduire l'image
-				$temporaire = '../cache/'.$attachment['physical_filename'].'.'.$max_size;
-				if (!is_file ($temporaire)) { // Si le fichier temporaire n'existe pas, il faut le creer
+				$temporaire = '../cache/geo/'.$attachment['physical_filename'].'.'.$max_size;
+
+				// Si le fichier temporaire n'existe pas, il faut le creer
+				if (!is_file ($temporaire)); {
 					$mimetype = explode('/',$attachment['mimetype']);
+
+					// Get source image
 					$imgcreate = 'imagecreatefrom'.$mimetype[1]; // imagecreatefromjpeg / imagecreatefrompng / imagecreatefromgif
-					$imgconv = 'image'.$mimetype[1]; // imagejpeg / imagepng / imagegif
-					$image_src = $imgcreate ('../files/'.$attachment['physical_filename']); 
+					$image_src = $imgcreate ('../files/'.$attachment['physical_filename']);
+
+					// Detect orientation
+					$angle = [
+						3 => 180,
+						6 => -90,
+						8 =>  90,
+					];
+					$a = @$angle [$exif ['Orientation']];
+					if ($a)
+						$image_src = imagerotate ($image_src, $a, 0);
+					if (abs ($a) == 90) {
+						$tmp = $isx;
+						$isx = $isy;
+						$isy = $tmp;
+					}
+
+					// Build destination image
 					$image_dest = imagecreatetruecolor ($isx / $reduction, $isy / $reduction); 
 					imagecopyresampled ($image_dest, $image_src, 0,0, 0,0, $isx / $reduction, $isy / $reduction, $isx, $isy);
+
+					// Convert image
+					$imgconv = 'image'.$mimetype[1]; // imagejpeg / imagepng / imagegif
 					$imgconv ($image_dest, $temporaire); 
+
+					// Cleanup
 					imagedestroy ($image_dest); 
 					imagedestroy ($image_src);
 				}

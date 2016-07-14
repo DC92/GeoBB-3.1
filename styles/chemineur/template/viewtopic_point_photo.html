@@ -1,12 +1,14 @@
 <!-- BEGIN _file -->
 	<table class= "photo">
 		<tr><td class="hg"></td><td class="hm">
-			<!-- IF _file.DATE != 'jeu. 1 janv. 1970' -->
-				<p>{_file.DATE}
-			<!-- ENDIF -->
-			<!-- IF _file.AUTEUR -->
-				&copy; {_file.AUTEUR}</p>
-			<!-- ENDIF -->
+			<p>
+				<!-- IF not (_file.DATE matches '/1970/') -->
+					{_file.DATE}
+				<!-- ENDIF -->
+				<!-- IF _file.AUTEUR -->
+					&copy; {_file.AUTEUR}
+				<!-- ENDIF -->
+			</p>
 		</td><td class="hd"></td></tr>
 		<tr><td class="mg"></td><td class="mm">
 			<!-- IF _file.ATTACH_ID < 1000000 -->

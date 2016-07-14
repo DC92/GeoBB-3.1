@@ -150,7 +150,7 @@ class listener implements EventSubscriberInterface
 			$reduction = max ($isx / $max_size, $isy / $max_size);
 			if ($reduction > 1) { // Il faut reduire l'image
 				$pn = pathinfo ($attachment['physical_filename']);
-				$temporaire = '../cache/geo/'.$pn['basename'].'.'.$max_size.$pn['extension'];
+				$temporaire = '../cache/geo/'.$pn['basename'].'.'.$max_size.@$pn['extension'];
 
 				// Si le fichier temporaire n'existe pas, il faut le creer
 				if (!is_file ($temporaire)); {

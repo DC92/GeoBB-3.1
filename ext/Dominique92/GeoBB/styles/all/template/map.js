@@ -91,7 +91,7 @@ var gis = new L.GeoJSON.Ajax({
 					't='+feature.properties.id,
 					'to_topic_id={TOPIC_ID}',
 					'redirect=viewtopic.php?t={TOPIC_ID}',
-				].join('&') + '" title="CETTE OPERATION EST IRREVERSIBLE">Fusionner avec "{TOPIC_TITLE}"</a>');
+				].join('&') + '" title="CETTE OPERATION EST IRREVERSIBLE">Fusionner avec "{% autoescape 'js' %}{TOPIC_TITLE}{% endautoescape %}"</a>');
 		<!-- ENDIF -->
 		var s = {
 			popup: ('<p>' + popup.join('</p><p>') + '</p>').replace(/<p>\s*<\/p>/ig, ''),
@@ -129,7 +129,7 @@ var gis = new L.GeoJSON.Ajax({
 				<!-- IF IS_MODERATOR -->
 					deblinkref+'&'+finlink+'">Créer une fiche</a>',
 					<!-- IF TOPIC_ID and GEO_MAP_TYPE == 'point' -->
-						deblinkref+'&t={TOPIC_ID}&nt={TOPIC_ID}">Lier à "{TOPIC_TITLE}"</a>',
+						deblinkref+'&t={TOPIC_ID}&nt={TOPIC_ID}">Lier à "{% autoescape 'js' %}{TOPIC_TITLE}{% endautoescape %}"</a>',
 					<!-- ENDIF -->
 				<!-- ENDIF -->
 			];

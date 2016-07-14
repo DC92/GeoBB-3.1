@@ -9,8 +9,7 @@ Consulter l'historique des éditions
 
 BUGS
 ====
-Dates clichés ont été pris...en 1970 ! Et un 1er janvier en outre... sans EXIF
-Hauteur menu déplié smartph
+Photo un peu petite : http://chemineur.fr/viewtopic.php?t=7462
 Pour ce point : http://v3.chemineur.fr/viewtopic.php?t=6743 le picto est un "?" alors qu'il s'agit d'une cabane...
 Escape sur diaporama ne marche pas sur FF !
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
@@ -37,6 +36,7 @@ Reprendre tortillards viewtopic_ligne.* suivant nouveaux templates ext/GeoBB
 LEAFLET - CARTES
 ================
 Pas d'ascenseur sur changelayer smartphone
+2em Ascenseur déborde sur le bas : remettre à gauche (mais pb de positionnement en IE & smartphone)
 Icones dégroupées derreière cagre nonn cliquables / ?? avec grande étiquette difficilement cliquables
 Ne pas forcer la carte de base d'un point. Prendre les cookies.
 Clear Ajax carte quand ajoute/supprime un lien
@@ -49,6 +49,7 @@ AJAX ne trace pas si erreurs non reportées !
 
 BEST TODO
 =========
+Ajouter l'origine des pages importées chemineur
 Ajouter des données fiches à volonté (serialized)
 GIS.PHP faire du BBOX une diagonale pour Intersects
 Barmenu: Enveloppe message trop basse dans Chrome

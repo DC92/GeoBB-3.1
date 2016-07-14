@@ -146,6 +146,8 @@ class listener implements EventSubscriberInterface
 
 	// Appelé aprés l'assignation de postrow au template. Pour assigner les sous-blocks de postrow
 	function viewtopic_post_row_after($vars) {
+		global $limite;
+
 		$row = $vars['row'];
 
 		// Lecture des posts ayant un geom en contact

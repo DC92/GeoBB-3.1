@@ -9,6 +9,7 @@ Consulter l'historique des éditions
 
 BUGS
 ====
+function gis_after($vars) : pb de ob_flush sur 1&1
 Photo un peu petite : http://chemineur.fr/viewtopic.php?t=7462
 Pour ce point : http://v3.chemineur.fr/viewtopic.php?t=6743 le picto est un "?" alors qu'il s'agit d'une cabane...
 Escape sur diaporama ne marche pas sur FF !

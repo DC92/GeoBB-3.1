@@ -309,7 +309,7 @@ class listener implements EventSubscriberInterface
 
 		// Release flow & continue import
 		ignore_user_abort (true);
-		ob_flush();
+//		ob_flush();
 		flush();
 
 		$log [] = str_repeat('*', 40);

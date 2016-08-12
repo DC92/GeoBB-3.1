@@ -60,6 +60,7 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_post_rowset_data' => 'viewtopic_post_rowset_data', //1240
 			'core.viewtopic_modify_post_row' => 'viewtopic_modify_post_row', //1949
 			'core.viewtopic_post_row_after' => 'viewtopic_post_row_after', //1949
+			'geo.gis_modify_data' => 'gis_modify_data', //gis.php
 
 			// Posting
 			'core.submit_post_modify_sql_data' => 'submit_post_modify_sql_data', //21 -> functions_posting.php 1859
@@ -171,6 +172,45 @@ class listener implements EventSubscriberInterface
 		}
 	}
 
+	function gis_modify_data($vars) {
+		// Insère l'extraction des données externes dans le flux géographique
+		$row = $vars['row'];
+
+		$this->optim ($row['geomphp'], $vars['diagBbox'] / 200); // La longueur min des segments de lignes & surfaces sera de 1/200 de la diagonale de la BBOX
+
+		$vars['row'] = $row;
+	}
+	function optim (&$g, $granularity) { // Fonction récursive d'optimisation d'un objet PHP contenant des objets géographiques
+		if (isset ($g->geometries)) // On recurse sur les Collection, ...
+			foreach ($g->geometries AS &$gs)
+				$this->optim ($gs, $granularity);
+
+		if (isset ($g->features)) // On recurse sur les Feature, ...
+			foreach ($g->features AS &$fs)
+				$this->optim ($fs, $granularity);
+
+		if (preg_match ('/multi/i', $g->type)) {
+			foreach ($g->coordinates AS &$gs)
+				$this->optim_coordinate_array ($gs, $granularity);
+		} elseif (isset ($g->coordinates)) // On a trouvé une liste de coordonnées à optimiser
+			$this->optim_coordinate_array ($g->coordinates, $granularity);
+	}
+	function optim_coordinate_array (&$cs, $granularity) { // Fonction d'optimisation d'un tableau de coordonnées
+		if (count ($cs) > 2) { // Pour éviter les "Points" et "Poly" à 2 points
+			$p = $cs[0]; // On positionne le point de référence de mesure de distance à une extrémité
+			$r = []; // La liste de coordonnées optimisées
+			foreach ($cs AS $k=>$v)
+				if (!$k || // On garde la première extrémité
+					$k == count ($cs) - 1) // Et la dernière
+					$r[] = $v;
+				elseif (hypot ($v[0] - $p[0], $v[1] - $p[1]) > $granularity)
+					$r[] = // On copie ce point
+					$p = // On repositionne le point de référence
+						$v;
+			$cs = $r; // On écrase l'ancienne
+		}
+	}
+
 	// Calcul des données automatiques
 	function get_automatic_data(&$row) {
 		global $config_locale;
@@ -248,11 +288,14 @@ class listener implements EventSubscriberInterface
 			// Traduction en geoJson
 			include_once($this->ext_dir.'geoPHP/geoPHP.inc'); // Librairie de conversion WKT <-> geoJson
 			$g = \geoPHP::load($post_data['geomwkt'],'wkt');
-			$post_data['geomjson'] = $g->out('json');
 			$this->get_bounds($g);
+			$gp = json_decode ($g->out('json')); // On transforme le GeoJson en objet PHP
+			$this->optim ($gp, 0.0001); // La longueur min des segments de lignes & surfaces sera de  0.0001 ° = 10 000 km / 90° * 0.0001 = 11m
+			$post_data['geomjson'] = json_encode ($gp);
 		}
 
 		// Pour éviter qu'un titre vide invalide la page et toute la saisie graphique.
+		// TODO : traiter au niveau du formulaire (avertissement de modif ?)
 		if (!$post_data['post_subject'])
 			$post_data['draft_subject'] = 'NEW';
 

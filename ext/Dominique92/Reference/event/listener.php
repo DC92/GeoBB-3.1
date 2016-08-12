@@ -49,7 +49,7 @@ class listener implements EventSubscriberInterface
 
 			'geo.gis_after' => 'gis_after',
 			'geo.gis_modify_sql' => 'gis_modify_sql',
-			'geo.gis_modify_row_properties' => 'gis_modify_row_properties',
+			'geo.gis_modify_data' => 'gis_modify_data',
 		];
 	}
 
@@ -297,7 +297,7 @@ class listener implements EventSubscriberInterface
 	}
 
 	// Insère les données externes extraites dans les propriétés de chaque élément du flux géographique
-	function gis_modify_row_properties($vars) {
+	function gis_modify_data($vars) {
 		$properties = $vars['properties'];
 		$properties ['url'] =  $vars['row']['url'];
 		$vars['properties'] = $properties;

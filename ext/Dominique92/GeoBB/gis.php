@@ -116,63 +116,31 @@ while ($row = $db->sql_fetchrow($result)) {
 	if (count ($colors))
 		$properties['color'] = $colors[1];
 
+	$g = geoPHP::load ($row['geomwkt'], 'wkt'); // On lit le geom en format WKT fourni par MySql
+	$row['geomjson'] = $g->out('json'); // On le transforme en format GeoJson
+	$row['geomphp'] = json_decode ($row['geomjson']); // On transforme le GeoJson en objet PHP
+
 	/**
 	 * Change properties before sending
 	 *
-	 * @event geo.gis_modify_row_properties
+	 * @event geo.gis_modify_data
 	 * @var array row
 	 * @var array properties
 	 */
 	$vars = array(
 		'row',
 		'properties',
+		'diagBbox', // Line or surface min segment length
 	);
-	extract($phpbb_dispatcher->trigger_event('geo.gis_modify_row_properties', compact($vars)));
+	extract($phpbb_dispatcher->trigger_event('geo.gis_modify_data', compact($vars)));
 
-	$g = geoPHP::load ($row['geomwkt'], 'wkt'); // On lit le geom en format WKT fourni par MySql
-	$gj = $g->out('json'); // On le transforme en format GeoJson
-	$gp = json_decode ($gj); // On transforme le GeoJson en objet PHP
-	optim ($gp); // On l'optimise
 	$gjs[] = [
 		'type' => 'Feature',
-		'geometry' => $gp, // On ajoute le tout à la liste à afficher sous la forme d'un "Feature" (Sous forme d'objet PHP)
+		'geometry' => $row['geomphp'], // On ajoute le tout à la liste à afficher sous la forme d'un "Feature" (Sous forme d'objet PHP)
 		'properties' => $properties,
 	];
 }
 $db->sql_freeresult($result);
-
-function optim (&$g) { // Fonction récursive d'optimisation d'un objet PHP contenant des objets géographiques
-	if (isset ($g->geometries)) // On recurse sur les Collection, ...
-		foreach ($g->geometries AS &$gs)
-			optim ($gs);
-
-	if (isset ($g->features)) // On recurse sur les Feature, ...
-		foreach ($g->features AS &$fs)
-			optim ($fs);
-
-	if (preg_match ('/multi/i', $g->type)) {
-		foreach ($g->coordinates AS &$gs)
-			optim_coordinate_array ($gs);
-	} elseif (isset ($g->coordinates)) // On a trouvé une liste de coordonnées à optimiser
-		optim_coordinate_array ($g->coordinates);
-}
-function optim_coordinate_array (&$cs) { // Fonction d'optimisation d'un tableau de coordonnées
-	global $diagBbox;
-
-	if (count ($cs) > 2) { // Pour éviter les "Points" et "Poly" à 2 points
-		$p = $cs[0]; // On positionne le point de référence de mesure de distance à une extrémité
-		$r = []; // La liste de coordonnées optimisées
-		foreach ($cs AS $k=>$v)
-			if (!$k || // On garde la première extrémité
-				$k == count ($cs) - 1) // Et la dernière
-				$r[] = $v;
-			elseif (hypot ($v[0] - $p[0], $v[1] - $p[1]) > $diagBbox / 200) // La granularité sera de 1/200 de la diagonale de la BBOX
-				$r[] = // On copie ce point
-				$p = // On repositionne le point de référence
-					$v;
-		$cs = $r; // On écrase l'ancienne
-	}
-}
 
 // Formatage du header
 $secondes_de_cache = 60;

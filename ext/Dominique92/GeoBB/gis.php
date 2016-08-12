@@ -129,7 +129,7 @@ while ($row = $db->sql_fetchrow($result)) {
 	);
 	extract($phpbb_dispatcher->trigger_event('geo.gis_modify_row_properties', compact($vars)));
 
-	$g = geoPHP::load ($row['geomwkt'], 'wkt'); // On lit le geom en format WKT forni par MySql
+	$g = geoPHP::load ($row['geomwkt'], 'wkt'); // On lit le geom en format WKT fourni par MySql
 	$gj = $g->out('json'); // On le transforme en format GeoJson
 	$gp = json_decode ($gj); // On transforme le GeoJson en objet PHP
 	optim ($gp); // On l'optimise
@@ -150,7 +150,7 @@ function optim (&$g) { // Fonction récursive d'optimisation d'un objet PHP cont
 		foreach ($g->features AS &$fs)
 			optim ($fs);
 
-	if (preg_match ("/multi/i", $g->type)) {
+	if (preg_match ('/multi/i', $g->type)) {
 		foreach ($g->coordinates AS &$gs)
 			optim_coordinate_array ($gs);
 	} elseif (isset ($g->coordinates)) // On a trouvé une liste de coordonnées à optimiser

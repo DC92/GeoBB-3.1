@@ -174,7 +174,7 @@ class listener implements EventSubscriberInterface
 	// Calcul des données automatiques
 	function get_automatic_data(&$row) {
 		global $config_locale;
-		preg_match_all('/([0-9\.]+)/', $row['geomwkt'], $ll);
+		preg_match_all('/([0-9\.\-]+)/', $row['geomwkt'], $ll);
 
 		// Calcul de l'altitude avec mapquest
 		if (array_key_exists ('geo_altitude', $row) && !$row['geo_altitude']) {
@@ -189,13 +189,15 @@ class listener implements EventSubscriberInterface
 
 		// Détermination du massif par refuges.info
 		if (array_key_exists ('geo_massif', $row) && !$row['geo_massif']) {
-			$f_wri_export = 'http://www.refuges.info/api/polygones?type_polygon=1&bbox='.$ll[1][0].','.$ll[1][1].','.$ll[1][0].','.$ll[1][1];
+			$f_wri_export = 'http://www.refuges.info/api/polygones?type_polygon=1,10,11,17&bbox='.$ll[1][0].','.$ll[1][1].','.$ll[1][0].','.$ll[1][1];
 			$wri_export = json_decode (file_get_contents ($f_wri_export));
 			foreach ($wri_export->features AS $f)
-				$m = $f->properties->nom;
+				$ms [$f->properties->type->id] = $f->properties->nom;
+			if (isset ($ms))
+				ksort ($ms);
 			$row['geo_massif'] = // Pour affichage
 			$sql_update['geo_massif'] = // Pour modification de la base
-				@$m.'~'; // ~ indique que la valeur & été déterminée par le serveur
+				@$ms[array_keys($ms)[0]].'~'; // ~ indique que la valeur & été déterminée par le serveur
 		}
 
 		// Update de la base

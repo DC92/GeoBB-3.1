@@ -348,14 +348,21 @@ function get_sync_context () {
 	$forums += [
 		'gîte' => $forums['gite'],
 		'gÃ®te' => $forums['gite'],
+		'gite-d-etape' => $forums['gite'],
 		'point culminant' => $forums['sommet'],
 		'abri sommaire' => $forums['abri'],
 		'emplacement de bivouac' => $forums['bivouac'],
 		'camp de base' => $forums['bivouac'],
 		'point' => $forums['point_eau'],
+		'point-d-eau' => $forums['point_eau'],
+		'ancien-point-d-eau' => $forums['point_eau'],
+		'point-de-passage' => $forums['col'],
 		'source' => $forums['point_eau'],
 		'inutilisable' => $forums['ferme'],
+		'cabane-non-gardee' => $forums['cabane'],
 		'batiment' => $forums['inconnu'],
+		'batiment-en-montagne' => $forums['inconnu'],
+		'batiment-inutilisable' => $forums['ferme'],
 		'refuge-garde' => $forums['refuge'],
 		'' => $forums['inconnu'],
 	];
@@ -369,7 +376,8 @@ function geo_sync_wri ($bbox = 'world') {
 	$log [] = $urlWRI = "http://www.refuges.info/api/bbox?bbox=$bbox&nb_coms=100&detail=simple&format_texte=texte&format=xml";
 	$xmlWRI = simplexml_load_file($urlWRI);
 	foreach ($xmlWRI AS $x) {
-		preg_match('/([a-z]+)/i', $x->type->icone, $icones);
+		// Références à des points WRI
+		preg_match('/([a-z\-]+)/i', $x->type->icone, $icones);
 		if ($f = @$forums[$icones[1]])
 			$wri_upd [] = [
 				'post_subject' => '"'.str_replace ('"', '\\"', $x->nom).'"',
@@ -381,7 +389,8 @@ function geo_sync_wri ($bbox = 'world') {
 		else if (!@$sans_icone[$icones[1]]++)
 			echo"<pre>Icone WRI inconnue ({$icones[1]}) ".var_export($x->type,true).'</pre>';
 
-		if ($x->coms)
+		// Import des commentaires
+		if (isset ($x->coms))
 			foreach ($x->coms->node AS $c) {
 				$noms = explode (' ', strtolower (@$c->createur->nom));
 				if ($u = @$users[$noms[count($noms)-1]]) {

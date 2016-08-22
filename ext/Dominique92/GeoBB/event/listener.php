@@ -347,11 +347,8 @@ class listener implements EventSubscriberInterface
 			$json = request_var ($col_name.'json', ''); // Look in $_POSTS[*json]
 			if ($json) {
 				include_once($this->ext_dir.'geoPHP/geoPHP.inc'); // Librairie de conversion WKT <-> geoJson
-
-				$sql_data[POSTS_TABLE]['sql'][$col_name] =
-					'GeomFromText("'.\geoPHP::load(
-						html_entity_decode($json)
-					,'json')->out('wkt').'")';
+				$g = \geoPHP::load (html_entity_decode($json), 'json');
+				$sql_data[POSTS_TABLE]['sql'][$col_name] = 'GeomFromText("'.$g->out('wkt').'")';
 			}
 		}
 		$this->db->sql_freeresult($result);

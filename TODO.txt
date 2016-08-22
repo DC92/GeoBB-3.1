@@ -1,5 +1,5 @@
-TEST
-====
+BUG
+===
 
 AIDE
 ====
@@ -26,11 +26,6 @@ Click sur une icone chem2 plante
 GYM
 ===
 Affichage horaire indépendant des htmlchars
-WRI
-===
-Voir sur carte IGN double la taille de la carte
-Commentaire ajouté, la photo est grande -> mettre une majuscule
-Remise à la verticale des images verticales ?
 
 TODO TORTILLARDS - LIGNES
 =========================
@@ -50,7 +45,6 @@ Reprendre tortillards viewtopic_ligne.* suivant nouveaux templates ext/GeoBB
 
 LEAFLET - CARTES
 ================
-Purge points trop proches
 En cas de chargement de trace GPS, colorier de façon différente des traces de la carte.
 Pas d'ascenseur sur changelayer smartphone
 2em Ascenseur déborde sur le bas : remettre à gauche (mais pb de positionnement en IE & smartphone)
@@ -67,7 +61,6 @@ AJAX ne trace pas si erreurs non reportées !
 BEST TODO
 =========
 Créer les massifs manquants sur WRI
-Enregistrer editeur ligne : filtrer < 5m
 Meteo sur chem
 Import WRI: importer texte fiche ?
 Post d'accueil chemineur

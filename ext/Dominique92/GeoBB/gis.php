@@ -21,7 +21,7 @@ $auth->acl($user->data);
 $user->setup();
 
 $priority = request_var ('priority', 0); // Topic à affichage prioritaire
-$limite = request_var ('limite', 250); // Nombre de points maximum
+$limite = request_var ('limite', 100); // Nombre de points maximum
 $bboxs = explode (',', $bbox = request_var ('bbox', '-180,-90,180,90'));
 $bbox_sql =
 	$bboxs[0].' '.$bboxs[1].','.

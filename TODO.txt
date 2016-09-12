@@ -1,15 +1,3 @@
-BUG
-===
-
-AIDE
-====
-L'affichage des traces peut être désactivé dans le sélecteur de gauche de la carte (décocher randonnées)
-Un sujet est actif quand il y a eu des contributions récentes.
-Création / 2dition de traces
-Résolu en se limitant aux liens C2C de type huts. Exit les summits qui posaient problèmes.
-Ici, la COPPA est la "Children's Online Privacy Protection Act", une loi américaine pour protéger la vie privée des mineurs de moins de 13 ans. J'essayerai d'enlever les mentions dans les formulaires.
-Consulter l'historique des éditions
-
 BUGS
 ====
 CSS bug chem cadre liens sur largeur fenêtre petite
@@ -22,10 +10,16 @@ Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’at
 Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
 Click sur une icone chem2 plante
+Identification impossible dans test.chem -> reset des cookies. (chrome)
 
-GYM
-===
-Affichage horaire indépendant des htmlchars
+AIDE
+====
+L'affichage des traces peut être désactivé dans le sélecteur de gauche de la carte (décocher randonnées)
+Un sujet est actif quand il y a eu des contributions récentes.
+Création / 2dition de traces
+Résolu en se limitant aux liens C2C de type huts. Exit les summits qui posaient problèmes.
+Ici, la COPPA est la "Children's Online Privacy Protection Act", une loi américaine pour protéger la vie privée des mineurs de moins de 13 ans. J'essayerai d'enlever les mentions dans les formulaires.
+Consulter l'historique des éditions
 
 TODO TORTILLARDS - LIGNES
 =========================
@@ -48,7 +42,7 @@ LEAFLET - CARTES
 En cas de chargement de trace GPS, colorier de façon différente des traces de la carte.
 Pas d'ascenseur sur changelayer smartphone
 2em Ascenseur déborde sur le bas : remettre à gauche (mais pb de positionnement en IE & smartphone)
-Icones dégroupées derreière cagre nonn cliquables / ?? avec grande étiquette difficilement cliquables
+Icones dégroupées derrière cadre non cliquable / ?? avec grande étiquette difficilement cliquables
 Ne pas forcer la carte de base d'un point. Prendre les cookies.
 Clear Ajax carte quand ajoute/supprime un lien
 Dalles cartes non complètes quand redimensionne la carte
@@ -60,6 +54,9 @@ AJAX ne trace pas si erreurs non reportées !
 
 BEST TODO
 =========
+Choix type trace GPS
+Optim geom dès le chargement
+Appli méteo suisse
 Créer les massifs manquants sur WRI
 Meteo sur chem
 Import WRI: importer texte fiche ?

@@ -20,8 +20,11 @@ $user->session_begin();
 $auth->acl($user->data);
 $user->setup();
 
-$priority = request_var ('priority', 0); // Topic à affichage prioritaire
-$limite = request_var ('limite', 100); // Nombre de points maximum
+$priority = request_var ('priority', 0); // topic_id à affichage prioritaire
+$limite = request_var ('limite', 150); // Nombre de points maximum
+$format = $format_app = request_var ('format', 'json');
+if ($format == 'gpx')
+	$limite = 10000;
 $bboxs = explode (',', $bbox = request_var ('bbox', '-180,-90,180,90'));
 $bbox_sql =
 	$bboxs[0].' '.$bboxs[1].','.
@@ -145,18 +148,37 @@ $db->sql_freeresult($result);
 // Formatage du header
 $secondes_de_cache = 60;
 $ts = gmdate("D, d M Y H:i:s", time() + $secondes_de_cache) . " GMT";
-header("Content-disposition: filename=points.json");
-header("Content-Type: application/json; UTF-8"); // rajout du charset
+header("Content-disposition: filename=chemineur.$format");
+header("Content-Type: application/$format_app; UTF-8"); // rajout du charset
 header("Content-Transfer-Encoding: binary");
 header("Pragma: cache");
 header("Expires: $ts");
 header("Access-Control-Allow-Origin: *");
 header("Cache-Control: max-age=$secondes_de_cache");
 
-echo json_encode ([ // On transforme l'objet PHP en code geoJson
+// On transforme l'objet PHP en code geoJson
+$json = json_encode ([
 	'type' => 'FeatureCollection',
 	'features' => $gjs
 ]) . PHP_EOL;
+
+if ($format == 'gpx') {
+	$mmav = ["><", '"geoPHP" version="1.0"'];
+	$mmap = [">\n<", '"http://chemineur.fr" xmlns="http://www.topografix.com/GPX/1/0"'];
+	// Récupère les noms des points
+	foreach ($gjs AS $gjsv)
+		if ($gjsv['geometry']->type == 'Point') {
+			$ll = 'lat="'.$gjsv['geometry']->coordinates[1].'" lon="'.$gjsv['geometry']->coordinates[0].'"';
+			$mmav [] = "<wpt $ll />";
+			$mmap [] = "<wpt $ll><name>".$gjsv['properties']['nom']."</name></wpt>";
+	}
+
+	// On transforme l'objet PHP en code gpx
+	$gp = geoPHP::load ($json, 'json');
+	$gpx = str_replace ($mmav, $mmap, $gp->out('gpx'));
+}
+
+echo $$format;
 
 /**
  * Execute something after actions

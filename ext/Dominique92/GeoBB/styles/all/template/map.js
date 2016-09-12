@@ -29,7 +29,15 @@ var control = {
 	geocoder: new L.Control.OSMGeocoder({
 		position: 'topleft'
 	}),
-	fileload: new L.Control.FileLayerLoad()
+	fileload: new L.Control.FileLayerLoad(),
+	fileget: new L.Control.Click(
+		function () {return gis._getUrl() + '&format=gpx'}, {
+			title: "Obtenir les élements de la carte dans un fichier GPX\n"+
+					"Pour le charger sur un GARMIN, utlisez Basecamp\n"+
+					"Atention, pour une grande carte, le fichier peut être gros.",
+			label: '&#8659;'
+		}
+	)
 };
 
 // Default position

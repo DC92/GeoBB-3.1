@@ -176,7 +176,8 @@ class listener implements EventSubscriberInterface
 		// Insère l'extraction des données externes dans le flux géographique
 		$row = $vars['row'];
 
-		$this->optim ($row['geomphp'], $vars['diagBbox'] / 200); // La longueur min des segments de lignes & surfaces sera de 1/200 de la diagonale de la BBOX
+		if ($vars['diagBbox'])
+			$this->optim ($row['geomphp'], $vars['diagBbox'] / 200); // La longueur min des segments de lignes & surfaces sera de 1/200 de la diagonale de la BBOX
 
 		$vars['row'] = $row;
 	}

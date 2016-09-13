@@ -20,11 +20,6 @@ $user->session_begin();
 $auth->acl($user->data);
 $user->setup();
 
-$priority = request_var ('priority', 0); // topic_id à affichage prioritaire
-$limite = request_var ('limite', 150); // Nombre de points maximum
-$format = $format_app = request_var ('format', 'json');
-if ($format == 'gpx')
-	$limite = 10000;
 $bboxs = explode (',', $bbox = request_var ('bbox', '-180,-90,180,90'));
 $bbox_sql =
 	$bboxs[0].' '.$bboxs[1].','.
@@ -34,6 +29,14 @@ $bbox_sql =
 	$bboxs[0].' '.$bboxs[1];
 
 $diagBbox = hypot ($bboxs[2] - $bboxs[0], $bboxs[3] - $bboxs[1]); // Hypothènuse de la bbox
+
+$priority = request_var ('priority', 0); // topic_id à affichage prioritaire
+$limite = request_var ('limite', 150); // Nombre de points maximum
+$format = $format_app = request_var ('format', 'json');
+if ($format == 'gpx') {
+	$limite = 10000;
+	$diagBbox = 0; // Pas d'optimisation
+}
 
 /**
  * Execute something before actions

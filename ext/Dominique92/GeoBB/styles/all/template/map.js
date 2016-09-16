@@ -37,6 +37,12 @@ var control = {
 					"Atention, pour une grande carte, le fichier peut être gros.",
 			label: '&#8659;'
 		}
+	),
+	print: new L.Control.Click(
+		function () {window.print(); return ''}, {
+			title: "Imprimer la carte.",
+			label: '&#x1f5b6;'
+		}
 	)
 };
 

@@ -12,6 +12,10 @@ Pourquoi post_attachment = 0 si on a une image ?
 Click sur une icone chem2 plante
 Identification impossible dans test.chem -> reset des cookies. (chrome)
 
+TODO
+====
+Erradiquer geoPHP ? si SQL > version (inclue JSON)
+
 AIDE
 ====
 L'affichage des traces peut être désactivé dans le sélecteur de gauche de la carte (décocher randonnées)

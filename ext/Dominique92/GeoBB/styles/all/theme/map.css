@@ -81,6 +81,17 @@ fieldset .posting-point .fields1 dt {
 		margin: 0; padding: 0;
 		display: block;
 	}
+	.leaflet-control-attribution {
+		display: block !important;
+	}
+	.leaflet-control-permalink,
+	.leaflet-control-attribution > a:first-child {
+		display: none !important;
+	}
+	.leaflet-control-attribution::first-letter {
+		color: transparent;
+	}
+
 	#map {
 		margin: 0; padding: 0;
 		display: block;

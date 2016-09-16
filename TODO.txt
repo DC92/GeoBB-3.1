@@ -1,5 +1,6 @@
 BUGS
 ====
+Garder + de priorité aux cartes (page points, ...)
 CSS bug chem cadre liens sur largeur fenêtre petite
 CSS Bug chem photos bord bas trop bas de 3px
 function gis_after($vars) : pb de ob_flush sur 1&1

@@ -1,4 +1,7 @@
 control.geocoder.addTo(map);
+control.fileload.addTo(map);
+control.fileget.addTo(map);
+control.print.addTo(map);
 
 var cadre = new L.Marker([0,0], {
 		clickable: false, // Evite d'activer le viewfinder: curseur

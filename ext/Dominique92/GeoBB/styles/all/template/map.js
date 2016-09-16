@@ -31,16 +31,20 @@ var control = {
 	}),
 	fileload: new L.Control.FileLayerLoad(),
 	fileget: new L.Control.Click(
-		function () {return gis._getUrl() + '&format=gpx'}, {
+		function () {
+			return gis._getUrl() + '&format=gpx';
+		}, {
 			title: "Obtenir les élements de la carte dans un fichier GPX\n"+
 					"Pour le charger sur un GARMIN, utlisez Basecamp\n"+
-					"Atention, pour une grande carte, le fichier peut être gros.",
+					"Atention: le fichier peut être gros pour une grande carte",
 			label: '&#8659;'
 		}
 	),
 	print: new L.Control.Click(
-		function () {window.print(); return ''}, {
-			title: "Imprimer la carte.",
+		function () {
+			window.print();
+		}, {
+			title: "Imprimer la carte",
 			label: '&#x1f5b6;'
 		}
 	)

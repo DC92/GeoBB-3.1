@@ -1,5 +1,6 @@
 BUGS
 ====
+GPX : Nommage des tracks / du fichier.
 Garder + de priorité aux cartes (page points, ...)
 CSS bug chem cadre liens sur largeur fenêtre petite
 CSS Bug chem photos bord bas trop bas de 3px

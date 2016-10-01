@@ -221,7 +221,7 @@ class listener implements EventSubscriberInterface
 		if (array_key_exists ('geo_altitude', $row) && !$row['geo_altitude']) {
 			$mapquest = 'http://open.mapquestapi.com/elevation/v1/profile?key='.$config_locale['keys-mapquest']
 					   .'&callback=handleHelloWorldResponse&shapeFormat=raw&latLngCollection='.$ll[1][1].','.$ll[1][0];
-			preg_match_all('/"height":([0-9]+)/', file_get_contents ($mapquest), $retour);//TODO DCMM preg_match
+			preg_match_all('/"height":([0-9]+)/', @file_get_contents ($mapquest), $retour);//TODO DCMM preg_match
 			if ($r = @$retour[1][0])
 				$row['geo_altitude'] = // Pour affichage
 				$sql_update['geo_altitude'] = // Pour modification de la base

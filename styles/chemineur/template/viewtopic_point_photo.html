@@ -13,7 +13,7 @@
 		<tr><td class="mg"></td><td class="mm">
 			<!-- IF _file.ATTACH_ID < 1000000 -->
 				<a href="download/file.php?id={_file.ATTACH_ID}" title="{_file.COMMENT}">
-					<script>document.write('<img src="download/file.php?id={_file.ATTACH_ID}&s='+Math.round(Math.max(200,(window.innerWidth-150)*375/(500+{_file.TEXT_SIZE})))+'" />')</script>
+					<script>document.write('<img src="download/file.php?id={_file.ATTACH_ID}&s='+Math.round(Math.max(window.innerWidth/2.5,(window.innerWidth-100)*375/(500+{_file.TEXT_SIZE})))+'" />')</script>
 				</a>
 			<!-- ELSE -->
 				<img src="{_file.REAL_FILENAME}" />

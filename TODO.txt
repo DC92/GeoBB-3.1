@@ -5,7 +5,6 @@ Garder + de priorité aux cartes (page points, ...)
 CSS bug chem cadre liens sur largeur fenêtre petite
 CSS Bug chem photos bord bas trop bas de 3px
 function gis_after($vars) : pb de ob_flush sur 1&1
-Photo un peu petite : http://chemineur.fr/viewtopic.php?t=7462
 Pour ce point : http://v3.chemineur.fr/viewtopic.php?t=6743 le picto est un "?" alors qu'il s'agit d'une cabane...
 Escape sur diaporama ne marche pas sur FF !
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
@@ -16,13 +15,13 @@ Identification impossible dans test.chem -> reset des cookies. (chrome)
 
 TODO
 ====
-Erradiquer geoPHP ? si SQL > version (inclue JSON)
+Erradiquer geoPHP ? si SQL >= version 5.7 (inclue JSON)
 
 AIDE
 ====
 L'affichage des traces peut être désactivé dans le sélecteur de gauche de la carte (décocher randonnées)
 Un sujet est actif quand il y a eu des contributions récentes.
-Création / 2dition de traces
+Création / Edition de traces
 Résolu en se limitant aux liens C2C de type huts. Exit les summits qui posaient problèmes.
 Ici, la COPPA est la "Children's Online Privacy Protection Act", une loi américaine pour protéger la vie privée des mineurs de moins de 13 ans. J'essayerai d'enlever les mentions dans les formulaires.
 Consulter l'historique des éditions

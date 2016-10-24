@@ -28,14 +28,6 @@
 	}
 }
 /* Etiquettes dans la carte */
-.leaflet-rrose-content-wrapper {
-	border-radius: 5px;
-	margin: 0 auto !important;
-}
-.leaflet-rrose-content,
-.leaflet-rrose-content p {
-	margin: 1px;
-}
 .lien-noir {
 	color: black !important;
 	text-decoration: none !important;

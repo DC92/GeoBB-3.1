@@ -34,6 +34,25 @@ class m1_schema extends \phpbb\db\migration\migration
 	 */
 	public function update_schema()
 	{
+		// Save local config parameters (to be able to clone an existing PHPBB forum)
+		$result = $this->db->sql_query('SELECT * FROM '.CONFIG_TABLE);
+		while ($row = $this->db->sql_fetchrow($result))
+			if (in_array(
+				$row['config_name'],
+				[
+					'server_name',
+					'cookie_domain',
+					'cookie_name',
+					'avatar_salt',
+					'plupload_salt',
+					'questionnaire_unique_id',
+				]))
+				$config_upd [] =
+					'UPDATE '.CONFIG_TABLE.
+					' SET config_value = "'.$row['config_value'].'"'.
+					' WHERE config_name = "'.$row['config_name'].'";';
+		file_put_contents ('config_base.sql', implode(PHP_EOL, $config_upd));
+
 		return array(
 			'add_columns'	=> array(
 				$this->table_prefix . 'posts'	=> array(

@@ -1,7 +1,11 @@
+NEW FEATURES
+============
+Début fusion plugins / Supression template IO / Save parms config dependant du serveur / Prep 1.0 : suppression .overflow & CSS rrose
+
 BUGS
 ====
+Création de fiche à partir de WRI : traduit mal les accents
 GPX : Nommage des tracks / du fichier.
-Garder + de priorité aux cartes (page points, ...)
 CSS bug chem cadre liens sur largeur fenêtre petite
 CSS Bug chem photos bord bas trop bas de 3px
 function gis_after($vars) : pb de ob_flush sur 1&1
@@ -12,10 +16,6 @@ Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
 Click sur une icone chem2 plante
 Identification impossible dans test.chem -> reset des cookies. (chrome)
-
-TODO
-====
-Erradiquer geoPHP ? si SQL >= version 5.7 (inclue JSON)
 
 AIDE
 ====
@@ -48,7 +48,6 @@ En cas de chargement de trace GPS, colorier de façon différente des traces de 
 Pas d'ascenseur sur changelayer smartphone
 2em Ascenseur déborde sur le bas : remettre à gauche (mais pb de positionnement en IE & smartphone)
 Icones dégroupées derrière cadre non cliquable / ?? avec grande étiquette difficilement cliquables
-Ne pas forcer la carte de base d'un point. Prendre les cookies.
 Clear Ajax carte quand ajoute/supprime un lien
 Dalles cartes non complètes quand redimensionne la carte
 Carte + bbox KO full screen sur smartphone
@@ -59,6 +58,7 @@ AJAX ne trace pas si erreurs non reportées !
 
 BEST TODO
 =========
+Erradiquer geoPHP ? si SQL >= version 5.7 (inclue JSON)
 Choix type trace GPS
 Optim geom dès le chargement
 Appli méteo suisse
@@ -181,3 +181,37 @@ gpx-rando
 wri + info cabane / type
 IO/MW
 
+*******************************************************
+Tables dependantes du serveur phpbb
+phpbb_config
+	avatar_salt
+	cookie_domain
+	plupload_salt
+	server_name
+	rand_seed
+	rand_seed_last_update
+	board_startdate
+	questionnaire_unique_id
+phpbb_migrations
+	*
+phpbb_sessions
+	*
+
+					// DUPLICATION SITE
+					Copy site geobb
+					Référence : Sauvegarde sauf tables ci dessus
+						zip
+						download
+					Nouveau : Install avec min de variantes
+						Delete /install
+					Dans PhpMyAdmin
+						Référence : Export tables geo_reference & geo_wric
+						Nouveau : Import du zip
+						Nouveau : Import tables geo_reference & geo_wric
+
+// DUPLICATION SITE
+Install avec min de variantes, delete /install
+Activer GeoBB
+SQL
+	Import sauvegarde automatique
+	Exécuter adm/c*.sql

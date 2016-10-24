@@ -49,7 +49,7 @@ new L.Control.Gps()
 
 new L.Control.Permalink.Cookies({
 	text: null, // Le contrôle n'apparait pas sur la carte car ça n'a pas de sens pour une page qui positionne elle même la carte
-	layers: new L.Control.Layers.overflow(L.TileLayer.collection()).addTo(map)
+	layers: new L.Control.Layers(L.TileLayer.collection()).addTo(map)
 }).addTo(map);
 
 map.fitBounds(bounds, {

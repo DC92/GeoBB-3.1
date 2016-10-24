@@ -53,12 +53,12 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents() {
 		return [
 			// Index
-			'core.index_modify_page_title' => 'activate', //226
+			'core.index_modify_page_title' => 'geobb_activate_map', //226
 
 			// Viewtopic
-			'core.viewtopic_get_post_data' => 'viewtopic_get_post_data', //1143
+			'core.viewtopic_get_post_data' => 'geobb_viewtopic_get_post_data', //1143
 			'core.viewtopic_post_rowset_data' => 'viewtopic_post_rowset_data', //1240
-			'core.viewtopic_modify_post_row' => 'viewtopic_modify_post_row', //1949
+			'core.viewtopic_modify_post_row' => 'geobb_viewtopic_modify_post_row', //1949
 			'core.viewtopic_post_row_after' => 'viewtopic_post_row_after', //1949
 			'geo.gis_modify_data' => 'gis_modify_data', //gis.php
 
@@ -69,7 +69,35 @@ class listener implements EventSubscriberInterface
 		];
 	}
 
-	function activate($vars, $forum_desc = '[all=accueil]', $first_post = true) {
+/* INTEGRER : TODO DCMM
+BarMenu
+	'core.page_footer' => 'page_footer',
+News
+	'core.display_forums_modify_row' => 'display_forums_modify_row',
+	'core.index_modify_page_title' => 'index_modify_page_title',
+ResizeImg
+	'core.viewtopic_post_rowset_data' => 'viewtopic_post_rowset_data',
+	'core.viewtopic_modify_post_data' => 'viewtopic_modify_post_data',
+	'core.parse_attachments_modify_template_data' => 'parse_attachments_modify_template_data',
+	'core.download_file_send_to_browser_before' => 'download_file_send_to_browser_before',
+Reference
+	'core.index_modify_page_title' => 'init_select',
+	'core.viewtopic_modify_post_data' => 'viewtopic_modify_post_data',
+	'core.viewtopic_assign_template_vars_before' => 'viewtopic_assign_template_vars_before',
+	'core.modify_posting_auth' => 'modify_posting_auth',
+	'core.submit_post_modify_sql_data' => 'submit_post_modify_sql_data',
+	'geo.gis_after' => 'gis_after',
+	'geo.gis_modify_sql' => 'gis_modify_sql',
+	'geo.gis_modify_data' => 'gis_modify_data',
+Organiser
+			'core.viewtopic_before_f_read_check' => 'viewtopic_before_f_read_check',
+			'core.viewtopic_post_rowset_data' => 'viewtopic_post_rowset_data',
+			'core.viewtopic_modify_post_data' => 'viewtopic_modify_post_data',
+			'core.viewtopic_modify_post_row' => 'viewtopic_modify_post_row',
+			'core.modify_posting_auth' => 'modify_posting_auth',
+*/
+
+	function geobb_activate_map($vars, $forum_desc = '[all=accueil]', $first_post = true) {
 		global $config_locale;
 
 		preg_match ('/\[(first|all)=([a-z]+)\]/i', html_entity_decode ($forum_desc), $regle);
@@ -94,7 +122,7 @@ class listener implements EventSubscriberInterface
 		VIEWTOPIC.PHP
 	*/
 	// Appelé avant la requette SQL qui récupère les données des posts
-	function viewtopic_get_post_data($vars) {
+	function geobb_viewtopic_get_post_data($vars) {
 		// Insère la conversion du champ geom en format WKT dans la requette SQL
 		$sql_ary = $vars['sql_ary'];
 		$sql_ary['SELECT'].= ',AsText(geom) AS geomwkt';
@@ -108,7 +136,7 @@ class listener implements EventSubscriberInterface
 	}
 
 	// Appelé lors de la deuxième passe sur les données des posts qui prépare dans $post_row les données à afficher sur le post du template
-	function viewtopic_modify_post_row($vars) {
+	function geobb_viewtopic_modify_post_row($vars) {
 		if (isset ($this->post_data [$vars['row']['post_id']])) {
 			$row = $this->post_data [$vars['row']['post_id']]; // Récupère les données SQL du post 
 			$post_row = $vars['post_row'];
@@ -128,7 +156,7 @@ class listener implements EventSubscriberInterface
 				$row['geomjson'] = $g->out('json');
 				$this->get_bounds($g);
 				$this->get_automatic_data($row);
-				$this->activate($vars, $vars['topic_data']['forum_desc']);
+				$this->geobb_activate_map($vars, $vars['topic_data']['forum_desc']);
 			}
 
 			foreach ($row AS $k=>$v)
@@ -313,7 +341,7 @@ class listener implements EventSubscriberInterface
 			!isset ($post_data['topic_id']) || // Cas de la création d'un nouveau topic
 			$post_data['topic_first_post_id'] == @$post_data['post_id'];
 
-		$this->activate($vars, $post_data['forum_desc'], $first_post);
+		$this->geobb_activate_map($vars, $post_data['forum_desc'], $first_post);
 
 		// Patch phpbb to accept geom values
 		// HORRIBLE hack mais comment faire autrement tant que les géométries ne sont pas prises en compte par PhpBB ???

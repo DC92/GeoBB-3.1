@@ -38,16 +38,6 @@ if ($format == 'gpx') {
 	$diagBbox = 0; // Pas d'optimisation
 }
 
-/**
- * Execute something before actions
- *
- * @event geo.gis_before
- */
-$vars = array(
-	'bbox',
-);
-extract($phpbb_dispatcher->trigger_event('geo.gis_before', compact($vars)));
-
 // Recherche des points dans la bbox
 $sql_array = [
 	'SELECT' => [
@@ -76,7 +66,7 @@ $sql_array = [
 			'forum_desc LIKE "%[all=%"',
 		],
 	],
-	'ORDER_BY'	=> "CASE WHEN f.forum_id = $priority THEN 0 ELSE left_id END",
+	'ORDER_BY' => "CASE WHEN f.forum_id = $priority THEN 0 ELSE left_id END",
 ];
 
 /**

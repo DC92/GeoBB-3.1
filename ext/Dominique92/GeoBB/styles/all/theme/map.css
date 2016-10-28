@@ -27,11 +27,19 @@
 		height: 100% !important;
 	}
 }
+/* Sélecteur de couches */
+.leaflet-control-layers {
+	word-wrap: normal;
+}
+.overlay_separator {
+	margin-top: 1px;
+	border-top-width : 1px;
+	border-style: solid;
+}
 /* Etiquettes dans la carte */
-.lien-noir {
-	color: black !important;
-	text-decoration: none !important;
-	font-weight: bold;
+.map-reference .leaflet-rrose-content-wrapper,
+.map-reference .leaflet-rrose-tip {
+	background-color: #def;
 }
 
 /* Affichage des champs spécifiques */
@@ -99,18 +107,4 @@ fieldset .posting-point .fields1 dt {
 		background-image: none;
 		background-color: white;
 	}
-}
-
-/* TODO DCMM A TRANSFERER DANS REFERENCE */
-.overlay_separator {
-	margin-top: 1px;
-	border-top-width : 1px;
-	border-style: solid;
-}
-.leaflet-control-layers {
-	word-wrap: normal;
-}
-.map-reference .leaflet-rrose-content-wrapper,
-.map-reference .leaflet-rrose-tip {
-	background-color: #def;
 }

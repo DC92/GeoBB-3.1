@@ -21,7 +21,7 @@ $(function() {
 
 // Controls
 var control = {
-	layers: new L.Control.Layers.overflow(L.TileLayer.collection()).addTo(map),
+	layers: new L.Control.Layers(L.TileLayer.collection()).addTo(map),
 	scale: new L.Control.Scale().addTo(map),
 	fullscreen: new L.Control.Fullscreen().addTo(map),
 	coordinates: new L.Control.Coordinates().addTo(map),
@@ -74,22 +74,10 @@ new L.Control.Permalink.Cookies({
 	layers: control.layers
 }).addTo(map);
 
-// Controle secondaire pour les couches vectorielles
-var lc2 = new L.Control.Layers.args({},{
-	<!-- BEGIN map_overlays -->
-		'{map_overlays.NAME}': {k: '{map_overlays.KEY}', v: '{map_overlays.VALUE}'},
-	<!-- END map_overlays -->
-}).addTo(map);
-
-var args = lc2.args();
-<!-- IF FORUM_ID --> // Priorité aux éléments du forum affiché
-	args.priority = {FORUM_ID};
-<!-- ENDIF -->
-
 // Chem POI
 var gis = new L.GeoJSON.Ajax({
 	urlGeoJSON: '{EXT_DIR}gis.php',
-	argsGeoJSON: args,
+	argsGeoJSON: {},
 	bbox: true,
 <!-- IF POST_ID -->
 	filter: function(feature) {
@@ -98,7 +86,7 @@ var gis = new L.GeoJSON.Ajax({
 <!-- ENDIF -->
 	style: function(feature) {
 		var popup = [
-			'<a href="viewtopic.php?t='+feature.properties.id+'" class="lien-noir">'+feature.properties.nom+'</a>'
+			'<a href="viewtopic.php?t='+feature.properties.id+'">'+feature.properties.nom+'</a>'
 		];
 		<!-- IF IS_MODERATOR and TOPIC_ID and GEO_MAP_TYPE == 'point' -->
 			if (feature.properties.type_id == {FORUM_ID} && // Uniquement entre points de même type
@@ -113,7 +101,6 @@ var gis = new L.GeoJSON.Ajax({
 		<!-- ENDIF -->
 		var s = {
 			popup: ('<p>' + popup.join('</p><p>') + '</p>').replace(/<p>\s*<\/p>/ig, ''),
-			remanent: true,
 <!-- IF SCRIPT_NAME != 'posting' -->
 			url: feature.properties.id ? 'viewtopic.php?t='+feature.properties.id : null,
 			degroup: 12,
@@ -158,7 +145,12 @@ var gis = new L.GeoJSON.Ajax({
 	}
 }).addTo(map);
 
-map.on('clickLayersArgs', function() {
-	gis.options.argsGeoJSON = lc2.args();
-	gis.reload();
-});
+// Controle secondaire pour les couches vectorielles
+var lc2 = new L.Control.Layers.argsGeoJSON(
+	gis,
+	{
+	<!-- BEGIN map_overlays -->
+		'{map_overlays.NAME}': {l: gis, p: '{map_overlays.PAR}', v: '{map_overlays.VALUE}'},
+	<!-- END map_overlays -->
+	}
+).addTo(map);

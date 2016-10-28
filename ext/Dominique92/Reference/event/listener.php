@@ -60,7 +60,7 @@ class listener implements EventSubscriberInterface
 		// Popule le sélecteur de couches overlays
 		$this->template->assign_block_vars('map_overlays', [
 			'NAME' => 'Chemineur',
-			'KEY' => 'site',
+			'PAR' => 'site',
 			'VALUE' => 'chemineur',
 		]);
 
@@ -69,7 +69,7 @@ class listener implements EventSubscriberInterface
 		while ($row = $this->db->sql_fetchrow($result))
 			$this->template->assign_block_vars('map_overlays', [
 				'NAME' => ucfirst ($n = str_replace (['http://', 'https://', 'www.', '.org', '.com'], '', $row['domain'])),
-				'KEY' => 'site',
+				'PAR' => 'site',
 				'VALUE' => $n,
 			]);
 		$this->db->sql_freeresult($result);
@@ -84,7 +84,7 @@ class listener implements EventSubscriberInterface
 		while ($row = $this->db->sql_fetchrow($result))
 			$this->template->assign_block_vars('map_overlays', [
 				'NAME' => $row['forum_name'],
-				'KEY' => 'poi',
+				'PAR' => 'poi',
 				'VALUE' => $row['forum_id'],
 			]);
 		$this->db->sql_freeresult($result);
@@ -290,8 +290,10 @@ class listener implements EventSubscriberInterface
 		$sql_array ['WHERE']['OR'][] = 't.topic_id IS NULL'; // Affiche un point externe s'il n'est pas associé à un topic ou si le topic associé n'existe plus
 		$sql_array ['WHERE']['OR'][] = 't.topic_visibility != '.ITEM_APPROVED; // Ou si le topic est masqué
 
-		$sql_array ['WHERE'][] = 'f.parent_id IN ('.request_var ('poi', '9999').')'; // Liste des types de points
-		$sql_array ['WHERE'][] = '(url IS NULL OR url REGEXP "'.str_replace (',', '|', request_var ('site', 'NONE')).'")'; // Liste des sites
+		$poi = request_var ('poi', '') ?: '9999';
+		$site = str_replace ([',','-','.'], ['|','\\\-','\\\.'], request_var ('site', '') ?: 'NONE');
+		$sql_array ['WHERE'][] = "f.parent_id IN ($poi)"; // Liste des types de points
+		$sql_array ['WHERE'][] = "(url REGEXP '$site')"; // Liste des sites
 
 		$vars['sql_array'] = $sql_array;
 	}

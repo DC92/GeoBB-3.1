@@ -1,9 +1,9 @@
 NEW FEATURES
 ============
-Début fusion plugins / Supression template IO / Save parms config dependant du serveur / Prep 1.0 : suppression .overflow & CSS rrose
 
 BUGS
 ====
+Maintenant, les icones chemineurs sont traitées comme externes !! (url = "chemineur.fr)"
 Création de fiche à partir de WRI : traduit mal les accents
 GPX : Nommage des tracks / du fichier.
 CSS bug chem cadre liens sur largeur fenêtre petite
@@ -16,6 +16,14 @@ Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
 Click sur une icone chem2 plante
 Identification impossible dans test.chem -> reset des cookies. (chrome)
+
+TODO
+====
+Initialiser avec carte IGN (puisque init = sur la France)
+Interface VTTRACK
+	Icônes KO
+	Priorité pas aux orris !!
+	Reprendre interface sur chem3
 
 AIDE
 ====
@@ -52,7 +60,6 @@ Clear Ajax carte quand ajoute/supprime un lien
 Dalles cartes non complètes quand redimensionne la carte
 Carte + bbox KO full screen sur smartphone
 Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
-Couche chemineur toujours présente. Ne devrait pas
 Continuité cookies cartes entre WRI et CHEM, ...
 AJAX ne trace pas si erreurs non reportées !
 
@@ -74,10 +81,6 @@ Mauvaise largeur de carte quand le style est prosilver
 Attendre que le fichier soit chargé avant de valider le post : à sécuriser !
 Récupérer trace dans fichier GPX
 Diaporama pleine page ? En particulier sur mobile
-Interface VTTRACK
-	Icônes KO
-	Priorité pas aux orris !!
-	Reprendre interface sur chem3
 Pouvoir inclure : Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respectivement par %28 et %29
 Erreur type de caractères randos Lozerre
 Récup trace diaporamas + chemins chem2
@@ -178,8 +181,7 @@ chemineur
 tortillards + dates 
 gpx-rando
 	+ stats sur trace
-wri + info cabane / type
-IO/MW
+wri + info cabane / type : TBD
 
 *******************************************************
 Tables dependantes du serveur phpbb

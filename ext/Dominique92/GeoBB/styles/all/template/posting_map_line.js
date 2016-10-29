@@ -1,6 +1,9 @@
 control.geocoder.addTo(map);
 control.fileload.addTo(map);
 
+L.Polyline.prototype.options.weight = L.Polygon.prototype.options.weight = 3;
+L.Polyline.prototype.options.opacity = L.Polygon.prototype.options.opacity = 1;
+
 var editor = new L.Control.Draw.Plus({
 	draw: {
 		polyline: true

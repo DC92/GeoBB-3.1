@@ -6,21 +6,21 @@
 	https://github.com/Dominique92/Leaflet.Map.MultiVendors
 	https://github.com/Dominique92/Leaflet.Permalink.Cookies
 	https://github.com/Dominique92/Leaflet.draw.plus
-	https://github.com/Leaflet/Leaflet.draw/tree/22db3939851774312d202b024ea9adc52534b24d
-	https://github.com/Leaflet/Leaflet.fullscreen/tree/f5e76270ad40bb573bd11595f9069c3f15f8f286
-	https://github.com/Leaflet/Leaflet/tree/0b5c12fd658abe46cf34bc9cac6278a62da29289
-	https://github.com/MrMufflon/Leaflet.Coordinates/tree/09ffcfdfa2bee2a7cee24a9653baef0ec0abc660
-	https://github.com/erictheise/rrose/tree/04fac08b0b367e137b64fb4e5e08e2dd020955c6
-	https://github.com/k4r573n/leaflet-control-osm-geocoder/tree/f833500063e165506503ee8aae997928052c3c4a
-	https://github.com/kartena/Proj4Leaflet/tree/3019d278b5d3e42a72b65142db2d5f0b06039b53
-	https://github.com/makinacorpus/Leaflet.FileLayer/tree/ef4f3ef0d4b7cff7aaadf2ae2141a286f2f45916
-	https://github.com/makinacorpus/Leaflet.GeometryUtil/tree/0d23b1db73b9416165673f44a07c064fd4584749
-	https://github.com/makinacorpus/Leaflet.Snap/tree/43fbe4f6a7cd2b275912294d7d27e1034639e519
-	https://github.com/mapbox/togeojson/tree/82dd5197823211a3898675b53843a27b46c42d7a
-	https://github.com/rob-murray/os-leaflet/tree/fcc5333069cfa20dc29df104449f567eeab0e4e5
-	https://github.com/rowanwins/leaflet-easyPrint/tree/e58ac06ced046695685d21686b9de8d902f25959
-	https://github.com/shramov/leaflet-plugins/tree/0d639aad6a2618d2be3527964236c0a24091c540
-	https://github.com/stefanocudini/leaflet-gps/tree/c7f00f2619a2f075bb8ae41541ec988734afe652
+	https://github.com/Leaflet/Leaflet.draw/commit/22db3939851774312d202b024ea9adc52534b24d
+	https://github.com/Leaflet/Leaflet.fullscreen/commit/f5e76270ad40bb573bd11595f9069c3f15f8f286
+	https://github.com/Leaflet/Leaflet/commit/aa6aa49f56e14bc2ee70034a356dc04646884a1e
+	https://github.com/MrMufflon/Leaflet.Coordinates/commit/09ffcfdfa2bee2a7cee24a9653baef0ec0abc660
+	https://github.com/erictheise/rrose/commit/04fac08b0b367e137b64fb4e5e08e2dd020955c6
+	https://github.com/k4r573n/leaflet-control-osm-geocoder/commit/f833500063e165506503ee8aae997928052c3c4a
+	https://github.com/kartena/Proj4Leaflet/commit/3019d278b5d3e42a72b65142db2d5f0b06039b53
+	https://github.com/makinacorpus/Leaflet.FileLayer/commit/ef4f3ef0d4b7cff7aaadf2ae2141a286f2f45916
+	https://github.com/makinacorpus/Leaflet.GeometryUtil/commit/0d23b1db73b9416165673f44a07c064fd4584749
+	https://github.com/makinacorpus/Leaflet.Snap/commit/43fbe4f6a7cd2b275912294d7d27e1034639e519
+	https://github.com/mapbox/togeojson/commit/82dd5197823211a3898675b53843a27b46c42d7a
+	https://github.com/rob-murray/os-leaflet/commit/fcc5333069cfa20dc29df104449f567eeab0e4e5
+	https://github.com/rowanwins/leaflet-easyPrint/commit/e58ac06ced046695685d21686b9de8d902f25959
+	https://github.com/shramov/leaflet-plugins/commit/0d639aad6a2618d2be3527964236c0a24091c540
+	https://github.com/stefanocudini/leaflet-gps/commit/c7f00f2619a2f075bb8ae41541ec988734afe652
 */
 
 ;var L={version:'1.0.1'};function expose(){var e=window.L;L.noConflict=function(){window.L=e;return this};window.L=L};if(typeof module==='object'&&typeof module.exports==='object'){module.exports=L}
@@ -390,6 +390,6 @@ else if(e[e.length-1].equals(i[0])){r=i}
 else if(e[e.length-1].equals(i[i.length-1])){r=i.reverse()};if(r){r.shift();var n=t[il1]._latlngs.concat(r);this.addLayer(new L.Polyline(n));this.editLayers.removeLayer(t[il1]);this.editLayers.removeLayer(t[il2]);return this._optimSavGeom()}}}}};var o=document.getElementById(this.options.entry),l=document.getElementById(this.options.changed);if(o){var a=typeof o.value!='undefined'?'value':'innerHTML';if(!this.options.editType)o[a]=JSON.stringify(this.editLayers.toGeoJSON());else{var s=[];this.editLayers.eachLayer(function(e){if(this.options.editType=='Marker'){if(e._latlng)s=e._latlng}
 else if(e._latlngs){if(this.options.editType.substring(0,5)=='Multi')s.push(e._latlngs);else s=e._latlngs}},this);o[a]=JSON.stringify(new L[this.options.editType](s).toGeoJSON().geometry)}};if(l)l.style.display=''}});eval('L.Edit.PolyVerticesEdit.prototype._createMiddleMarker = '+L.Edit.PolyVerticesEdit.prototype._createMiddleMarker.toString().replace(/'click', onClick, this|'click',[a-z],this/g,'\'click\',this._cut,this'));L.Edit.PolyVerticesEdit.include({_cut:function(e){if(this._markers.length<3)return;var r,t;for(m in this._markers)if(this._markers[m]._middleRight&&this._markers[m]._middleRight._leaflet_id==e.target._leaflet_id)r=this._markers[m];else if(this._markers[m]._middleLeft&&this._markers[m]._middleLeft._leaflet_id==e.target._leaflet_id)t=this._markers[m];if(this._poly.options.fill){var i=[];for(var s=0;s<this._markers.length;s++)i.push(this._markers[(t._index+s)%this._markers.length]._latlng);this._poly._map.fire('draw:created',{layer:new L.Polyline(i)});this._poly._map.removeLayer(this._poly)}
 else{if(!r._prev&&!t._next)this._poly._map.removeLayer(this._poly);else if(!r._prev)this._onMarkerClick({target:r,remove:!0});else if(!t._next)this._onMarkerClick({target:t,remove:!0});else{this._map.noOptim=!0;var i=[];while(m=this._markers[t._index]){i.push(m._latlng);this._onMarkerClick({target:m})};this._map.noOptim=!1;this._poly._map.fire('draw:created',{layer:new L.Polyline(i,this._poly.options)})}}}});
-;L.Control.Layers.include({addTo:function(o){L.Control.prototype.addTo.call(this,o);L.DomEvent.on(this._container,{mouseleave:this.expand},this);o.on('mouseout',this.collapse,this)}});
+;L.Control.Layers.include({addTo:function(o){L.Control.prototype.addTo.call(this,o);L.DomEvent.on(this._container,{mouseleave:this.expand,mouseenter:function(){o.fire('cl_collapse',this)}},this);o.on('cl_collapse',this._collapse_others,this);o.on('mouseout',this.collapse,this)},_collapse_others:function(o){if(o._leaflet_id!=this._leaflet_id)this.collapse()},remove:function(){map.off('cl_collapse',this._collapse_others,this);map.off('mouseout',this.collapse,this);L.Control.prototype.remove.call(this)}});
 ;L.myLeafletVersion="0.2";L.Control.Scale.prototype.options.imperial=!1;if(navigator.language||navigator.userLanguage=="fr"){if(L.Control.Zoom)L.Control.Zoom=L.Control.Zoom.extend({options:{zoomInTitle:"Rapprocher",zoomOutTitle:"Eloigner"}});if(L.Control.Fullscreen)L.Control.Fullscreen=L.Control.Fullscreen.extend({options:{title:{"false":"Plein écran","true":"Sortir du plein écran"}}});if(L.Control.Gps)L.Control.Gps=L.Control.Gps.extend({options:{title:"Afficher votre position GPS"}});if(L.Control.FileLayerLoad)L.Control.FileLayerLoad=L.Control.FileLayerLoad.extend({statics:{TITLE:"Importer un fichier GPX, KML, GeoJSON",LABEL:"&#8657;"}});if(L.Control.OSMGeocoder)L.Control.OSMGeocoder=L.Control.OSMGeocoder.extend({options:{text:"Chercher"}});L.drawLocal={draw:{toolbar:{actions:{title:"Annuler le dessin",text:"Annuler"},finish:{title:"Finir le dessin",text:"Finir"},undo:{title:"Supprimer le dernier point",text:"Supprimer le dernier point"},buttons:{polyline:"Tracer une ligne",polygon:"Tracer un polygone",rectangle:"Tracer un rectangle",circle:"Tracer un cercle",marker:"Placer un marqueur"}},handlers:{circle:{tooltip:{start:"Cliquer et glisser pour tracer un cercle"},radius:"Rayon"},marker:{tooltip:{start:"Cliquer sur la carte pour placer un marqueur"}},polygon:{tooltip:{start:"Cliquer pour commencer le dessin d'un polygone",cont:"Cliquer pour continuer le dessin d'un polygone",end:"Cliquer sur le premier point clôt le polygone"}},polyline:{error:"<strong>Erreur:</strong> Les contours de la forme ne peuvent pas se croiser !",tooltip:{start:"Cliquer pour commencer une ligne",cont:"Cliquer pour continuer le dessin de la ligne",end:"Cliquer sur le dernier point pour finir la ligne"}},rectangle:{tooltip:{start:"Cliquer et glisser pour tracer un rectangle"}},simpleshape:{tooltip:{end:"Relacher la souris pour finir le dessin"}}}},edit:{toolbar:{actions:{save:{title:"Finir les changements",text:"Finir"},cancel:{title:"Annuler les changements",text:"Annuler"}},buttons:{edit:"Editer les éléments",editDisabled:"Pas d'élément",remove:"Supprimer un élément",removeDisabled:"Pas d'élément"}},handlers:{edit:{tooltip:{text:"Cliquer et glisser pour editer",subtext:"Cliquer annuler pour annuler les changements"}},remove:{tooltip:{text:"Cliquer sur un élément pour le supprimer"}}}}}};
 ;if(navigator.userAgent.search(/arach|archiver|bot|crawl|curl|factory|index|partner|rss|seek|search|semantic|scoot|spider|spyder|yandex/i)!=-1)L.Map.prototype.addLayer=function(){};

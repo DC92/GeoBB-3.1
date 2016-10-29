@@ -2,53 +2,9 @@
 	var key = {MAP_KEYS};
 <!-- ENDIF -->
 
-L.Polyline.prototype.options.weight = L.Polygon.prototype.options.weight = 3;
-L.Polyline.prototype.options.opacity = L.Polygon.prototype.options.opacity = 1;
-
 var map = new L.Map('map', {
 	layers: [L.TileLayer.collection('OSM-FR')]
 });
-
-// Resize
-$(function() {
-	$('#map').resizable ({
-		handles: 's,w,sw',
-		resize: function (event,ui) {
-			ui.position.left = ui.originalPosition.left;
-		}
-	});
-});
-
-// Controls
-var control = {
-	layers: new L.Control.Layers(L.TileLayer.collection()).addTo(map),
-	scale: new L.Control.Scale().addTo(map),
-	fullscreen: new L.Control.Fullscreen().addTo(map),
-	coordinates: new L.Control.Coordinates().addTo(map),
-	gps: new L.Control.Gps().addTo(map),
-	geocoder: new L.Control.OSMGeocoder({
-		position: 'topleft'
-	}),
-	fileload: new L.Control.FileLayerLoad(),
-	fileget: new L.Control.Click(
-		function () {
-			return gis._getUrl() + '&format=gpx';
-		}, {
-			title: "Obtenir les élements de la carte dans un fichier GPX\n"+
-					"Pour le charger sur un GARMIN, utlisez Basecamp\n"+
-					"Atention: le fichier peut être gros pour une grande carte",
-			label: '&#8659;'
-		}
-	),
-	print: new L.Control.Click(
-		function () {
-			window.print();
-		}, {
-			title: "Imprimer la carte",
-			label: '&#x1f5b6;'
-		}
-	)
-};
 
 // Default position
 <!-- IF GEO_BBOX_MINY -->
@@ -62,19 +18,70 @@ var control = {
 	map.setView([46.9, 1.7], 6); // France
 <!-- ENDIF -->
 
-new L.Control.Permalink.Cookies({
-	<!-- IF GEO_BBOX_MINY -->
-		move: false, // N'utilise pas la position
-	<!-- ELSE -->
-		move: true, // Utilise la position
-	<!-- ENDIF -->
-	<!-- IF SCRIPT_NAME != 'index' -->
-		text: null, // N'affiche pas le permalink
-	<!-- ENDIF -->
-	layers: control.layers
-}).addTo(map);
+// Resize
+$(function() {
+	$('#map').resizable ({
+		handles: 's,w,sw',
+		resize: function (event,ui) {
+			ui.position.left = ui.originalPosition.left;
+		}
+	});
+});
 
-// Chem POI
+// Controls
+var control_layers = new L.Control.Layers(L.TileLayer.collection()).addTo(map),
+
+	control = {
+		permalink: new L.Control.Permalink.Cookies({
+			position: 'bottomright',
+			<!-- IF GEO_BBOX_MINY -->
+				move: false, // N'utilise pas la position
+			<!-- ELSE -->
+				move: true, // Utilise la position
+			<!-- ENDIF -->
+			<!-- IF SCRIPT_NAME != 'index' -->
+				text: null, // N'affiche pas le permalink
+			<!-- ENDIF -->
+			layers: control_layers
+		}).addTo(map),
+
+		scale: new L.Control.Scale().addTo(map),
+		coordinates: new L.Control.Coordinates({
+			position:'bottomleft'
+		}).addTo(map),
+
+		scale: new L.Control.Fullscreen().addTo(map),
+
+		gps: new L.Control.Gps().addTo(map),
+
+		geocoder: new L.Control.OSMGeocoder({
+			position: 'topleft'
+		}),
+
+		fileload: new L.Control.FileLayerLoad(),
+
+		fileget: new L.Control.Click(
+			function () {
+				return gis._getUrl() + '&format=gpx';
+			}, {
+				title: "Obtenir les élements de la carte dans un fichier GPX\n"+
+						"Pour le charger sur un GARMIN, utlisez Basecamp\n"+
+						"Atention: le fichier peut être gros pour une grande carte",
+				label: '&#8659;'
+			}
+		),
+
+		print: new L.Control.Click(
+			function () {
+				window.print();
+			}, {
+				title: "Imprimer la carte",
+				label: '&#x1f5b6;'
+			}
+		)
+	};
+
+// Couches vertorielles
 var gis = new L.GeoJSON.Ajax({
 	urlGeoJSON: '{EXT_DIR}gis.php',
 	argsGeoJSON: {},
@@ -111,7 +118,8 @@ var gis = new L.GeoJSON.Ajax({
 			weight: <!-- IF TOPIC_ID --> feature.properties.id == {TOPIC_ID} ? 3 : <!-- ENDIF --> 2
 		};
 
-		if (feature.properties.url) {
+		if (feature.properties.url && 
+			feature.properties.url != 'this') {
 			var parser = document.createElement('a');
 			parser.href = feature.properties.url;
 

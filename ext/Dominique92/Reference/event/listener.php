@@ -61,7 +61,7 @@ class listener implements EventSubscriberInterface
 		$this->template->assign_block_vars('map_overlays', [
 			'NAME' => 'Chemineur',
 			'PAR' => 'site',
-			'VALUE' => 'chemineur',
+			'VALUE' => 'this',
 		]);
 
 		$sql = 'SELECT DISTINCT SUBSTRING_INDEX(url, "/", 3) AS domain FROM geo_reference';
@@ -283,8 +283,8 @@ class listener implements EventSubscriberInterface
 		$sql_array ['SELECT'][] = 'url'; // 1 donnée supplèmentaire
 
 		// Fusionne la table interne et externe
-		$posts_it = 'post_subject,      post_id, topic_id, forum_id,                      post_visibility, geom, NULL AS url';
-		$ref_it   = 'post_subject, 0 AS post_id, topic_id, forum_id, '.ITEM_APPROVED.' AS post_visibility, geom,         url';
+		$posts_it = 'post_subject,      post_id, topic_id, forum_id,                      post_visibility, geom, "this" AS url';
+		$ref_it   = 'post_subject, 0 AS post_id, topic_id, forum_id, '.ITEM_APPROVED.' AS post_visibility, geom,           url';
 		$sql_array['FROM'] = ["((SELECT $posts_it FROM ".POSTS_TABLE.") UNION (SELECT $ref_it FROM geo_reference))" => 'p'];
 
 		$sql_array ['WHERE']['OR'][] = 't.topic_id IS NULL'; // Affiche un point externe s'il n'est pas associé à un topic ou si le topic associé n'existe plus

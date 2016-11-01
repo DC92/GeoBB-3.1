@@ -24,6 +24,7 @@ $(function() {
 		handles: 's,w,sw',
 		resize: function (event,ui) {
 			ui.position.left = ui.originalPosition.left;
+			map.invalidateSize();
 		}
 	});
 });
@@ -36,8 +37,6 @@ var control_layers = new L.Control.Layers(L.TileLayer.collection()).addTo(map),
 			position: 'bottomright',
 			<!-- IF GEO_BBOX_MINY -->
 				move: false, // N'utilise pas la position
-			<!-- ELSE -->
-				move: true, // Utilise la position
 			<!-- ENDIF -->
 			<!-- IF SCRIPT_NAME != 'index' -->
 				text: null, // N'affiche pas le permalink
@@ -46,11 +45,12 @@ var control_layers = new L.Control.Layers(L.TileLayer.collection()).addTo(map),
 		}).addTo(map),
 
 		scale: new L.Control.Scale().addTo(map),
+
 		coordinates: new L.Control.Coordinates({
 			position:'bottomleft'
 		}).addTo(map),
 
-		scale: new L.Control.Fullscreen().addTo(map),
+		fullscreen: new L.Control.Fullscreen().addTo(map),
 
 		gps: new L.Control.Gps().addTo(map),
 
@@ -81,7 +81,7 @@ var control_layers = new L.Control.Layers(L.TileLayer.collection()).addTo(map),
 		)
 	};
 
-// Couches vertorielles
+// Couches vectorielles
 var gis = new L.GeoJSON.Ajax({
 	urlGeoJSON: '{EXT_DIR}gis.php',
 	argsGeoJSON: {},
@@ -92,9 +92,7 @@ var gis = new L.GeoJSON.Ajax({
 	},
 <!-- ENDIF -->
 	style: function(feature) {
-		var popup = [
-			'<a href="viewtopic.php?t='+feature.properties.id+'">'+feature.properties.nom+'</a>'
-		];
+		var popup = [feature.properties.nom];
 		<!-- IF IS_MODERATOR and TOPIC_ID and GEO_MAP_TYPE == 'point' -->
 			if (feature.properties.type_id == {FORUM_ID} && // Uniquement entre points de même type
 				feature.properties.id != {TOPIC_ID}) // Pas le point avec lui même

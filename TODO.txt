@@ -3,6 +3,8 @@ NEW FEATURES
 
 BUGS
 ====
+Editeur ligne : Uncaught TypeError: L[this.options.editType] is not a constructor
+??? Pas de cookie layer !
 CSS Bug chem photos bord bas trop bas de 3px
 Création de fiche à partir de WRI : traduit mal les accents
 CSS bug chem cadre liens sur largeur fenêtre petite
@@ -27,7 +29,6 @@ LEAFLET - CARTES
 En cas de chargement de trace GPS, colorier de façon différente des traces de la carte.
 Icones dégroupées derrière cadre non cliquable / ?? avec grande étiquette difficilement cliquables
 Clear Ajax carte quand ajoute/supprime un lien
-Dalles cartes non complètes quand redimensionne la carte
 Carte + bbox KO full screen sur smartphone
 Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
 Continuité cookies cartes entre WRI et CHEM, ...

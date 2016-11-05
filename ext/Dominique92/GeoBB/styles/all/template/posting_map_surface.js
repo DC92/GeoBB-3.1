@@ -9,7 +9,7 @@ var editor = new L.Control.Draw.Plus({
 	edit: {
 		remove: true
 	},
-	editType: 'MultiPolygon',
+	editType: 'Polygon',
 	entry: 'edit-json',
 	changed: 'edit-change'
 }).addTo(map);

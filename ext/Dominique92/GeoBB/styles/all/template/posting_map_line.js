@@ -11,7 +11,7 @@ var editor = new L.Control.Draw.Plus({
 	edit: {
 		remove: true
 	},
-	editType: 'MultiPolyline',
+	editType: 'Polyline',
 	entry: 'edit-json',
 	changed: 'edit-change'
 }).addTo(map);

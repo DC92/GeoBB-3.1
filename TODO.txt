@@ -32,7 +32,6 @@ Icones dégroupées derrière cadre non cliquable / ?? avec grande étiquette di
 Clear Ajax carte quand ajoute/supprime un lien
 Carte + bbox KO full screen sur smartphone
 Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
-Continuité cookies cartes entre WRI et CHEM, ...
 AJAX ne trace pas si erreurs non reportées !
 
 AIDE

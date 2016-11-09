@@ -9,11 +9,16 @@
 	background-image: url(images/alt_carte.jpg);
 	background-repeat: repeat-x;
 }
+/* Cas du full screen */
 .leaflet-fullscreen-on {
-	width: 100% !important;
-	height: 100% !important;
 	max-width: 100% !important;
 	max-height: 100% !important;
+}
+@media (device-width: 100vw) and (device-height: 100vh) { /* Cas du full screen / nécéssaire pour chrome */
+	#map {
+		max-width: 100% !important;
+		max-height: 100% !important;
+	}
 }
 /* Carte responsive pour mobiles */
 @media screen and (max-width: 600px) {

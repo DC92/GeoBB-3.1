@@ -405,6 +405,9 @@ top: 0;
 .photo .md img {
 	position: relative; top: -3px; right: -5px;
 }
+.photo .mm {
+	line-height: 0; /* Sinon, le bord inférieur de la photo à un gap de 2px */
+}
 .photo .mg, .photo .md {
 	background: url('cadres/photo_h.png');
 }

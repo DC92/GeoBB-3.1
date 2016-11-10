@@ -125,7 +125,7 @@ Organiser
 	function geobb_viewtopic_get_post_data($vars) {
 		// Insère la conversion du champ geom en format WKT dans la requette SQL
 		$sql_ary = $vars['sql_ary'];
-		$sql_ary['SELECT'].= ',AsText(geom) AS geomwkt';
+		$sql_ary['SELECT'] .= ',AsText(geom) AS geomwkt';
 		$vars['sql_ary'] = $sql_ary;
 	}
 
@@ -345,6 +345,7 @@ Organiser
 
 		// Patch phpbb to accept geom values
 		// HORRIBLE hack mais comment faire autrement tant que les géométries ne sont pas prises en compte par PhpBB ???
+		// DCMM TODO résolu en PhpBB 3.2
 		$file_name = "phpbb/db/driver/driver.php";
 		$file_tag = "\n\t\tif (is_null(\$var))";
 		$file_patch = "\n\t\tif (strpos (\$var, 'GeomFromText') === 0) //GeoBB\n\t\t\treturn \$var;";
@@ -368,9 +369,9 @@ Organiser
 			if ($col_name == 'geom' && $row['Type'] == 'text')
 				$this->db->sql_query('ALTER TABLE '.POSTS_TABLE.' CHANGE geom geom GEOMETRYCOLLECTION NULL');
 
-			$val = request_var ($col_name, 'UNDEFINED'); // Look in $_POST
-			if ($val !=  'UNDEFINED')
-				$sql_data[POSTS_TABLE]['sql'][$col_name] = $val ?: null; // null permet la supression du champ
+			$val = request_var ($col_name, 'UNDEFINED', true); // Look in $_POST
+			if ($val != 'UNDEFINED')
+				$sql_data[POSTS_TABLE]['sql'][$col_name] = utf8_normalize_nfc($val) ?: null; // null permet la supression du champ
 
 			// Donnée spaciale
 			$json = request_var ($col_name.'json', ''); // Look in $_POSTS[*json]

@@ -3,14 +3,9 @@ NEW FEATURES
 
 BUGS
 ====
-L.MultiPolyline is not a constructor(…) -> On a enlevé Multi : à tester
-Editeur ligne : Uncaught TypeError: L[this.options.editType] is not a constructor
-??? Pas de cookie layer !
-CSS Bug chem photos bord bas trop bas de 3px
 Création de fiche à partir de WRI : traduit mal les accents
 CSS bug chem cadre liens sur largeur fenêtre petite
 function gis_after($vars) : pb de ob_flush sur 1&1
-Pour ce point : http://v3.chemineur.fr/viewtopic.php?t=6743 le picto est un "?" alors qu'il s'agit d'une cabane...
 Escape sur diaporama ne marche pas sur FF !
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
 Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?

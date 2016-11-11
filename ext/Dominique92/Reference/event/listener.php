@@ -220,7 +220,7 @@ class listener implements EventSubscriberInterface
 					trigger_error('NOT_AUTHORISED');
 
 			$nt = request_var('nt', 0);
-			if ($nom = request_var('nom', '')) { // On ne passe pas par request_var car il ne récupère pas les accents
+			if ($nom = utf8_normalize_nfc(ucfirst(urldecode (request_var('nom', '', true))))) {
 				$data = [
 					'forum_id' => $vars['forum_id'],
 					'post_subject' => $nom,
@@ -231,8 +231,8 @@ class listener implements EventSubscriberInterface
 					'topic_id' => 0, // Le créer
 					'message' => '',
 					'message_md5' => md5(''),
-					'bbcode_bitfield' => 0,//$message_parser->bbcode_bitfield, // TODO DCMM
-					'bbcode_uid' => 0,//$message_parser->bbcode_uid,
+					'bbcode_bitfield' => 0, //$message_parser->bbcode_bitfield, // TODO DCMM
+					'bbcode_uid' => 0, //$message_parser->bbcode_uid,
 					'icon_id' => 0,
 					'enable_bbcode' => true,
 					'enable_smilies' => true,
@@ -249,7 +249,7 @@ class listener implements EventSubscriberInterface
 				$poll = [];
 				\submit_post(
 					'post',
-					urldecode ($nom),
+					$nom,
 					$this->user->data['username'],
 					POST_NORMAL,
 					$poll,

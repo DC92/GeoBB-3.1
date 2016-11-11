@@ -291,7 +291,7 @@ class listener implements EventSubscriberInterface
 		$sql_array ['WHERE']['OR'][] = 't.topic_visibility != '.ITEM_APPROVED; // Ou si le topic est masqué
 
 		$poi = request_var ('poi', '') ?: '9999';
-		$site = str_replace ([',','-','.'], ['|','\\\-','\\\.'], request_var ('site', '') ?: 'NONE');
+		$site = str_replace ([',','-','.'], ['|','\\-','\\.'], request_var ('site', '') ?: 'NONE');
 		$sql_array ['WHERE'][] = "f.parent_id IN ($poi)"; // Liste des types de points
 		$sql_array ['WHERE'][] = "(url REGEXP '$site')"; // Liste des sites
 

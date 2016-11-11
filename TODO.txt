@@ -1,5 +1,6 @@
 NEW FEATURES
 ============
+Ajax ne marche pas sur choix source (chem, ...)
 
 BUGS
 ====

@@ -33,8 +33,9 @@ var pel;
 	pel = document.getElementById('p{postrow.POST_ID}');
 	pel.onmouseover = pel.onmouseout =
 		function(e) {
-			hover({
-				postrow.POST_ID
-			}, e.type);
+			hover(
+				{postrow.POST_ID}, 
+				e.type
+			);
 		};
 <!-- END postrow -->

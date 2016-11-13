@@ -38,7 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'FINAL_INTEGRATION_BY' => 'Copyright &copy; <a = href="https://github.com/Dominique92">Dominique Cavailhez</a> 2016. Sur la base de PhpBB :',
+	'FINAL_INTEGRATION_BY' => 'Copyright &copy; <a href="https://github.com/Dominique92">Dominique Cavailhez</a> 2016. Sur la base de PhpBB :',
 //TODO DCMM déplacer en photosize
 	'ADD_ATTACHMENT_EXPLAIN' => 'Si vous souhaitez joindre une ou plusieurs photos, complétez les indications suivantes.',
 ));

@@ -42,5 +42,5 @@ $lang = array_merge($lang, array(
 	'FAQ' => 'Aide',
 	'ADD' => 'Créer',
 	'OPEN_CLOSE' => 'Déplier / replier',
-	'FINAL_INTEGRATION_BY' => 'Copyright &copy; <a = href="https://github.com/Dominique92">Dominique Cavailhez</a> 2016. Sur la base de PhpBB :',
+	'FINAL_INTEGRATION_BY' => 'Copyright &copy; <a href="https://github.com/Dominique92">Dominique Cavailhez</a> 2016. Sur la base de PhpBB :',
 ));

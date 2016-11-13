@@ -14,7 +14,7 @@
 	max-width: 100% !important;
 	max-height: 100% !important;
 }
-@media (device-width: 100vw) and (device-height: 100vh) { /* Cas du full screen / nécéssaire pour chrome */
+@media screen and (device-width: 100vw) and (device-height: 100vh) { /* Cas du full screen / nécéssaire pour chrome */
 	#map {
 		max-width: 100% !important;
 		max-height: 100% !important;

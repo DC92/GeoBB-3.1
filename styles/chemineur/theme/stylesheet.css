@@ -39,12 +39,8 @@ form#viewtopic,
 	background-image: none;
 }
 
-.Wsub-panels, /* DCMM TODO DELETE ... */
-#attach-panel,
-#Woptions-panel-tab .button1,
-#Wconfirm .submit-buttons input,
-.Wbutton1.default-submit-action {
-	Display: inline-block !important;
+#attach-panel {
+	display: inline-block !important;
 }
 
 body, html,

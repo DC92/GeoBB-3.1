@@ -1,13 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html dir="ltr" lang="fr">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link href="styles/chemineur/theme/images/favicon.ico" rel="shortcut icon" />
 	<title>{TOPIC_TITLE}</title>
 	<link type="text/css" rel="stylesheet" href="{T_THEME_PATH}/diapo.css" />
 	<script src="assets/javascript/jquery.min.js"></script>
 	<script src="{T_TEMPLATE_PATH}/../assets/SimpleControlsGallery.js"></script>
 </head>
-<body onkeydown="if (event.keyCode == 27) window.location.href = 'viewtopic.php?t={TOPIC_ID}&amp;view=forum'">
+
+<body onkeypress="location='?t={TOPIC_ID}&view=forum'">
 	<div id="diaporama"></div>
 
 	<div style="display:none">

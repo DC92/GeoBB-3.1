@@ -1,7 +1,6 @@
 BUGS
 ====
 function gis_after($vars) : pb de ob_flush sur 1&1
-Escape sur diaporama ne marche pas sur FF !
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
 Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
@@ -54,6 +53,7 @@ Barmenu: Enveloppe message trop basse dans Chrome
 Mauvaise largeur de carte quand le style est prosilver
 Attendre que le fichier soit chargé avant de valider le post : à sécuriser !
 Diaporama pleine page ? En particulier sur mobile
+	Echap par une touche sur mobile pas pratique
 Pouvoir inclure : Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respectivement par %28 et %29
 Erreur type de caractères randos Lozerre
 Récup trace diaporamas + chemins chem2

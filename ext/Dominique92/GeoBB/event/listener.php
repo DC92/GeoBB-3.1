@@ -378,7 +378,8 @@ Organiser
 			if ($json) {
 				include_once($this->ext_dir.'geoPHP/geoPHP.inc'); // Librairie de conversion WKT <-> geoJson
 				$g = \geoPHP::load (html_entity_decode($json), 'json');
-				$sql_data[POSTS_TABLE]['sql'][$col_name] = 'GeomFromText("'.$g->out('wkt').'")';
+				if ($g) // Pas de geom
+					$sql_data[POSTS_TABLE]['sql'][$col_name] = 'GeomFromText("'.$g->out('wkt').'")';
 			}
 		}
 		$this->db->sql_freeresult($result);

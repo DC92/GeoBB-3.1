@@ -1,5 +1,7 @@
 /* Carte */
 #map {
+	width: 50%; /* Support of non CSS3 browsers (Safari on Windows)*/
+	height: 380px;
 	width: 50vw;
 	height: 50vw;
 	max-width: 80vw;
@@ -65,6 +67,15 @@ fieldset .posting-point .fields1 dd {
 }
 fieldset .posting-point .fields1 dt {
 	width: 8em;
+}
+
+/* Curseur des cadres et viseurs */
+.carte-normal {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+}
+.carte-curseur {
+	cursor: move;
 }
 
 /* Style pour impression */

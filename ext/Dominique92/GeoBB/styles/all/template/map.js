@@ -19,14 +19,18 @@ var map = new L.Map('map', {
 <!-- ENDIF -->
 
 // Resize
-$(function() {
-	$('#map').resizable ({
-		handles: 's,w,sw',
-		resize: function (event,ui) {
-			ui.position.left = ui.originalPosition.left;
-			map.invalidateSize();
-		}
-	});
+$('#map').resizable ({
+	handles: 's,w,sw', // 2 côtés et 1 coin
+	start: function (event,ui) {
+		map.dragging.disable(); // Le coin appartenant à la carte, elle serait draggée en même temps que redimensionnée
+	},
+	resize: function (event,ui) {
+		ui.position.left = ui.originalPosition.left; // Reste à droite de la page
+		map.invalidateSize(); // Recouvre tout le nouveau <div>
+	},
+	stop: function (event,ui) {
+		map.dragging.enable();
+	}
 });
 
 // Controls
@@ -106,13 +110,16 @@ var gis = new L.GeoJSON.Ajax({
 		<!-- ENDIF -->
 		var s = {
 			popup: ('<p>' + popup.join('</p><p>') + '</p>').replace(/<p>\s*<\/p>/ig, ''),
-<!-- IF SCRIPT_NAME != 'posting' -->
+<!-- IF SCRIPT_NAME == 'posting' -->
+			url: null,
+			className: 'carte-normal',
+<!-- ELSE -->
 			url: feature.properties.id ? 'viewtopic.php?t='+feature.properties.id : null,
 			degroup: 12,
 <!-- ENDIF -->
 			iconUrl: feature.properties.icone,
 			iconAnchor: [8, 8],
-			popupAnchor: [0, -8],
+			popupAnchor: [0, -6],
 			weight: <!-- IF TOPIC_ID --> feature.properties.id == {TOPIC_ID} ? 3 : <!-- ENDIF --> 2
 		};
 

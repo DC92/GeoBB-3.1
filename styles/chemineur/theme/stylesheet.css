@@ -125,8 +125,11 @@ body, html,
 	margin: 8px -3px -3px -4px !important;
 }
 #menu.horizontal a {
-	color: #000 !important;
-	text-decoration: none !important;
+	color: #0000ff !important;
+	text-decoration: none;
+}
+#menu.horizontal a:hover {
+	background-color: orange;
 }
 
 .bouton-new-comment {

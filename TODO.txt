@@ -1,21 +1,17 @@
 BUGS
 ====
-function gis_after($vars) : pb de ob_flush sur 1&1
+Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
+En cas de chargement de trace GPS, colorier de façon différente des traces de la carte.
+Clear Ajax carte quand ajoute/supprime un lien
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
 Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
 Click sur une icone chem2 plante
 
-LEAFLET - CARTES
-================
-En cas de chargement de trace GPS, colorier de façon différente des traces de la carte.
-Icones dégroupées derrière cadre non cliquable / ?? avec grande étiquette difficilement cliquables
-Clear Ajax carte quand ajoute/supprime un lien
-Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
-AJAX ne devrait pas tracer si pas en mode debug!
-
 TODO
 ====
+Pouvoir trier les posts
+	Y compris WRIC
 Test https
 Interface VTTRACK
 	Icônes KO
@@ -24,6 +20,7 @@ Interface VTTRACK
 
 AIDE
 ====
+Bug à l'upgrade de version avec /config.php : '{$cles_ign[$_SERVER['HTTP_HOST']]}', : Illegal use of $_SERVER
 L'affichage des traces peut être désactivé dans le sélecteur de gauche de la carte (décocher randonnées)
 Un sujet est actif quand il y a eu des contributions récentes.
 Création / Edition de traces
@@ -33,17 +30,19 @@ Consulter l'historique des éditions
 
 BEST TODO
 =========
+Meteo sur chem
+Initialiser avec carte IGN (puisque init = sur la France)
+GPX : Nommage des tracks / du fichier.
+BUG: function gis_after($vars) : pb de ob_flush sur 1&1
+Que l'appel au calcul d'altitude et détermination de massif soit muet si ne marche pas http://test.chemineur.fr/viewtopic.php?f=70&t=10088
 DELETE styles/chemineur/theme/fr/stylesheet.css
 Mettre les media print dans print.css
 CSS bug chem cadre liens sur largeur fenêtre petite
-Initialiser avec carte IGN (puisque init = sur la France)
-GPX : Nommage des tracks / du fichier.
-Erradiquer geoPHP ? si SQL >= version 5.7 (inclue JSON)
+Erradiquer geoPHP ? si SQL >= version 5.7 (inclue JSON) -> Phpbb 3.2
 Choix type trace GPS
 Editeur Optim geom dès le chargement
 Appli méteo suisse
 Créer les massifs manquants sur WRI
-Meteo sur chem
 Import WRI: importer texte fiche ?
 Post d'accueil chemineur
 Ajouter l'origine des pages importées chemineur
@@ -57,7 +56,8 @@ Diaporama pleine page ? En particulier sur mobile
 Pouvoir inclure : Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respectivement par %28 et %29
 Erreur type de caractères randos Lozerre
 Récup trace diaporamas + chemins chem2
-Exif -> Commentaire attachment ?? / Visu Commentaire attachment dans w_point_photo
+Dans la zone "ajouter des fichiers" pour les clichés on a un cartouche destiné à d'éventuels commentaires...lesquels n'apparaissent pas 
+	Exif -> Commentaire attachment ?? / Visu Commentaire attachment dans w_point_photo
 	Récup auteur photo // GEO-TODO DCMM Retrouver le nom du "poster_id" : $vars['attachment']['poster_id']
 	Date des clichés < 1970 ??? (pas d'UNIX time) => Utiliser la date EXIF (éditée) pour les clichés ???
 EDIT.log => Trace supprimer le sujet

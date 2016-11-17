@@ -7,6 +7,7 @@ var cadre = new L.Marker([0,0], {
 		clickable: false, // Evite d'activer le viewfinder: curseur
 		icon: L.icon({
 			iconUrl: '{EXT_DIR}styles/all/theme/images/cadre.png',
+			className: 'carte-normal',
 			iconAnchor: [15, 21]
 		})
 	})

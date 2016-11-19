@@ -10,9 +10,6 @@ Click sur une icone chem2 plante
 
 TODO
 ====
-Pouvoir trier les posts
-	Y compris WRIC
-Test https
 Interface VTTRACK
 	Icônes KO
 	Priorité pas aux orris !!
@@ -20,7 +17,6 @@ Interface VTTRACK
 
 AIDE
 ====
-Bug à l'upgrade de version avec /config.php : '{$cles_ign[$_SERVER['HTTP_HOST']]}', : Illegal use of $_SERVER
 L'affichage des traces peut être désactivé dans le sélecteur de gauche de la carte (décocher randonnées)
 Un sujet est actif quand il y a eu des contributions récentes.
 Création / Edition de traces
@@ -30,6 +26,8 @@ Consulter l'historique des éditions
 
 BEST TODO
 =========
+Pouvoir trier les posts WRIC
+Bug à l'upgrade de version avec /config.php : '{$cles_ign[$_SERVER['HTTP_HOST']]}', : Illegal use of $_SERVER
 Meteo sur chem
 Initialiser avec carte IGN (puisque init = sur la France)
 GPX : Nommage des tracks / du fichier.

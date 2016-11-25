@@ -112,7 +112,7 @@ var gis = new L.GeoJSON.Ajax({
 			popup: ('<p>' + popup.join('</p><p>') + '</p>').replace(/<p>\s*<\/p>/ig, ''),
 <!-- IF SCRIPT_NAME == 'posting' -->
 			url: null,
-			className: 'carte-normal',
+			className: 'leaflet-grab',
 <!-- ELSE -->
 			url: feature.properties.id ? 'viewtopic.php?t='+feature.properties.id : null,
 			degroup: 12,

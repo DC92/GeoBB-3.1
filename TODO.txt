@@ -1,8 +1,8 @@
 BUGS
 ====
+Pas de choix de forum sur rando pedestre
 Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
-En cas de chargement de trace GPS, colorier de façon différente des traces de la carte.
-Clear Ajax carte quand ajoute/supprime un lien
+Clear Ajax carte quand ajoute/supprime un lien (les 2 icones restent sur la carte)
 Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’atteindre n’existe pas.
 Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
@@ -15,17 +15,10 @@ Interface VTTRACK
 	Priorité pas aux orris !!
 	Reprendre interface sur chem3
 
-AIDE
-====
-L'affichage des traces peut être désactivé dans le sélecteur de gauche de la carte (décocher randonnées)
-Un sujet est actif quand il y a eu des contributions récentes.
-Création / Edition de traces
-Résolu en se limitant aux liens C2C de type huts. Exit les summits qui posaient problèmes.
-Ici, la COPPA est la "Children's Online Privacy Protection Act", une loi américaine pour protéger la vie privée des mineurs de moins de 13 ans. J'essayerai d'enlever les mentions dans les formulaires.
-Consulter l'historique des éditions
-
 BEST TODO
 =========
+En cas de chargement de trace GPS, colorier de façon différente des traces de la carte.
+OS.GB key for test.chemineur.fr
 Pouvoir trier les posts WRIC
 Bug à l'upgrade de version avec /config.php : '{$cles_ign[$_SERVER['HTTP_HOST']]}', : Illegal use of $_SERVER
 Meteo sur chem
@@ -54,10 +47,8 @@ Diaporama pleine page ? En particulier sur mobile
 Pouvoir inclure : Les caractères ( ) sont interdits dans les URLs, il faut les remplacer respectivement par %28 et %29
 Erreur type de caractères randos Lozerre
 Récup trace diaporamas + chemins chem2
-Dans la zone "ajouter des fichiers" pour les clichés on a un cartouche destiné à d'éventuels commentaires...lesquels n'apparaissent pas 
-	Exif -> Commentaire attachment ?? / Visu Commentaire attachment dans w_point_photo
-	Récup auteur photo // GEO-TODO DCMM Retrouver le nom du "poster_id" : $vars['attachment']['poster_id']
-	Date des clichés < 1970 ??? (pas d'UNIX time) => Utiliser la date EXIF (éditée) pour les clichés ???
+Récup auteur photo // GEO-TODO DCMM Retrouver le nom du "poster_id" : $vars['attachment']['poster_id']
+Date des clichés < 1970 ??? (pas d'UNIX time) => Utiliser la date EXIF (éditée) pour les clichés ???
 EDIT.log => Trace supprimer le sujet
 	EDIT.log => Segmenter par jour
 Afficher les jpg signalés dans le texte.
@@ -86,6 +77,16 @@ Revenir à la page où on était quand on se connecte
 Aspect bouton créer un point dans viewforums
 Ajouter bouton permutation sur page point chem
 	View film + permutation
+
+AIDE
+====
+Fonction glisser les commentaires
+L'affichage des traces peut être désactivé dans le sélecteur de gauche de la carte (décocher randonnées)
+Un sujet est actif quand il y a eu des contributions récentes.
+Création / Edition de traces
+Résolu en se limitant aux liens C2C de type huts. Exit les summits qui posaient problèmes.
+Ici, la COPPA est la "Children's Online Privacy Protection Act", une loi américaine pour protéger la vie privée des mineurs de moins de 13 ans. J'essayerai d'enlever les mentions dans les formulaires.
+Consulter l'historique des éditions
 
 MISE EN FORME / INSTALL / DEMOS
 ===============================

@@ -4,10 +4,9 @@ control.fileget.addTo(map);
 control.print.addTo(map);
 
 var cadre = new L.Marker([0,0], {
-		clickable: false, // Evite d'activer le viewfinder: curseur
 		icon: L.icon({
 			iconUrl: '{EXT_DIR}styles/all/theme/images/cadre.png',
-			className: 'carte-normal',
+			className: 'leaflet-grab',
 			iconAnchor: [15, 21]
 		})
 	})

@@ -69,15 +69,6 @@ fieldset .posting-point .fields1 dt {
 	width: 8em;
 }
 
-/* Curseur des cadres et viseurs */
-.carte-normal {
-	cursor: -webkit-grab;
-	cursor:    -moz-grab;
-}
-.carte-curseur {
-	cursor: move;
-}
-
 /* Style pour impression */
 /* On ne garde que la carte sans les controles */
 @page {

@@ -5,7 +5,6 @@ var curseur = new L.Marker(
 		riseOnHover: true,
 		icon: L.icon({
 			iconUrl: '{EXT_DIR}styles/all/theme/images/curseur.png',
-			className: 'carte-curseur',
 			iconAnchor: [15, 15]
 		})
 	}

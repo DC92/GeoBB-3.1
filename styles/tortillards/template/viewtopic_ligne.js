@@ -39,7 +39,7 @@ new L.Control.Coordinates().addTo(map);
 
 new L.Control.Gps()
 	.addTo(map)
-	.on('gpslocated', function(e) {
+	.on('gps:located', function(e) {
 		e.target._map.setView(e.latlng, 16, {
 			reset: true
 		});

@@ -18,7 +18,7 @@ control.geocoder.addTo(map);
 
 function gotogps () {
 	control.gps.deactivate()
-	control.gps.on('gpslocated', function(e) {
+	control.gps.on('gps:located', function(e) {
 		e.target._map.setView(e.latlng, 15, {
 			reset: true
 		});

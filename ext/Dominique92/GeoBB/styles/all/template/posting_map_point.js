@@ -5,6 +5,7 @@ var curseur = new L.Marker(
 		riseOnHover: true,
 		icon: L.icon({
 			iconUrl: '{EXT_DIR}styles/all/theme/images/curseur.png',
+			className: 'leaflet-move',
 			iconAnchor: [15, 15]
 		})
 	}

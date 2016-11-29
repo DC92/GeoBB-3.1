@@ -40,6 +40,7 @@ class listener implements EventSubscriberInterface
 		return [
 			'core.viewtopic_post_rowset_data' => 'viewtopic_post_rowset_data',
 			'core.viewtopic_modify_post_data' => 'viewtopic_modify_post_data',
+			'core.viewtopic_modify_post_row' => 'viewtopic_modify_post_row',
 			'core.parse_attachments_modify_template_data' => 'parse_attachments_modify_template_data',
 			'core.download_file_send_to_browser_before' => 'download_file_send_to_browser_before',
 		];
@@ -53,6 +54,40 @@ class listener implements EventSubscriberInterface
 
 	function viewtopic_modify_post_data($vars) { // ligne 1576
 		$this->attachments = $vars['attachments'];
+	}
+
+	// Insère des miniatures des liens.jpg insérés dans les messages
+	function viewtopic_modify_post_row($vars) { // ligne 2006
+		global $db;
+		$post_row = $vars['post_row'];
+		preg_match_all('/href="(http[^"]*\.(jpe?g|png))"[^>]*>([^<]*\.(jpe?g|png))<\/a>/i', $post_row['MESSAGE'], $imgs); // Récupère les urls d'images
+
+		foreach ($imgs[1] AS $k=>$i) {
+			$sql_rch = "SELECT * FROM ".ATTACHMENTS_TABLE." WHERE real_filename = '$i'";
+			$result = $this->db->sql_query_limit($sql_rch, 1);
+			$r = $this->db->sql_fetchrow($result);
+			if(!$r) { // L'image n'est pas dans la base
+				$sql_ary = array(
+					'physical_filename'	=> $i,
+					'attach_comment'	=> $i,
+					'real_filename'		=> $i,
+					'extension'			=> 'jpg',
+					'mimetype'			=> 'image/jpeg',
+					'filesize'			=> 0,
+					'filetime'			=> time(),
+					'thumbnail'			=> 0,
+					'is_orphan'			=> 1,
+					'in_message'		=> 0,
+					'poster_id'			=> 1,
+				);
+				$db->sql_query('INSERT INTO ' . ATTACHMENTS_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary));
+				$result = $this->db->sql_query_limit($sql_rch, 1);
+				$r = $this->db->sql_fetchrow($result);
+			}
+			
+			$post_row['MESSAGE'] = str_replace ('>'.$imgs[3][$k].'<', '><img title="'.$i.'" style="border:5px solid #F3E358" src="download/file.php?id='.$r['attach_id'].'&s=200"><', $post_row['MESSAGE']);
+		}
+		$vars['post_row'] = $post_row;
 	}
 
 	function parse_attachments_modify_template_data($vars) {

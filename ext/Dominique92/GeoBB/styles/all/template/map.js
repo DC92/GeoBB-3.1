@@ -162,8 +162,8 @@ var gis = new L.GeoJSON.Ajax({
 var lc2 = new L.Control.Layers.argsGeoJSON(
 	gis,
 	{
-	<!-- BEGIN map_overlays -->
+<!-- BEGIN map_overlays -->
 		'{map_overlays.NAME}': {l: gis, p: '{map_overlays.PAR}', v: '{map_overlays.VALUE}'},
-	<!-- END map_overlays -->
+<!-- END map_overlays -->
 	}
 ).addTo(map);

@@ -1,5 +1,6 @@
 BUGS
 ====
+C2C sur WRI (et autres -> V2 !!!)
 Input fichier GPX sur ligne train ?
 Pas de choix de forum sur rando pedestre
 Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
@@ -8,6 +9,8 @@ Supression de fiche => viewforum.php?f=0 => Le forum que vous avez tenté d’at
 Pourquoi ne retourne t'il pas un mail de création d'user à l'admin ?
 Pourquoi post_attachment = 0 si on a une image ?
 Click sur une icone chem2 plante
+Image interdite dans texte
+	http://chemineur.fr/viewtopic.php?t=10411#p29247
 
 TODO
 ====
@@ -18,6 +21,11 @@ Interface VTTRACK
 
 BEST TODO
 =========
+Ajouter les liens en "voir sur le site" dans l'étiquette
+Le sélecteur de couche chem/wri/c2C/... pourrait ne pas sélectionner les sites externes par défaut.
+Mettre ?date dans les liens des libs LL.
+Sécuriser les file_get_contents en cas de lien cassé
+IGN test.chemineur.fr 1nxqfnrnhph73nqh80izju6j
 En cas de chargement de trace GPS, colorier de façon différente des traces de la carte.
 OS.GB key for test.chemineur.fr
 Pouvoir trier les posts WRIC
@@ -83,7 +91,6 @@ Fonction glisser les commentaires
 L'affichage des traces peut être désactivé dans le sélecteur de gauche de la carte (décocher randonnées)
 Un sujet est actif quand il y a eu des contributions récentes.
 Création / Edition de traces
-Résolu en se limitant aux liens C2C de type huts. Exit les summits qui posaient problèmes.
 Ici, la COPPA est la "Children's Online Privacy Protection Act", une loi américaine pour protéger la vie privée des mineurs de moins de 13 ans. J'essayerai d'enlever les mentions dans les formulaires.
 Consulter l'historique des éditions
 

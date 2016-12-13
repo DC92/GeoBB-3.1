@@ -321,7 +321,7 @@ class listener implements EventSubscriberInterface
 		get_sync_context ();
 		geo_sync_wri ($vars['bbox']);
 		geo_sync_prc (date_last_sync ('pyrenees'));
-		geo_sync_c2c ('huts', date_last_sync ('camptocamp'));
+		geo_sync_c2c ($vars['bbox'], date_last_sync ('camptocamp'));
 
 		$log [] = '';
 		file_put_contents ('../../../GIS.log', implode (' ', $log) ."\n", FILE_APPEND);
@@ -414,34 +414,70 @@ function geo_sync_wri ($bbox = 'world') {
 	sql_update_table ('geo_wric', $wric_upd);
 }
 //-------------------------------------------------------------------------
-function geo_sync_c2c ($type = 'huts', $last_date = 0) {
-	global $forums, $template;
+function lon2x ($lon) {return $lon * 20037508.34 / 180;}
+function lat2y ($lat) {return log (tan ((90 + $lat) * M_PI / 360)) / M_PI * 20037508.34;}
+function x2lon ($x)   {return $x / 20037508.34 * 180;}
+function y2lat ($y)   {return atan (exp ($y * M_PI / 20037508.34)) / M_PI * 360 -90;}
 
-	if (time() - $last_date > 24 * 3600) { // Une fois par jour
-		$type = request_var ('type', $type);
-		$page = request_var ('page', 1);
-		$c2cxml = new \SimpleXMLElement (str_replace ('geo:', '', (file_get_contents ("http://www.camptocamp.org/$type/rss/npp/100/page/$page"))));
-		foreach ($c2cxml->channel->item AS $c) {
-			$ds = explode (' - ', $c->description);
-			$ls = explode ('/', $c->link);
+function geo_sync_c2c ($bbox = '', $last_date = 0) {
+	global $forums, $template, $db;
+	$forums += [
+		'hut' => $forums['cabane'],
+		'shelter' => $forums['abri'],
+		'summit' => $forums['sommet'],
+		'pass' => $forums['col'],
+		'lake' => $forums['lac'],
+		'locality' => $forums['village'],
+		// Non importés
+		'climbing_outdoor' => 0,
+		'bisse' => 0,
+		'access' => 0,
+		'waterfall' => 0,
+		'local_product' => 0,
+		'virtual' => 0,
+		'misc' => 0
+	];
+	$bbll = explode(',',$bbox);
+	$bbxy = [
+		lon2x ($bbll[0]),
+		lat2y ($bbll[1]),
+		lon2x ($bbll[2]),
+		lat2y ($bbll[3]),
+	];
+	$js = json_decode (file_get_contents ('https://api.camptocamp.org/waypoints?pl=fr&bbox='.implode('%2C', $bbxy)));
 
-			if ($f = @$forums[$ds[1]])
-				$sql_values[] = [
-					'post_subject' => '"'.str_replace("\"", "\\\"", html_entity_decode ($c->title, ENT_QUOTES)).'"',
-					'forum_id'     => $f,
-					'geom'         => "GeomFromText('POINT({$c->long} {$c->lat})',0)",
-					'url'          => '"http://www.camptocamp.org/'.$type.'/'.$ls[4].'"',
-					'last_update'  => time(),
-				];
-			else if (!@$sans_icone[$ds[1]]++)
-				echo"<pre>Icone C2C inconnue ".var_export($ds[1],true).'</pre>';
+	foreach ($js->documents AS $d) {
+		if (!isset ($forums[$d->waypoint_type])) { // Type de point non déterminé
+			file_put_contents ('C2CUNKN.log', $d->waypoint_type."\n", FILE_APPEND );
+			continue;
 		}
-		sql_update_table ('geo_reference', $sql_values);
 
-		if (request_var('repeat', 0) &&
-			count($c2cxml->channel->item) == 100)
-			$template->assign_var('REPEAT', "1;url=sync.php?cmd=sync_c2c&type=$type&repeat&page=".($page+1));
+		foreach ($d->locales AS $k=>$v)
+			if (!$k || $v->lang == 'fr')
+				$locale = $v;
+
+		$g = json_decode ($d->geometry->geom);
+
+		if ($forum_id = $forums[$d->waypoint_type])
+			$sql_values[] = $sv = [
+				'post_subject' => '"'.$locale->title.'"',
+				'forum_id' => $forums[$d->waypoint_type],
+				'geom' => implode (' ', [
+					'GeomFromText("POINT(',
+					x2lon($g->coordinates[0]),
+					y2lat($g->coordinates[1]),
+					')",0)'
+				]),
+				'url' => implode ('/', [
+					'"https://www.camptocamp.org/waypoints',
+					$d->document_id,
+					$locale->lang,
+					'-"'
+				]),
+				'last_update'  => time(),
+			];
 	}
+	sql_update_table ('geo_reference', $sql_values);
 }
 //-------------------------------------------------------------------------
 function geo_sync_prc ($last_date = 0) {

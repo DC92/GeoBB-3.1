@@ -178,6 +178,13 @@ gpx-rando
 wri + info cabane / type : TBD
 
 *******************************************************
+COPIE SITE
+Delete all SQL tables
+Import sauvegarde SQL complete
+UPDATE phpbb_config SET config_value = "test.chemineur.fr" WHERE config_name = "cookie_domain";
+UPDATE phpbb_config SET config_value = "phpbb3_71gbo" WHERE config_name = "cookie_name";
+UPDATE phpbb_config SET config_value = "test.chemineur.fr" WHERE config_name = "server_name";
+*******************************************************
 Tables dependantes du serveur phpbb
 phpbb_config
 	avatar_salt

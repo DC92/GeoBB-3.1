@@ -146,6 +146,8 @@ class listener implements EventSubscriberInterface
 			}
 			$attachment ['physical_filename'] = $local;
 		}
+		else if (is_file('../'.$attachment['real_filename'])) // Fichier relatif à la racine du site
+			$attachment ['physical_filename'] = '../'.$attachment ['real_filename']; // script = download/file.php
 
 		if ($exif = @exif_read_data ('../files/'.$attachment['physical_filename'])) {
 			$fls = explode ('/', @$exif ['FocalLength']);

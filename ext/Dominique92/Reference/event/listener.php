@@ -209,9 +209,37 @@ class listener implements EventSubscriberInterface
 	Supprime un lien à un topic: http://localhost/GeoBB/GeoBB319/posting.php?sid=...&mode=post&f=12&t=34&url=http://wri/...
 	*/
 	function modify_posting_auth($vars) {
-		global $is_authed;
+		global $db, $is_authed;
 
 		$this->init_select();
+
+		// Attache les fichiers files/attach/<POST_ID>/*.jpg
+		$attachments = [];
+		$sql = 'SELECT * FROM '.ATTACHMENTS_TABLE.' WHERE post_msg_id = '.$vars['post_id'];
+		$result = $db->sql_query($sql);
+		while ($row = $db->sql_fetchrow($result)) {
+			$fs = explode('files/attach',$row['real_filename']);
+			if (count ($fs) == 2)
+				$attachments['files/attach'.$fs[1]] = $row;
+		}
+		$db->sql_freeresult($result);
+
+		foreach (glob ("files/attach/{$vars['post_id']}/*.{JPG,jpg}", GLOB_BRACE) AS $jpg) {
+			if (!isset ($attachments[$jpg]))
+				$db->sql_query('INSERT INTO ' . ATTACHMENTS_TABLE . ' ' . $db->sql_build_array('INSERT', array (
+					'post_msg_id' => $vars['post_id'],
+					'topic_id' => $vars['topic_id'],
+					'in_message' => 0,
+					'poster_id' => $this->user->data['user_id'],
+					'is_orphan' => 0,
+					'physical_filename' => $jpg,
+					'real_filename' => $jpg,
+					'attach_comment' => '',
+					'extension' => 'jpg',
+					'mimetype' => 'image/jpeg',
+				)));
+			$db->sql_query('UPDATE '.POSTS_TABLE.' SET post_attachment = 1 WHERE post_id = '.$vars['post_id']);
+		}
 
 		// Création d'une fiche
 		if ($url = request_var('url', '')) {

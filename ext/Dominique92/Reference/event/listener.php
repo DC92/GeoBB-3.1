@@ -44,7 +44,8 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_modify_post_data' => 'viewtopic_modify_post_data',
 			'core.viewtopic_assign_template_vars_before' => 'viewtopic_assign_template_vars_before',
 
-			'core.modify_posting_auth' => 'modify_posting_auth',
+			'core.modify_posting_parameters' => 'modify_posting_parameters', // ligne 104
+			'core.modify_posting_auth' => 'modify_posting_auth', // ligne 394
 			'core.submit_post_modify_sql_data' => 'submit_post_modify_sql_data',
 
 			'geo.gis_after' => 'gis_after',
@@ -203,17 +204,12 @@ class listener implements EventSubscriberInterface
 		}
 	}
 
-	/* Appelé aprés vérifications autorisations à l'affichage de la page
-	Crée une fiche: http://localhost/GeoBB/GeoBB319/posting.php?sid=...&mode=post&f=12&url=http://wri/...&nom=nnnn&lon=2&lat=45
-	Lien à un topic: http://localhost/GeoBB/GeoBB319/posting.php?sid=...&mode=post&f=12&t=34&url=http://wri/...&nt=34
-	Supprime un lien à un topic: http://localhost/GeoBB/GeoBB319/posting.php?sid=...&mode=post&f=12&t=34&url=http://wri/...
-	*/
-	function modify_posting_auth($vars) {
-		global $db, $is_authed;
+	/* Appelé avant tout */
+	// Attache les fichiers files/attach/<POST_ID>/*.jpg
+	function modify_posting_parameters($vars) {
+		global $db;
 
-		$this->init_select();
-
-		// Attache les fichiers files/attach/<POST_ID>/*.jpg
+		// Liste les attachments déjà présents
 		$attachments = [];
 		$sql = 'SELECT * FROM '.ATTACHMENTS_TABLE.' WHERE post_msg_id = '.$vars['post_id'];
 		$result = $db->sql_query($sql);
@@ -224,11 +220,18 @@ class listener implements EventSubscriberInterface
 		}
 		$db->sql_freeresult($result);
 
-		foreach (glob ("files/attach/{$vars['post_id']}/*.{JPG,jpg}", GLOB_BRACE) AS $jpg) {
+		// Récupère le topic_id
+		$sql = 'SELECT topic_id FROM '.POSTS_TABLE.' WHERE post_id = '.$vars['post_id'];
+		$result = $db->sql_query_limit($sql, 1);
+		$posts_table = $db->sql_fetchrow($result);
+		$db->sql_freeresult($result);
+
+		// Insére les attachements
+		foreach (glob ("files/attach/{$vars['post_id']}/*.{JPG,jpg}", GLOB_BRACE) AS $jpg)
 			if (!isset ($attachments[$jpg]))
-				$db->sql_query('INSERT INTO ' . ATTACHMENTS_TABLE . ' ' . $db->sql_build_array('INSERT', array (
+				$db->sql_query('INSERT INTO '. ATTACHMENTS_TABLE.' '.$db->sql_build_array('INSERT', array (
 					'post_msg_id' => $vars['post_id'],
-					'topic_id' => $vars['topic_id'],
+					'topic_id' => $posts_table['topic_id'],
 					'in_message' => 0,
 					'poster_id' => $this->user->data['user_id'],
 					'is_orphan' => 0,
@@ -238,8 +241,20 @@ class listener implements EventSubscriberInterface
 					'extension' => 'jpg',
 					'mimetype' => 'image/jpeg',
 				)));
-			$db->sql_query('UPDATE '.POSTS_TABLE.' SET post_attachment = 1 WHERE post_id = '.$vars['post_id']);
-		}
+
+		// Marque ce post avec attachement
+		$db->sql_query('UPDATE '.POSTS_TABLE.' SET post_attachment = 1 WHERE post_id = '.$vars['post_id']);
+	}
+
+	/* Appelé aprés vérifications autorisations à l'affichage de la page
+	Crée une fiche: http://localhost/GeoBB/GeoBB319/posting.php?sid=...&mode=post&f=12&url=http://wri/...&nom=nnnn&lon=2&lat=45
+	Lien à un topic: http://localhost/GeoBB/GeoBB319/posting.php?sid=...&mode=post&f=12&t=34&url=http://wri/...&nt=34
+	Supprime un lien à un topic: http://localhost/GeoBB/GeoBB319/posting.php?sid=...&mode=post&f=12&t=34&url=http://wri/...
+	*/
+	function modify_posting_auth($vars) {
+		global $db, $is_authed;
+
+		$this->init_select();
 
 		// Création d'une fiche
 		if ($url = request_var('url', '')) {
@@ -287,7 +302,7 @@ class listener implements EventSubscriberInterface
 			}
 
 			$sql = "UPDATE geo_reference SET topic_id = $nt WHERE url = '$url'";
-			$this->db->sql_query($sql);
+			$db->sql_query($sql);
 
 			// On arrête tout et on recharge
 			header('Location: viewtopic.php?t='.($nt ?: $vars['topic_id']));

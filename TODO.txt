@@ -178,43 +178,14 @@ gpx-rando
 wri + info cabane / type : TBD
 
 *******************************************************
+http://s201381593.onlinehome.fr/cron/task.php
+*******************************************************
 COPIE SITE
+==========
 Delete all SQL tables
 Import sauvegarde SQL complete
 UPDATE phpbb_config SET config_value = "test.chemineur.fr" WHERE config_name = "cookie_domain";
 UPDATE phpbb_config SET config_value = "phpbb3_71gbo" WHERE config_name = "cookie_name";
 UPDATE phpbb_config SET config_value = "test.chemineur.fr" WHERE config_name = "server_name";
 *******************************************************
-Tables dependantes du serveur phpbb
-phpbb_config
-	avatar_salt
-	cookie_domain
-	plupload_salt
-	server_name
-	rand_seed
-	rand_seed_last_update
-	board_startdate
-	questionnaire_unique_id
-phpbb_migrations
-	*
-phpbb_sessions
-	*
 
-					// DUPLICATION SITE
-					Copy site geobb
-					Référence : Sauvegarde sauf tables ci dessus
-						zip
-						download
-					Nouveau : Install avec min de variantes
-						Delete /install
-					Dans PhpMyAdmin
-						Référence : Export tables geo_reference & geo_wric
-						Nouveau : Import du zip
-						Nouveau : Import tables geo_reference & geo_wric
-
-// DUPLICATION SITE
-Install avec min de variantes, delete /install
-Activer GeoBB
-SQL
-	Import sauvegarde automatique
-	Exécuter adm/c*.sql

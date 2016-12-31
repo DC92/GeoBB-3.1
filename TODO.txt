@@ -1,5 +1,7 @@
 BUGS
 ====
+Modif commentaire photo bugge quand il y a une '
+WRI : Le numéro de point demandé "5156" est introuvable dans notre base (chalet des ministres)
 C2C sur WRI (et autres -> V2 !!!)
 Input fichier GPX sur ligne train ?
 Pas de choix de forum sur rando pedestre

@@ -210,7 +210,7 @@ class listener implements EventSubscriberInterface
 		global $db;
 
 		// Liste les attachments déjà présents
-		$attachments = [];
+		$attachments = $sql_arri = [];
 		$sql = 'SELECT * FROM '.ATTACHMENTS_TABLE.' WHERE post_msg_id = '.$vars['post_id'];
 		$result = $db->sql_query($sql);
 		while ($row = $db->sql_fetchrow($result)) {
@@ -229,7 +229,7 @@ class listener implements EventSubscriberInterface
 		// Insére les attachements
 		foreach (glob ("files/attach/{$vars['post_id']}/*.{JPG,jpg}", GLOB_BRACE) AS $jpg)
 			if (!isset ($attachments[$jpg]))
-				$db->sql_query('INSERT INTO '. ATTACHMENTS_TABLE.' '.$db->sql_build_array('INSERT', array (
+				$sql_arri [] = array (
 					'post_msg_id' => $vars['post_id'],
 					'topic_id' => $posts_table['topic_id'],
 					'in_message' => 0,
@@ -240,7 +240,11 @@ class listener implements EventSubscriberInterface
 					'attach_comment' => '',
 					'extension' => 'jpg',
 					'mimetype' => 'image/jpeg',
-				)));
+				);
+
+		// Ajoute, mais dans l'ordre de nommage des fichiers
+		foreach (array_reverse ($sql_arri) AS $a)
+			$db->sql_query('INSERT INTO '. ATTACHMENTS_TABLE.' '.$db->sql_build_array('INSERT', $a));
 
 		// Marque ce post avec attachement
 		$db->sql_query('UPDATE '.POSTS_TABLE.' SET post_attachment = 1 WHERE post_id = '.$vars['post_id']);

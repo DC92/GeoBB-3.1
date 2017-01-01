@@ -14,16 +14,15 @@
 <body onkeypress="location='?t={TOPIC_ID}&view=forum'">
 	<div id="diaporama"></div>
 
-	<div style="display:none">
-		<!-- BEGIN postrow -->
-			<var>
-				<!-- IF postrow.POST_SUBJECT -->
-					<b>{postrow.RE}</b>
-				<!-- ENDIF -->
-				{postrow.MESSAGE}
-			</var>
-		<!-- END postrow -->
-	</div>
+	<!-- BEGIN postrow -->
+		<div style="display:none">
+			<span><b>{postrow.POST_SUBJECT}</b> {postrow.MESSAGE}</span>
+
+			<!-- BEGIN attachment -->
+					{postrow.attachment.DISPLAY_ATTACHMENT}
+			<!-- END attachment -->
+		</div>
+	<!-- END postrow -->
 
 	<script>
 		<!-- INCLUDE viewtopic_diapo.js -->

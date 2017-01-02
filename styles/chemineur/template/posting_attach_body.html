@@ -56,10 +56,10 @@
 							</td>
 					</tr>
 					<!-- BEGIN attach_row -->
-						<tr class="attach-row" data-attach-id="{attach_row.ATTACH_ID}" id="p{attach_row.ATTACH_ID}">
+						<tr class="attach-row" data-attach-id="{attach_row.ATTACH_ID}">
 							<td class="attach-name">
 								<span class="file-name ellipsis-text">
-									<img style="min-height:150px" src="{attach_row.U_VIEW_ATTACHMENT}&s=200" />
+									<img style="min-height:150px" src="{attach_row.U_VIEW_ATTACHMENT}&s=150&{attach_row.FILENAME}" />
 									<a href="{attach_row.U_VIEW_ATTACHMENT}">{attach_row.FILENAME}</a>
 								</span>
 								<span class="attach-controls">
@@ -94,33 +94,23 @@
 		.display-options {
 			display: none;
 		}
+		.ui-sortable-placeholder {
+			height:150px;
+		}
 	</style>
-	<script>
-		window.document.onload = function(e){ 
-			var post_ids_before = [];
-			<!-- BEGIN attach_row -->
-				post_ids_before.push('#p{attach_row.ATTACH_ID}'); // Tableau des ids des posts avant
-			<!-- END attach_row -->
 
+	<!-- INCLUDEJS {DIR_JQUERY_UI}jquery-ui/jquery-ui.min.js -->
+
+	<script>
+		window.onload = function(e){
 			$('#file-list').sortable({
-				items: post_ids_before.join(','),
 				cursor: 'ns-resize',
 				opacity: 0.7,
 				revert : true,
-				activate: function(e,ui) {
-					// Redimensionne les espaces vides à la hauteur du pavé à placer
-					$('.ui-sortable-placeholder').css('height:'+ui.item.context.offsetHeight+'px');
-				},
 				update: function(e,ui) {
-					// On recharge la page avec la nouvelle liste des post_id
-					location.assign(
-						window.location.href.replace(/#.*$/, '') + // L'URL sans le "#signet" à la fin
-						'&' + $(this).sortable(
-							'serialize',
-							{expression: /(p)([0-9]+)/} // Retire le p devant l'ID du post
-						).replace (/p/g,'o') + // Le remplace par un 'o' (qui sera l'argument de l'URL de modification
-						'#'+ui.item.context.id // Se positionne sur le post modifié
-					);
+					$('.aid').each( function (i) {
+						$(this).context.value = i;
+					});
 				}
 			});
 		}

@@ -1,5 +1,6 @@
 BUGS
 ====
+Suppression fichier attach ne supprime pas l'attachment.
 Diapo : ne s'arrête pas sur touche escape
 WRI : Le numéro de point demandé "5156" est introuvable dans notre base (chalet des ministres)
 C2C sur WRI (et autres -> V2 !!!)

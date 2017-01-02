@@ -44,6 +44,7 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_modify_post_data' => 'viewtopic_modify_post_data',
 			'core.viewtopic_modify_post_row' => 'viewtopic_modify_post_row',
 			'core.modify_posting_auth' => 'modify_posting_auth',
+			'core.posting_modify_submit_post_after' => 'posting_modify_submit_post_after',
 		];
 	}
 
@@ -99,6 +100,10 @@ class listener implements EventSubscriberInterface
 	function modify_posting_auth($vars) {
 		require_once($this->root_path . 'includes/functions_admin.php');
 
+		$this->template->assign_vars ([
+			'DIR_JQUERY_UI' => $this->dirJqueryUi, // Le repertoire de cette extension
+		]);
+
 		// Popule le sélecteur de forum
 		// TODO DCMM ça n'a rien à faire là. A déplacer dans un autre plugin ?
 		if ($view = request_var('view', '')) {
@@ -122,5 +127,28 @@ class listener implements EventSubscriberInterface
 		if ($vars['mode'] == 'edit' && // S'il existe déjà !
 			$vars['forum_id'] != $vars['forum_id'])
 			move_topics([$vars['post_id']], $vars['forum_id']);
+	}
+
+	// Tri des attachements
+	function posting_modify_submit_post_after($vars) {
+		// Get SQL attachment data
+		$sql = 'SELECT * FROM '.ATTACHMENTS_TABLE.' WHERE post_msg_id = '.$vars['post_data']['post_id'].' ORDER BY attach_id DESC';
+		$result = $this->db->sql_query($sql);
+		while ($row = $this->db->sql_fetchrow($result)) {
+			$sqln[] = $r = $row['attach_id'];
+			unset($row['attach_id']);
+			$sqla[$r] = $row;
+		}
+		$this->db->sql_freeresult($result);
+
+		// POST attachment data
+		$ads = $this->request->variable('attachment_data', array(0 => array('' => '')), true, \phpbb\request\request_interface::POST);
+		foreach (array_values($ads) AS $k=>$v) {
+			$sql =
+				'UPDATE '.ATTACHMENTS_TABLE.
+				' SET ' .$this->db->sql_build_array('UPDATE', $sqla[$v['attach_id']]).
+				' WHERE attach_id = '.$sqln[$k];
+			$this->db->sql_query($sql);
+		}
 	}
 }

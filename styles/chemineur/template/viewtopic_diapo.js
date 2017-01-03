@@ -5,12 +5,12 @@ var l = $(window).width(), h = $(window).height(),
 		['./styles/chemineur/theme/diapo/escape.png', '', '', '']
 	);
 	
-	for (i = 0; i < vars.length; i++)
+	for (var v = 0; v < vars.length; v++)
 		d.push ([
-			'download/file.php?id='+vars[0].id+'&s='+u*4,
+			'download/file.php?id='+vars[v].id+'&s='+u*4,
 			'', '',
-			vars[i].parentElement.firstElementChild.innerHTML + // Commentaire du post
-			vars[i].innerHTML // Commentaire de la diapo
+			vars[v].parentElement.firstElementChild.innerHTML + // Commentaire du post
+			vars[v].innerHTML // Commentaire de la diapo
 		]);
 
 var mygallery=new simpleGallery({

@@ -507,7 +507,7 @@ function geo_sync_c2c ($bbox = '', $last_date = 0) {
 
 		if ($forum_id = $forums[$d->waypoint_type])
 			$sql_values[] = $sv = [
-				'post_subject' => '"'.$locale->title.'"',
+				'post_subject' => '"'.str_replace('"', '\\"', $locale->title).'"',
 				'forum_id' => $forums[$d->waypoint_type],
 				'geom' => implode (' ', [
 					'GeomFromText("POINT(',
@@ -535,7 +535,7 @@ function geo_sync_prc ($last_date = 0) {
 		$sql_values = [];
 		foreach ($addressPoints AS $k=>$v)
 			$sql_values[] = [
-				'post_subject' => '"'.$v[2].'"',
+				'post_subject' => '"'.str_replace('"', '\\"', $v[2]).'"',
 				'forum_id'     => $forums['cabane'],
 				'geom'         => "GeomFromText('POINT({$v[0]} {$v[1]})',0)",
 				'url'          => '"http://www.pyrenees-refuges.com/fr/affiche.php?numenr='.$v[3].'"',

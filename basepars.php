@@ -12,6 +12,7 @@ while ($row = $db->sql_fetchrow($result))
 			'UPDATE '.CONFIG_TABLE.
 			' SET config_value = "'.$row['config_value'].'"'.
 			' WHERE config_name = "'.$row['config_name'].'";';
+$db->sql_freeresult($result);
 
 echo(implode('<br/>', $config_upd));
 

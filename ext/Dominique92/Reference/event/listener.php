@@ -347,8 +347,12 @@ class listener implements EventSubscriberInterface
 
 	// Insère les données externes extraites dans les propriétés de chaque élément du flux géographique
 	function gis_modify_data($vars) {
+		global $bu; // Adresse racine du site
 		$properties = $vars['properties'];
-		$properties ['url'] =  $vars['row']['url'];
+		$properties ['url'] =
+			$vars['row']['url'] == 'this'
+			? $bu.'viewtopic.php?t='.$vars['row']['topic_id']
+			: $vars['row']['url'];
 		$vars['properties'] = $properties;
 	}
 

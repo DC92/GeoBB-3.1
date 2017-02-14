@@ -124,7 +124,7 @@ var gis = new L.GeoJSON.Ajax({
 		};
 
 		if (feature.properties.url && 
-			feature.properties.url != 'this') {
+			!feature.properties.url.match(/chemineur/)) {
 			var parser = document.createElement('a');
 			parser.href = feature.properties.url;
 

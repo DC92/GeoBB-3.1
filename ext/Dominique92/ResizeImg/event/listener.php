@@ -76,16 +76,22 @@ class listener implements EventSubscriberInterface
 					'filesize'			=> 0,
 					'filetime'			=> time(),
 					'thumbnail'			=> 0,
-					'is_orphan'			=> 1,
+					'is_orphan'			=> 0,
 					'in_message'		=> 0,
-					'poster_id'			=> 1,
+					'post_msg_id'		=> $vars['row']['post_id'],
+					'topic_id'			=> $vars['row']['topic_id'],
+					'poster_id'			=> $vars['poster_id'],
 				);
 				$db->sql_query('INSERT INTO ' . ATTACHMENTS_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary));
 				$result = $this->db->sql_query_limit($sql_rch, 1);
 				$r = $this->db->sql_fetchrow($result);
 			}
 			
-			$post_row['MESSAGE'] = str_replace ('>'.$imgs[3][$k].'<', '><img title="'.$i.'" style="border:5px solid #F3E358" src="download/file.php?id='.$r['attach_id'].'&s=200"><', $post_row['MESSAGE']);
+			$post_row['MESSAGE'] = str_replace (
+				'>'.$imgs[3][$k].'<',
+				'><img title="'.$i.'" alt="'.$i.'" style="border:5px solid #F3E358" src="download/file.php?id='.$r['attach_id'].'&s=200&'.time().'"><',
+				$post_row['MESSAGE']
+			);
 		}
 		$vars['post_row'] = $post_row;
 	}

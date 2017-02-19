@@ -62,15 +62,15 @@ class listener implements EventSubscriberInterface
 		$post_row = $vars['post_row'];
 		preg_match_all('/href="(http[^"]*\.(jpe?g|png))"[^>]*>([^<]*\.(jpe?g|png))<\/a>/i', $post_row['MESSAGE'], $imgs); // Récupère les urls d'images
 
-		foreach ($imgs[1] AS $k=>$i) {
-			$sql_rch = "SELECT * FROM ".ATTACHMENTS_TABLE." WHERE real_filename = '$i'";
+		foreach ($imgs[1] AS $k=>$href) {
+			$sql_rch = "SELECT * FROM ".ATTACHMENTS_TABLE." WHERE real_filename = '$href'";
 			$result = $this->db->sql_query_limit($sql_rch, 1);
 			$r = $this->db->sql_fetchrow($result);
 			if(!$r) { // L'image n'est pas dans la base
 				$sql_ary = array(
-					'physical_filename'	=> $i,
-					'attach_comment'	=> $i,
-					'real_filename'		=> $i,
+					'physical_filename'	=> $href,
+					'attach_comment'	=> $href,
+					'real_filename'		=> $href,
 					'extension'			=> 'jpg',
 					'mimetype'			=> 'image/jpeg',
 					'filesize'			=> 0,
@@ -88,8 +88,8 @@ class listener implements EventSubscriberInterface
 			}
 			
 			$post_row['MESSAGE'] = str_replace (
-				'>'.$imgs[3][$k].'<',
-				'><img title="'.$i.'" alt="'.$i.'" style="border:5px solid #F3E358" src="download/file.php?id='.$r['attach_id'].'&s=200&'.time().'"><',
+				$href.'">'.$imgs[3][$k].'<',
+				$href.'"><img title="'.$href.'" alt="'.$href.'" style="border:5px solid #F3E358" src="download/file.php?id='.$r['attach_id'].'&s=200&'.time().'"><',
 				$post_row['MESSAGE']
 			);
 		}

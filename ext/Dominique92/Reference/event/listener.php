@@ -495,13 +495,14 @@ function geo_sync_c2c ($bbox = '', $last_date = 0) {
 		lon2x ($bbll[2]),
 		lat2y ($bbll[3]),
 	];
-	$js = json_decode (file_get_contents ('https://api.camptocamp.org/waypoints?pl=fr&bbox='.implode('%2C', $bbxy)));
+	$js = json_decode (@file_get_contents ('https://api.camptocamp.org/waypoints?pl=fr&bbox='.implode('%2C', $bbxy)));
 
-	foreach ($js->documents AS $d) {
-		if (!isset ($forums[$d->waypoint_type])) { // Type de point non déterminé
-			file_put_contents ('C2CUNKN.log', $d->waypoint_type."\n", FILE_APPEND );
-			continue;
-		}
+	if ($js)
+		foreach ($js->documents AS $d) {
+			if (!isset ($forums[$d->waypoint_type])) { // Type de point non déterminé
+				file_put_contents ('C2CUNKN.log', $d->waypoint_type."\n", FILE_APPEND );
+				continue;
+			}
 
 		foreach ($d->locales AS $k=>$v)
 			if (!$k || $v->lang == 'fr')
@@ -535,7 +536,7 @@ function geo_sync_prc ($last_date = 0) {
 	global $forums;
 
 	if (time() - $last_date > 24 * 3600) { // Une fois par jour
-		eval (str_replace ('var ', '$', file_get_contents ('http://www.pyrenees-refuges.com/lib/refuges.js')));
+		eval (str_replace ('var ', '$', @file_get_contents ('http://www.pyrenees-refuges.com/lib/refuges.js')));
 		$sql_values = [];
 		foreach ($addressPoints AS $k=>$v)
 			$sql_values[] = [

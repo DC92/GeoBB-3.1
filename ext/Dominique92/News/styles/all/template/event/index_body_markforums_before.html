@@ -15,6 +15,9 @@
 					<a href="viewforum.php?f={nouvelles.FORUM_ID}" title="{nouvelles.FORUM_NAME}"><img src="{nouvelles.FORUM_IMAGE}" /></a>
 				<!-- ENDIF -->
 				<a class="topictitle" href="viewtopic.php?t={nouvelles.TOPIC_ID}#p{nouvelles.POST_ID}" title="{L_VIEW_LATEST_POST}">{nouvelles.TOPIC_TITLE}</a>
+				<!-- IF nouvelles.GEO_MASSIF -->
+					({nouvelles.GEO_MASSIF})
+				<!-- ENDIF -->
 				<!-- IF not nouvelles.FORUM_IMAGE -->
 					dans <a class="topictitle" href="viewforum.php?f={nouvelles.FORUM_ID}" title="{L_FORUM_INDEX}">{nouvelles.FORUM_NAME}</a>
 				<!-- ENDIF -->

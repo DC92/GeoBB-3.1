@@ -3,7 +3,6 @@ BUGS
 Suppression fichier attach ne supprime pas l'attachment.
 Diapo : ne s'arrête pas sur touche escape
 WRI : Le numéro de point demandé "5156" est introuvable dans notre base (chalet des ministres)
-C2C sur WRI (et autres -> V2 !!!)
 Input fichier GPX sur ligne train ?
 Pas de choix de forum sur rando pedestre
 Posting ligne: pour édit : mettre marqueurs lignes au dessus des icones
@@ -27,7 +26,6 @@ BEST TODO
 Ajouter les liens en "voir sur le site" dans l'étiquette
 Le sélecteur de couche chem/wri/c2C/... pourrait ne pas sélectionner les sites externes par défaut.
 Mettre ?date dans les liens des libs LL.
-Sécuriser les file_get_contents en cas de lien cassé
 IGN test.chemineur.fr 1nxqfnrnhph73nqh80izju6j
 En cas de chargement de trace GPS, colorier de façon différente des traces de la carte.
 OS.GB key for test.chemineur.fr
@@ -37,8 +35,6 @@ Meteo sur chem
 Initialiser avec carte IGN (puisque init = sur la France)
 GPX : Nommage des tracks / du fichier.
 BUG: function gis_after($vars) : pb de ob_flush sur 1&1
-Que l'appel au calcul d'altitude et détermination de massif soit muet si ne marche pas http://test.chemineur.fr/viewtopic.php?f=70&t=10088
-DELETE styles/chemineur/theme/fr/stylesheet.css
 Mettre les media print dans print.css
 CSS bug chem cadre liens sur largeur fenêtre petite
 Erradiquer geoPHP ? si SQL >= version 5.7 (inclue JSON) -> Phpbb 3.2

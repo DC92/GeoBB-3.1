@@ -259,9 +259,10 @@ Organiser
 		// Détermination du massif par refuges.info
 		if (array_key_exists ('geo_massif', $row) && !$row['geo_massif']) {
 			$f_wri_export = 'http://www.refuges.info/api/polygones?type_polygon=1,10,11,17&bbox='.$ll[1][0].','.$ll[1][1].','.$ll[1][0].','.$ll[1][1];
-			$wri_export = json_decode (file_get_contents ($f_wri_export));
-			foreach ($wri_export->features AS $f)
-				$ms [$f->properties->type->id] = $f->properties->nom;
+			$wri_export = json_decode (@file_get_contents ($f_wri_export));
+			if($wri_export->features)
+				foreach ($wri_export->features AS $f)
+					$ms [$f->properties->type->id] = $f->properties->nom;
 			if (isset ($ms))
 				ksort ($ms);
 			$row['geo_massif'] = // Pour affichage

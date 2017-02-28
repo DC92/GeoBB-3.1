@@ -62,19 +62,15 @@ $styles = array (
 		// Force le style s'il est l'un des champs du domaine défini dans /config.php : EX: style.domaine.ext
 		preg_match('/([a-z]+)\.[a-z]+/i', getenv('SCRIPT_NAME'), $scripts);
 		$this->script = $scripts[1];
-
-//DCMM ??? TODO DELETE ???		if ($this->user->page['script_path'] == $this->user->page['root_script_path']) { // Si on est à la racine du site
-			$this->style_name = @$styles[getenv('SERVER_NAME')];
-			$sql = 'SELECT * FROM '.STYLES_TABLE.' WHERE style_name = "'.$this->style_name.'"';
-			$result = $this->db->sql_query ($sql);
-			$row = $this->db->sql_fetchrow ($result);
-			$this->db->sql_freeresult ($result);
-			if ($row) {
-				$style_id = $row ['style_id']; // Force le style PhpBB
-				$this->template->assign_var ('GEO_STYLE', $this->style_name);
-			}
-//DCMM		}
-
+		$this->style_name = @$styles[getenv('SERVER_NAME')];
+		$sql = 'SELECT * FROM '.STYLES_TABLE.' WHERE style_name = "'.$this->style_name.'"';
+		$result = $this->db->sql_query ($sql);
+		$row = $this->db->sql_fetchrow ($result);
+		$this->db->sql_freeresult ($result);
+		if ($row) {
+			$style_id = $row ['style_id']; // Force le style PhpBB
+			$this->template->assign_var ('GEO_STYLE', $this->style_name);
+		}
 		$vars['style_id'] = $style_id;
 	}
 

@@ -73,8 +73,7 @@ class listener implements EventSubscriberInterface
 			SELECT t.topic_id, topic_title,
 				t.forum_id, forum_name, forum_image,
 				topic_first_post_id, post_id, post_attachment, topic_posts_approved,
-				username, poster_id, post_time
-				post_time
+				username, poster_id, post_time, geo_massif
 			FROM	 ".TOPICS_TABLE." AS t
 				JOIN ".FORUMS_TABLE." AS f USING (forum_id)
 				JOIN ".POSTS_TABLE ." AS p ON (p.post_id = t.topic_last_post_id)
@@ -87,6 +86,7 @@ class listener implements EventSubscriberInterface
 			if ($auth->acl_get('f_read', $row['forum_id'])) {
 				$row ['topic_comments'] = $row['topic_posts_approved'] - 1;
 				$row ['post_time'] = $this->user->format_date ($row['post_time']);
+				$row ['geo_massif'] = str_replace ('~', '', $row ['geo_massif']);
 				$this->template->assign_block_vars('nouvelles', array_change_key_case ($row, CASE_UPPER));
 			}
 		$this->db->sql_freeresult($result);

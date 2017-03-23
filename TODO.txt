@@ -23,6 +23,7 @@ Interface VTTRACK
 
 BEST TODO
 =========
+Utilité de basepars.php ?
 Ajouter les liens en "voir sur le site" dans l'étiquette
 Le sélecteur de couche chem/wri/c2C/... pourrait ne pas sélectionner les sites externes par défaut.
 Mettre ?date dans les liens des libs LL.

@@ -320,7 +320,7 @@ Organiser
 			$g = \geoPHP::load($post_data['geomwkt'],'wkt');
 			$this->get_bounds($g);
 			$gp = json_decode ($g->out('json')); // On transforme le GeoJson en objet PHP
-			$this->optim ($gp, 0.0001); // La longueur min des segments de lignes & surfaces sera de  0.0001 ° = 10 000 km / 90° * 0.0001 = 11m
+			$this->optim ($gp, 0.0001); // La longueur min des segments de lignes & surfaces sera de 0.0001 ° = 10 000 km / 90° * 0.0001 = 11m
 			$post_data['geomjson'] = json_encode ($gp);
 		}
 

@@ -1,5 +1,6 @@
 BUGS
 ====
+Pas de scroll avec doigt (mobile) sur page avec deplacement de post
 Suppression fichier attach ne supprime pas l'attachment.
 Diapo : ne s'arrête pas sur touche escape
 WRI : Le numéro de point demandé "5156" est introuvable dans notre base (chalet des ministres)
@@ -16,6 +17,8 @@ Image interdite dans texte
 
 TODO
 ====
+Changer la phrase de connexion
+Ajouter un lien "mot de passe" et "contact"
 Interface VTTRACK
 	Icônes KO
 	Priorité pas aux orris !!

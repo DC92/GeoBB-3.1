@@ -17,6 +17,8 @@ Image interdite dans texte
 
 TODO
 ====
+Mettre un gros cache sur leaflet.js...
+Joindre et compresser les js & css
 Changer la phrase de connexion
 Ajouter un lien "mot de passe" et "contact"
 Interface VTTRACK

@@ -455,3 +455,8 @@ top: 0;
 .hovered {
 	background-color: pink !important;
 }
+
+/* Posting */
+.avertissement {
+	color: red;
+}

@@ -1,5 +1,6 @@
 BUGS
 ====
+Plus de delete segment de ligne
 Pas de scroll avec doigt (mobile) sur page avec deplacement de post
 Suppression fichier attach ne supprime pas l'attachment.
 Diapo : ne s'arrête pas sur touche escape
@@ -71,7 +72,6 @@ Import complet points WRI
 	Rechercher dans les points externes / dedoublons autres sites
 	Interface WRI V2->V3 	http://v2.chemineur.fr/prod/chem/json.php?site=c2c&bbox=-6.921386718749999%2C38.75408327579141%2C20.32470703125%2C51.69979984974196Doublons ou icones fantômes
 Améliorer référencement (-> Prat communal !)
-	Redirections pour conserver les liens chem2
 Pouvoir citer un WRIC
 	Tri des WRIC (actuellement en bas de page) => date par défaut + déplaçable
 ext/GeoBB : ajouter les coordonnées au template print

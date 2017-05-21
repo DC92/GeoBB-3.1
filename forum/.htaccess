@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^(\d+)$ /point/index.php [QSA,L]

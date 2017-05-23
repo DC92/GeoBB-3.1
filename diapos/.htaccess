@@ -1,2 +1,6 @@
-RewriteEngine on
-RewriteRule ^(\d+)$ /point/index.php [QSA,L]
+# Redirections pour conserver les liens chem2
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteRule ^(\d+)$ /point/index.php [QSA,L]
+</IfModule>

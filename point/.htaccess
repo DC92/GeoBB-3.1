@@ -1,2 +1,3 @@
+# Redirections pour conserver les liens chem2
 RewriteEngine on
-RewriteRule ^(\d+)$ /point/index.php [QSA,L]
+RewriteRule ^([0-9a-z]+)$ /point/index.php [QSA,L]

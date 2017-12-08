@@ -538,14 +538,15 @@ function geo_sync_prc ($last_date = 0) {
 	if (time() - $last_date > 24 * 3600) { // Une fois par jour
 		eval (str_replace ('var ', '$', @file_get_contents ('http://www.pyrenees-refuges.com/lib/refuges.js')));
 		$sql_values = [];
-		foreach ($addressPoints AS $k=>$v)
-			$sql_values[] = [
-				'post_subject' => '"'.str_replace('"', '\\"', $v[2]).'"',
-				'forum_id'     => $forums['cabane'],
-				'geom'         => "GeomFromText('POINT({$v[0]} {$v[1]})',0)",
-				'url'          => '"http://www.pyrenees-refuges.com/fr/affiche.php?numenr='.$v[3].'"',
-				'last_update'  => time(),
-			];
+		if($addressPoints)
+			foreach ($addressPoints AS $k=>$v)
+				$sql_values[] = [
+					'post_subject' => '"'.str_replace('"', '\\"', $v[2]).'"',
+					'forum_id'     => $forums['cabane'],
+					'geom'         => "GeomFromText('POINT({$v[0]} {$v[1]})',0)",
+					'url'          => '"http://www.pyrenees-refuges.com/fr/affiche.php?numenr='.$v[3].'"',
+					'last_update'  => time(),
+				];
 		sql_update_table ('geo_reference', $sql_values);
 	}
 }

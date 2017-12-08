@@ -63,7 +63,7 @@ class listener implements EventSubscriberInterface
 		preg_match_all('/href="(http[^"]*\.(jpe?g|png))"[^>]*>([^<]*\.(jpe?g|png))<\/a>/i', $post_row['MESSAGE'], $imgs); // Récupère les urls d'images
 
 		foreach ($imgs[1] AS $k=>$href) {
-			$sql_rch = "SELECT * FROM ".ATTACHMENTS_TABLE." WHERE real_filename = '$href'";
+			$sql_rch = "SELECT * FROM ".ATTACHMENTS_TABLE." WHERE real_filename = '".addslashes($href)."'";
 			$result = $this->db->sql_query_limit($sql_rch, 1);
 			$r = $this->db->sql_fetchrow($result);
 			if(!$r) { // L'image n'est pas dans la base

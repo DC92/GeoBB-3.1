@@ -100,6 +100,11 @@ $bu = $sp[0].'://'.getenv('SERVER_NAME').$ri[0].'/';
 
 $gjs = [];
 while ($row = $db->sql_fetchrow($result)) {
+
+	// Filtre d'une cabane privée
+	if (strstr($row['post_subject'],'Pekoa'))
+		continue;
+
 	$properties = [
 		'nom' => $row['post_subject'],
 		'id' => $row['topic_id'],

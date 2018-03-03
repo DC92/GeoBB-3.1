@@ -410,6 +410,7 @@ function get_sync_context () {
 		'point-d-eau' => $forums['point_eau'],
 		'ancien-point-d-eau' => $forums['point_eau'],
 		'point-de-passage' => $forums['col'],
+		'passage-delicat' => $forums['col'],
 		'source' => $forums['point_eau'],
 		'inutilisable' => $forums['ferme'],
 		'cabane-non-gardee' => $forums['cabane'],
@@ -454,7 +455,7 @@ function geo_sync_wri ($bbox = 'world') {
 						'date'             => strtotime($c->date) ?: 0,
 						'photo'            => '"'.@$c->photo->originale.'"',
 						'date_photo'       => strtotime(@$c->photo->date) ?: 0,
-						'auteur'           => '"'.$c->createur->nom.'"',
+						'auteur'           => '"'.str_replace ('"', '\\"', $c->createur->nom).'"',
 						'url'              => '"http://www.refuges.info/point/'.$x->id.'"',
 						'wric_last_update' => time(),
 					];

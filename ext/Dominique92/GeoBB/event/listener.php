@@ -265,9 +265,10 @@ Organiser
 					$ms [$f->properties->type->id] = $f->properties->nom;
 			if (isset ($ms))
 				ksort ($ms);
+			$determine = @$ms[array_keys($ms)[0]].'~';
 			$row['geo_massif'] = // Pour affichage
 			$sql_update['geo_massif'] = // Pour modification de la base
-				@$ms[array_keys($ms)[0]].'~'; // ~ indique que la valeur & été déterminée par le serveur
+				$determine == 'Accueil~' ? null : $determine; // ~ indique que la valeur & été déterminée par le serveur
 		}
 
 		// Update de la base

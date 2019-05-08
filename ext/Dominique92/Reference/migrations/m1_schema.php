@@ -70,7 +70,7 @@ class m1_schema extends \phpbb\db\migration\migration
 	 * @return array Array of table schema
 	 * @access public
 	 */
-	public function revert_schema()
+	public function WWWrevert_schema()
 	{
 		return array(
 			'drop_tables' => array(

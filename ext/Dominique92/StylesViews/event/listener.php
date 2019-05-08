@@ -84,7 +84,7 @@ $styles = array (
 			$row = $this->db->sql_fetchrow($result);
 			$this->db->sql_freeresult($result);
 
-			preg_match('/\[view=([a-z]+)\]/i', html_entity_decode ($row['forum_desc']), $views);
+			preg_match('/\[view=([a-z]+)(\:|\])/i', html_entity_decode ($row['forum_desc']), $views);
 			$this->request->overwrite ('view', @$views[1]);
 		}
 

@@ -3,7 +3,7 @@
 <!-- ENDIF -->
 
 var map = new L.Map('map', {
-	layers: [L.TileLayer.collection('OSM-FR')]
+	layers: [L.TileLayer.collection('OpenTopoMap')]
 });
 
 // Default position
@@ -33,7 +33,11 @@ $('#map').resizable ({
 	}
 });
 
+//var tc = L.TileLayer.collection();
+//tc.OpenTopoMap = new L.TileLayer.OSM.OTP();
+
 // Controls
+//var control_layers = new L.Control.Layers(tc).addTo(map),
 var control_layers = new L.Control.Layers(L.TileLayer.collection()).addTo(map),
 
 	control = {

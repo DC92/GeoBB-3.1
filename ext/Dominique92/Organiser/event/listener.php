@@ -109,7 +109,7 @@ class listener implements EventSubscriberInterface
 		if ($view = request_var('view', '')) {
 			$sql = "SELECT forum_id, forum_name, parent_id, forum_type, forum_flags, forum_options, left_id, right_id, forum_desc
 				FROM ".FORUMS_TABLE."
-				WHERE forum_desc LIKE '%[view=$view]%'
+				WHERE forum_desc LIKE '%[view=$view%'
 				ORDER BY left_id ASC";
 			$result = $this->db->sql_query($sql);
 			while ($row = $this->db->sql_fetchrow($result))

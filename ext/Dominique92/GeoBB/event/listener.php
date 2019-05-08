@@ -100,7 +100,7 @@ Organiser
 	function geobb_activate_map($vars, $forum_desc = '[all=accueil]', $first_post = true) {
 		global $config_locale;
 
-		preg_match ('/\[(first|all)=([a-z]+)\]/i', html_entity_decode ($forum_desc), $regle);
+		preg_match ('/\[(first|all)=([a-z]+)(\:|\])/i', html_entity_decode ($forum_desc), $regle);
 		switch (@$regle[1]) {
 			case 'first': // Régle sur le premier post seulement
 				if (!$first_post)
@@ -142,8 +142,8 @@ Organiser
 			$post_row = $vars['post_row'];
 
 			// Convert the geom info in geoJson format
-			preg_match ('/\[(first|all)=([a-z]+)\]/i', $vars['topic_data']['forum_desc'], $regle);
-			if (count ($regle) == 3 &&
+			preg_match ('/\[(first|all)=([a-z]+)(\:|\])/i', $vars['topic_data']['forum_desc'], $regle);
+			if (count ($regle) >= 3 &&
 				(
 					($regle[1] == 'all') ||
 					($regle[1] == 'first' && ($row['post_id'] == $vars['topic_data']['topic_first_post_id']))

@@ -153,6 +153,8 @@ Organiser
 				include_once($this->ext_dir.'geoPHP/geoPHP.inc'); // Librairie de conversion WKT <-> geoJson
 				// Traduit la géométrie en format geoJson
 				$g = \geoPHP::load($row['geomwkt'],'wkt');
+				$row['lon'] = $g->x();
+				$row['lat'] = $g->y();
 				$row['geomjson'] = $g->out('json');
 				$this->get_bounds($g);
 				$this->get_automatic_data($row);
